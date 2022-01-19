@@ -32,6 +32,9 @@ menuCards(context, snapshot, index) {
               height: dynamicWidth(context, 0.2),
               width: dynamicWidth(context, 0.5),
               fit: BoxFit.cover,
+              errorBuilder: (context, url, error) {
+                return const Icon(Icons.error);
+              },
             ),
           ),
         ),

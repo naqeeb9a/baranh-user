@@ -129,6 +129,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                       child: Drawer(child: drawerItems2(context)),
                     ),
                     body: child,
+                    
                   );
           });
         },

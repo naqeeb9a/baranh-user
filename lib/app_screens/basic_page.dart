@@ -2,7 +2,7 @@ import 'package:baranh/app_screens/customer_care.dart';
 import 'package:baranh/app_screens/arrived_guests.dart';
 import 'package:baranh/app_screens/online_order.dart';
 import 'package:baranh/app_screens/new_reservations.dart';
-import 'package:baranh/app_screens/waiting_for_arrival.dart';
+import 'package:baranh/app_screens/order_history.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
