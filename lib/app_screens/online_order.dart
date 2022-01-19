@@ -98,17 +98,17 @@ class _OnlineOrderState extends State<OnlineOrder> {
                                       onNotification: (notification) {
                                         final ScrollDirection direction =
                                             notification.direction;
-                                        changeState(() {
-                                          if (direction ==
-                                              ScrollDirection.reverse) {
-                                            _showFab = false;
-                                            checkState();
-                                          } else if (direction ==
-                                              ScrollDirection.forward) {
-                                            _showFab = true;
-                                            checkState();
-                                          }
-                                        });
+
+                                        if (direction ==
+                                            ScrollDirection.reverse) {
+                                          _showFab = false;
+                                          checkState();
+                                        } else if (direction ==
+                                            ScrollDirection.forward) {
+                                          _showFab = true;
+                                          checkState();
+                                        }
+
                                         return true;
                                       },
                                       child: GridView.builder(
