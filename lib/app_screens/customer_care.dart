@@ -17,52 +17,133 @@ class _CustomerCareState extends State<CustomerCare> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        backgroundColor: myBlack,
-        body: Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: dynamicWidth(context, 0.05)),
-          child: SingleChildScrollView(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                heightBox(context, 0.03),
-                text(context, "BARANH LAHORE", 0.06, myWhite, bold: true),
-                text(context, "TIME : 7 PM TO 3 AM", 0.04, myWhite),
-                text(
-                    context,
-                    "GULBERG GALLERIA 18 GULBERG BOULEVARD GULBERG LAHORE",
-                    0.04,
-                    myWhite),
-                heightBox(context, 0.01),
-                ClipRRect(
-                    borderRadius:
-                        BorderRadius.circular(dynamicWidth(context, 0.02)),
-                    child: Image.asset("assets/baranh_lahore.jpg")),
-                heightBox(context, 0.01),
-                essentialsRow(context, LineIcons.phone, LineIcons.whatSApp,
-                    "042 35745701", "+92 346 8697097"),
-                const Divider(
-                  color: myWhite,
+      backgroundColor: myBlack,
+      body: Padding(
+        padding: EdgeInsets.symmetric(horizontal: dynamicWidth(context, 0.05)),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Container(
+              width: dynamicWidth(context, .9),
+              height: dynamicHeight(context, .26),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(
+                  dynamicWidth(context, 0.02),
                 ),
-                text(context, "BARANH JHANG", 0.06, myWhite, bold: true),
-                text(context, "TIME : 7 PM TO 3 AM", 0.04, myWhite),
-                text(
-                    context,
-                    "LDS - LONDON DEPARTMENTAL STORE NEAR SHELL PUMP, SESSION CHOWK, JHANG SADAR",
-                    0.04,
-                    myWhite),
-                heightBox(context, 0.01),
-                ClipRRect(
-                    borderRadius:
-                        BorderRadius.circular(dynamicWidth(context, 0.02)),
-                    child: Image.asset("assets/baranh_jhang.jpg")),
-                heightBox(context, 0.01),
-                essentialsRow(context, LineIcons.phone, LineIcons.whatSApp,
-                    "042 35745701", "+92 346 8697097")
-              ],
+                image: const DecorationImage(
+                  image: AssetImage("assets/baranh_lahore.jpg"),
+                  fit: BoxFit.fitHeight,
+                ),
+              ),
+              child: Container(
+                width: dynamicWidth(context, .9),
+                height: dynamicHeight(context, .26),
+                decoration: BoxDecoration(
+                  color: myBlack.withOpacity(.6),
+                  borderRadius: BorderRadius.circular(
+                    dynamicWidth(context, 0.02),
+                  ),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    text(
+                      context,
+                      "BARANH LAHORE",
+                      0.06,
+                      myWhite,
+                      bold: true,
+                    ),
+                    text(
+                      context,
+                      "TIME : 7 PM TO 3 AM",
+                      0.04,
+                      myWhite,
+                    ),
+                    text(
+                      context,
+                      "GULBERG GALLERIA 18 GULBERG BOULEVARD GULBERG LAHORE",
+                      0.04,
+                      myWhite,
+                      alignText: TextAlign.center,
+                    ),
+                    heightBox(context, .06),
+                    essentialsRow(
+                      context,
+                      LineIcons.phone,
+                      LineIcons.whatSApp,
+                      "042 35745701",
+                      "+92 346 8697097",
+                    ),
+                  ],
+                ),
+              ),
             ),
-          ),
-        ));
+            heightBox(context, 0.04),
+            const Divider(
+              color: myWhite,
+            ),
+            heightBox(context, 0.04),
+            Container(
+              width: dynamicWidth(context, .9),
+              height: dynamicHeight(context, .26),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(
+                  dynamicWidth(context, 0.02),
+                ),
+                image: const DecorationImage(
+                  image: AssetImage("assets/baranh_jhang.jpg"),
+                  fit: BoxFit.fitHeight,
+                ),
+              ),
+              child: Container(
+                width: dynamicWidth(context, .9),
+                height: dynamicHeight(context, .26),
+                decoration: BoxDecoration(
+                  color: myBlack.withOpacity(.6),
+                  borderRadius: BorderRadius.circular(
+                    dynamicWidth(context, 0.02),
+                  ),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    text(
+                      context,
+                      "BARANH JHANG",
+                      0.06,
+                      myWhite,
+                      bold: true,
+                    ),
+                    text(
+                      context,
+                      "TIME : 7 PM TO 3 AM",
+                      0.04,
+                      myWhite,
+                    ),
+                    text(
+                      context,
+                      "LDS - LONDON DEPARTMENTAL STORE NEAR SHELL PUMP, SESSION CHOWK, JHANG SADAR",
+                      0.04,
+                      myWhite,
+                      alignText: TextAlign.center,
+                    ),
+                    heightBox(context, .06),
+                    essentialsRow(
+                      context,
+                      LineIcons.phone,
+                      LineIcons.whatSApp,
+                      "042 35745701",
+                      "+92 346 8697097",
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }
 
