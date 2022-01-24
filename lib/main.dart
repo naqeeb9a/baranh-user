@@ -81,7 +81,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
         ),
       ),
       home: MaterialApp(
-        title: 'Baranh',
+        title: 'Baranh Team',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
           primarySwatch: primaryColor,
