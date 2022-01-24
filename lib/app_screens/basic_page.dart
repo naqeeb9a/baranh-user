@@ -1,5 +1,6 @@
 import 'package:baranh/app_screens/customer_care.dart';
 import 'package:baranh/app_screens/arrived_guests.dart';
+import 'package:baranh/app_screens/home.dart';
 import 'package:baranh/app_screens/online_order.dart';
 import 'package:baranh/app_screens/new_reservations.dart';
 import 'package:baranh/app_screens/order_history.dart';
@@ -38,6 +39,8 @@ class _BasicPageState extends State<BasicPage> with TickerProviderStateMixin {
         return const OrderHistory();
       case "Customer Care":
         return const CustomerCare();
+      case "Home":
+        return const Home();
 
       default:
         return Column(

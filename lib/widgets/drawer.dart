@@ -24,6 +24,7 @@ Widget drawerItems(context, function, changeState) {
   }
 
   List drawerItemList = [
+    getitem(Icons.home, "Home"),
     getitem(Icons.calendar_today, "New Reservations"),
     getitem(Icons.calendar_today, "Online order"),
     getitem(Icons.food_bank, "Active Order"),
@@ -87,9 +88,8 @@ Widget drawerItems(context, function, changeState) {
                   context,
                   userResponse == ""
                       ? ""
-                      : "Hi ${userResponse["full_name"] ?? ""}"
-                          "\n(${userResponse["designation"] ?? ""})"
-                          "\n\n${userResponse["outlet_name"] ?? ""}",
+                      : "Hi ${userResponse["name"] ?? ""}"
+                          "\n(${userResponse["email"] ?? ""})",
                   .05,
                   myWhite,
                   bold: true,

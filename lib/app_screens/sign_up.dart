@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:baranh/app_screens/sign_up.dart';
 import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
@@ -12,32 +11,38 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:lottie/lottie.dart';
 import 'package:motion_toast/motion_toast.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import '../main.dart';
-
-class LoginScreen extends StatefulWidget {
-  const LoginScreen({Key? key}) : super(key: key);
+class SignUp extends StatefulWidget {
+  const SignUp({Key? key}) : super(key: key);
 
   @override
-  _LoginScreenState createState() => _LoginScreenState();
+  _SignUpState createState() => _SignUpState();
 }
 
-class _LoginScreenState extends State<LoginScreen> {
+class _SignUpState extends State<SignUp> {
   bool loading = false;
   final _formKey = GlobalKey<FormState>();
 
+  final name = TextEditingController();
+  final phone = TextEditingController();
+  final address = TextEditingController();
   final email = TextEditingController();
   final password = TextEditingController();
 
-  loginFunction() async {
+  signUpFunction() async {
     try {
       setState(() {
         loading = true;
       });
       var response = await http.post(
-          Uri.parse("https://baranhweb.cmcmtech.com/api/signin-customer"),
-          body: {"emailphone": email.text, "password": password.text});
+          Uri.parse("https://baranhweb.cmcmtech.com/api/register-customer"),
+          body: {
+            "yourname": name.text,
+            "phone": phone.text,
+            "address": address.text,
+            "email": email.text,
+            "password": password.text
+          });
       if (response.statusCode == 200) {
         var jsonData = jsonDecode(response.body);
 
@@ -80,6 +85,42 @@ class _LoginScreenState extends State<LoginScreen> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
+                              text(context, "Your Name", .05, myWhite),
+                              SizedBox(
+                                height: dynamicHeight(context, 0.01),
+                              ),
+                              inputTextField(
+                                context,
+                                "Your Name",
+                                name,
+                              ),
+                              SizedBox(
+                                height: dynamicHeight(context, 0.01),
+                              ),
+                              text(context, "Phone", .05, myWhite),
+                              SizedBox(
+                                height: dynamicHeight(context, 0.01),
+                              ),
+                              inputTextField(
+                                context,
+                                "Phone",
+                                phone,
+                              ),
+                              SizedBox(
+                                height: dynamicHeight(context, 0.01),
+                              ),
+                              text(context, "Address:", .05, myWhite),
+                              SizedBox(
+                                height: dynamicHeight(context, 0.01),
+                              ),
+                              inputTextField(
+                                context,
+                                "Address",
+                                address,
+                              ),
+                              SizedBox(
+                                height: dynamicHeight(context, 0.01),
+                              ),
                               text(context, "Email", .05, myWhite),
                               SizedBox(
                                 height: dynamicHeight(context, 0.01),
@@ -107,16 +148,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                   });
                                 },
                               ),
-                              SizedBox(
-                                height: dynamicHeight(context, 0.01),
-                              ),
-                              Align(
-                                  alignment: Alignment.centerRight,
-                                  child: text(context, "Forgot password", 0.04,
-                                      myWhite))
                             ],
                           ),
-                          coloredButton(context, "SIGN IN", myOrange,
+                          coloredButton(context, "REGISTER", myOrange,
                               function: () async {
                             if (!EmailValidator.validate(email.text)) {
                               MotionToast.error(
@@ -132,8 +166,16 @@ class _LoginScreenState extends State<LoginScreen> {
                                 description:
                                     const Text("Please enter valid password!"),
                               ).show(context);
+                            } else if (name.text.isEmpty ||
+                                phone.text.isEmpty ||
+                                address.text.isEmpty) {
+                              MotionToast.error(
+                                title: const Text("Error"),
+                                dismissable: true,
+                                description: const Text("Fill all the fields"),
+                              ).show(context);
                             } else {
-                              var response = await loginFunction();
+                              var response = await signUpFunction();
 
                               if (response == "Error") {
                                 setState(() {
@@ -142,8 +184,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                 MotionToast.error(
                                   title: const Text("Error"),
                                   dismissable: true,
-                                  description:
-                                      const Text("Invalid Credentials"),
+                                  description: const Text(
+                                      "Invalid Information Provided Try Again"),
                                 ).show(context);
                               } else if (response == false) {
                                 setState(() {
@@ -156,38 +198,19 @@ class _LoginScreenState extends State<LoginScreen> {
                                       "Check your Internet or try again later"),
                                 ).show(context);
                               } else {
-                                SharedPreferences loginUser =
-                                    await SharedPreferences.getInstance();
-                                loginUser.setString(
-                                  "userResponse",
-                                  json.encode(response),
-                                );
                                 setState(() {
-                                  pageDecider = "Home";
+                                  loading = false;
                                 });
-                                pushAndRemoveUntil(
-                                  context,
-                                  const MyApp(),
-                                );
+                                pop(context);
+                                MotionToast.success(
+                                  title: const Text("Successfully Registered"),
+                                  dismissable: true,
+                                  description: const Text(
+                                      "You have successfully signed up now please login"),
+                                ).show(context);
                               }
                             }
                           }),
-                          InkWell(
-                            onTap: () {
-                              push(context, const SignUp());
-                            },
-                            child: RichText(
-                                text: const TextSpan(children: [
-                              TextSpan(
-                                  text: "Don't have an account? ",
-                                  style: TextStyle(color: myWhite)),
-                              TextSpan(
-                                  text: "Sign up",
-                                  style: TextStyle(
-                                      color: myOrange,
-                                      fontWeight: FontWeight.bold))
-                            ])),
-                          )
                         ],
                       ),
                     ),
@@ -202,6 +225,9 @@ class _LoginScreenState extends State<LoginScreen> {
   void dispose() {
     email.dispose();
     password.dispose();
+    name.dispose();
+    phone.dispose();
+    address.dispose();
     super.dispose();
   }
 }
