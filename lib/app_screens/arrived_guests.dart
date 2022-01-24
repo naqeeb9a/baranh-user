@@ -1,7 +1,7 @@
 import 'package:baranh/app_functions/functions.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
-import 'package:baranh/widgets/table_cards.dart';
+import 'package:baranh/widgets/generic_cards.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -35,18 +35,18 @@ class _ActiveOrdersState extends State<ActiveOrders> {
                 thickness: 1,
                 color: myWhite,
               ),
-              Expanded(
-                child: tableCards(
-                  context,
-                  getReservationData("arrived"),
-                  "Assign Waiter",
-                  "Assign Table",
-                  setState: () {
-                    setState(() {});
-                  },
-                  visible: true,
-                ),
-              )
+              // Expanded(
+              //   child: tableCards(
+              //     context,
+              //     getReservationData("arrived"),
+              //     "Assign Waiter",
+              //     "Assign Table",
+              //     setState: () {
+              //       setState(() {});
+              //     },
+              //     visible: true,
+              //   ),
+              // )
             ],
           ),
         ),

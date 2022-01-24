@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:baranh/utils/config.dart';
 import 'package:http/http.dart' as http;
-import 'package:shared_preferences/shared_preferences.dart';
 
 getReservationData(query) async {
   try {
@@ -160,16 +159,11 @@ getTimeSlots(date) async {
 
 getMenu() async {
   try {
-    var response = await http.post(
-        Uri.parse("https://baranhweb.cmcmtech.com/api/searchmenu"),
-        body: json.encode({"outletid": "1", "term": "all"}),
-        headers: {
-          'Content-type': 'application/json',
-          'Accept': 'application/json',
-        });
+    var response = await http
+        .get(Uri.parse("https://baranhweb.cmcmtech.com/api/menu/all"));
     var jsonData = json.decode(response.body);
     if (response.statusCode == 200) {
-      return jsonData["data"];
+      return jsonData["data"]["menu"];
     } else {
       return false;
     }
@@ -290,5 +284,24 @@ checkAvailability(date, timeDropdown, seats) async {
     }
   } catch (e) {
     return "server";
+  }
+}
+
+//---------Baranh User ------------
+getOrderHistory(id) async {
+  print(id);
+  try {
+    var response = await http.get(
+      Uri.parse("https://baranhweb.cmcmtech.com/api/order-history/" + id),
+    );
+    var jsonData = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      return jsonData["data"]["message"];
+    } else {
+      return false;
+    }
+  } catch (e) {
+    print(e);
+    return false;
   }
 }

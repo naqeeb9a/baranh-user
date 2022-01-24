@@ -28,7 +28,7 @@ menuCards(context, snapshot, index) {
             ),
             child: Image.network(
               snapshot[index]["photo"] ??
-                  "https://neurologist-ahmedabad.com/wp-content/themes/apexclinic/images/no-image/No-Image-Found-400x264.png",
+                  "https://hempbroker420.com/wp-content/uploads/2018/06/noimage.jpg",
               height: dynamicWidth(context, 0.2),
               width: dynamicWidth(context, 0.5),
               fit: BoxFit.cover,
