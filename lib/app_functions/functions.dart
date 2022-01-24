@@ -163,7 +163,7 @@ getMenu() async {
         .get(Uri.parse("https://baranhweb.cmcmtech.com/api/menu/all"));
     var jsonData = json.decode(response.body);
     if (response.statusCode == 200) {
-      return jsonData["data"]["menu"];
+      return jsonData["data"];
     } else {
       return false;
     }
@@ -289,7 +289,6 @@ checkAvailability(date, timeDropdown, seats) async {
 
 //---------Baranh User ------------
 getOrderHistory(id) async {
-  print(id);
   try {
     var response = await http.get(
       Uri.parse("https://baranhweb.cmcmtech.com/api/order-history/" + id),
@@ -301,7 +300,6 @@ getOrderHistory(id) async {
       return false;
     }
   } catch (e) {
-    print(e);
     return false;
   }
 }

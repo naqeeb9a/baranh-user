@@ -16,7 +16,8 @@ genericCards() {
           return retry(context);
         } else if (snapshot.data.length == 0 ||
             snapshot.data == "Nothing found!") {
-          return text(context, "No Order History", 0.04, myWhite);
+          return Center(
+              child: text(context, "No Order History", 0.04, myWhite));
         } else {
           return ListView.builder(
             itemCount: snapshot.data.length,

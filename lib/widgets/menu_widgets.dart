@@ -2,118 +2,73 @@ import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:line_icons/line_icon.dart';
+import 'package:line_icons/line_icons.dart';
 
 menuCards(context, snapshot, index) {
-  return Container(
-    decoration: BoxDecoration(
-      color: myBlack,
-      borderRadius: BorderRadius.circular(
-        dynamicWidth(context, 0.02),
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Row(
+        children: [
+          CircleAvatar(
+            backgroundColor: myWhite,
+            radius: dynamicWidth(context, 0.08),
+            child: CircleAvatar(
+              backgroundColor: myWhite,
+              radius: dynamicWidth(context, 0.075),
+              backgroundImage: NetworkImage(snapshot[index]["photo"] ??
+                  "https://hempbroker420.com/wp-content/uploads/2018/06/noimage.jpg"),
+            ),
+          ),
+          widthBox(context, 0.03),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              text(context, snapshot[index]["name"], 0.03, myWhite, bold: true),
+              text(
+                context,
+                "Rs ." + snapshot[index]["sale_price"],
+                0.04,
+                myWhite,
+              ),
+            ],
+          ),
+        ],
       ),
-    ),
-    child: Column(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Align(
-          alignment: Alignment.center,
-          child: ClipRRect(
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(
-                dynamicWidth(context, 0.02),
-              ),
-              topRight: Radius.circular(
-                dynamicWidth(context, 0.02),
-              ),
-            ),
-            child: Image.network(
-              snapshot[index]["photo"] ??
-                  "https://hempbroker420.com/wp-content/uploads/2018/06/noimage.jpg",
-              height: dynamicWidth(context, 0.2),
-              width: dynamicWidth(context, 0.5),
-              fit: BoxFit.cover,
-              errorBuilder: (context, url, error) {
-                return const Icon(Icons.error);
-              },
-            ),
-          ),
-        ),
-        Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: dynamicWidth(context, 0.02),
-          ),
-          child: text(
-            context,
-            snapshot[index]["name"],
-            0.03,
-            myWhite,
-          ),
-        ),
-        Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: dynamicWidth(context, 0.02)),
-          child: text(
-            context,
-            "Rs ." + snapshot[index]["sale_price"],
-            0.04,
-            myWhite,
-          ),
-        ),
-        Padding(
-          padding:
-              EdgeInsets.symmetric(horizontal: dynamicWidth(context, 0.02)),
-          child: iconsRow(
-            context,
-            snapshot[index],
-          ),
-        ),
-        heightBox(context, 0.005),
-      ],
-    ),
+      cartIcon(context, snapshot[index])
+    ],
   );
 }
 
-iconsRow(context, snapshot) {
+cartIcon(context, snapshot) {
   var quantity = 1;
   return StatefulBuilder(builder: (context, changeState) {
-    return Row(
-      children: [
-        Expanded(
-          child: GestureDetector(
-              onTap: () {
-                if (!cartItems.contains(snapshot)) {
-                  snapshot["qty"] = quantity;
-                  snapshot['setState'] = () {
-                    changeState(() {});
-                  };
-                  cartItems.add(snapshot);
+    return GestureDetector(
+        onTap: () {
+          if (!cartItems.contains(snapshot)) {
+            snapshot["qty"] = quantity;
+            snapshot['setState'] = () {
+              changeState(() {});
+            };
+            cartItems.add(snapshot);
 
-                  changeState(() {});
-                } else {
-                  cartItems.remove(snapshot);
+            changeState(() {});
+          } else {
+            cartItems.remove(snapshot);
 
-                  changeState(() {});
-                }
-              },
-              child: Container(
-                height: dynamicWidth(context, 0.08),
-                child: Center(
-                  child: text(
-                      context,
-                      cartItems.contains(snapshot) ? "Added" : "Add to Cart",
-                      0.04,
-                      cartItems.contains(snapshot) ? myBlack : myWhite,
-                      alignText: TextAlign.center),
-                ),
-                decoration: BoxDecoration(
-                  borderRadius:
-                      BorderRadius.circular(dynamicWidth(context, 0.02)),
-                  color: cartItems.contains(snapshot) ? myGrey : myOrange,
-                ),
-              )),
-        ),
-      ],
-    );
+            changeState(() {});
+          }
+        },
+        child: cartItems.contains(snapshot)
+            ? LineIcon(
+                LineIcons.shoppingBasket,
+                color: myOrange,
+              )
+            : LineIcon(
+                LineIcons.shoppingBasket,
+                color: myWhite,
+              ));
   });
 }
 
@@ -180,20 +135,16 @@ class CustomSearchDelegate extends SearchDelegate {
     }
 
     return Padding(
-      padding: EdgeInsets.all(dynamicWidth(context, 0.05)),
-      child: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-            childAspectRatio:
-                dynamicWidth(context, 0.5) / dynamicWidth(context, 0.5)),
-        itemCount: matchQuery.length,
-        itemBuilder: (BuildContext context, int index) {
-          return menuCards(context, matchQuery, index);
-        },
-      ),
-    );
+        padding: EdgeInsets.all(dynamicWidth(context, 0.05)),
+        child: ListView.builder(
+            itemCount: matchQuery.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: EdgeInsets.symmetric(
+                    vertical: dynamicHeight(context, 0.01)),
+                child: menuCards(context, matchQuery, index),
+              );
+            }));
   }
 
   @override
@@ -205,19 +156,15 @@ class CustomSearchDelegate extends SearchDelegate {
       }
     }
     return Padding(
-      padding: EdgeInsets.all(dynamicWidth(context, 0.05)),
-      child: GridView.builder(
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            crossAxisSpacing: 10,
-            mainAxisSpacing: 10,
-            childAspectRatio:
-                dynamicWidth(context, 0.5) / dynamicWidth(context, 0.5)),
-        itemCount: matchQuery.length,
-        itemBuilder: (BuildContext context, int index) {
-          return menuCards(context, matchQuery, index);
-        },
-      ),
-    ); // ListTile
+        padding: EdgeInsets.all(dynamicWidth(context, 0.05)),
+        child: ListView.builder(
+            itemCount: matchQuery.length,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: EdgeInsets.symmetric(
+                    vertical: dynamicHeight(context, 0.01)),
+                child: menuCards(context, matchQuery, index),
+              );
+            }));
   }
 }

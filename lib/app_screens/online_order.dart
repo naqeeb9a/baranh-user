@@ -61,12 +61,30 @@ class _OnlineOrderState extends State<OnlineOrder> {
                               builder: (context, changeState) {
                             return Column(
                               children: [
+                                SizedBox(
+                                  height: dynamicWidth(context, 0.3),
+                                  child: ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount:
+                                          snapshot.data["categories"].length,
+                                      itemBuilder: (context, index) {
+                                        return Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal:
+                                                  dynamicWidth(context, 0.03)),
+                                          child: categoryCircle(
+                                              context,
+                                              snapshot.data["categories"],
+                                              index),
+                                        );
+                                      }),
+                                ),
                                 InkWell(
                                   onTap: () {
                                     showSearch(
                                       context: context,
                                       delegate:
-                                          CustomSearchDelegate(snapshot.data),
+                                          CustomSearchDelegate(snapshot.data["menu"]),
                                     ).then((value) => changeState(() {}));
                                   },
                                   child: Container(
@@ -76,13 +94,16 @@ class _OnlineOrderState extends State<OnlineOrder> {
                                             dynamicWidth(context, 0.1))),
                                     child: TextFormField(
                                       decoration: InputDecoration(
+                                          isDense: true,
                                           border: const UnderlineInputBorder(
                                               borderSide: BorderSide.none),
                                           hintText: "Search",
                                           enabled: false,
                                           contentPadding: EdgeInsets.symmetric(
                                               horizontal:
-                                                  dynamicWidth(context, 0.05))),
+                                                  dynamicWidth(context, 0.05),
+                                              vertical: dynamicHeight(
+                                                  context, 0.012))),
                                     ),
                                   ),
                                 ),
@@ -94,40 +115,37 @@ class _OnlineOrderState extends State<OnlineOrder> {
                                   };
                                   return Expanded(
                                     child: NotificationListener<
-                                        UserScrollNotification>(
-                                      onNotification: (notification) {
-                                        final ScrollDirection direction =
-                                            notification.direction;
+                                            UserScrollNotification>(
+                                        onNotification: (notification) {
+                                          final ScrollDirection direction =
+                                              notification.direction;
 
-                                        if (direction ==
-                                            ScrollDirection.reverse) {
-                                          _showFab = false;
-                                          checkState();
-                                        } else if (direction ==
-                                            ScrollDirection.forward) {
-                                          _showFab = true;
-                                          checkState();
-                                        }
+                                          if (direction ==
+                                              ScrollDirection.reverse) {
+                                            _showFab = false;
+                                            checkState();
+                                          } else if (direction ==
+                                              ScrollDirection.forward) {
+                                            _showFab = true;
+                                            checkState();
+                                          }
 
-                                        return true;
-                                      },
-                                      child: GridView.builder(
-                                        gridDelegate:
-                                            SliverGridDelegateWithFixedCrossAxisCount(
-                                                crossAxisCount: 2,
-                                                crossAxisSpacing: 10,
-                                                mainAxisSpacing: 10,
-                                                childAspectRatio: dynamicWidth(
-                                                        context, 0.5) /
-                                                    dynamicWidth(context, 0.5)),
-                                        itemCount: snapshot.data.length,
-                                        itemBuilder:
-                                            (BuildContext context, int index) {
-                                          return menuCards(
-                                              context, snapshot.data, index);
+                                          return true;
                                         },
-                                      ),
-                                    ),
+                                        child: ListView.builder(
+                                            itemCount:
+                                                snapshot.data["menu"].length,
+                                            itemBuilder: (context, index) {
+                                              return Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                    vertical: dynamicHeight(
+                                                        context, 0.01)),
+                                                child: menuCards(
+                                                    context,
+                                                    snapshot.data["menu"],
+                                                    index),
+                                              );
+                                            })),
                                   );
                                 }),
                               ],
@@ -180,4 +198,22 @@ class _OnlineOrderState extends State<OnlineOrder> {
       }),
     );
   }
+}
+
+categoryCircle(context, snapshot, index) {
+  return Column(
+    children: [
+      CircleAvatar(
+        backgroundColor: myWhite,
+        radius: dynamicWidth(context, 0.08),
+        child: CircleAvatar(
+          radius: dynamicWidth(context, 0.075),
+          backgroundImage: const NetworkImage(
+              "https://cdn.pixabay.com/photo/2016/12/26/17/28/spaghetti-1932466__340.jpg"),
+        ),
+      ),
+      heightBox(context, 0.01),
+      text(context, snapshot[index]["category_name"], 0.04, myWhite)
+    ],
+  );
 }
