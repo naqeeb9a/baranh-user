@@ -2,8 +2,8 @@ import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/buttons.dart';
 import 'package:baranh/widgets/text_widget.dart';
-import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
 class Home extends StatefulWidget {
@@ -169,14 +169,15 @@ listSpeciality(context, itemList) {
           child: Column(
             children: [
               ClipRRect(
-                borderRadius:
-                    BorderRadius.circular(dynamicWidth(context, 0.04)),
+                borderRadius: BorderRadius.circular(
+                  dynamicWidth(context, 0.04),
+                ),
                 child: Image.network(
                   itemList[index]["img"],
                   width: dynamicWidth(context, 0.5),
-                  height: dynamicWidth(context, 0.6),
                 ),
               ),
+              heightBox(context, .01),
               text(context, itemList[index]["name"], 0.04, myWhite)
             ],
           ),
