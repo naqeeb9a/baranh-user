@@ -4,6 +4,7 @@ import 'package:baranh/app_screens/home.dart';
 import 'package:baranh/app_screens/online_order.dart';
 import 'package:baranh/app_screens/new_reservations.dart';
 import 'package:baranh/app_screens/order_history.dart';
+import 'package:baranh/app_screens/profile.dart';
 import 'package:baranh/app_screens/qr_screen.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/widgets/text_widget.dart';
@@ -119,6 +120,8 @@ class _BasicPageState extends State<BasicPage> with TickerProviderStateMixin {
         return const Home();
       case "QR Screen":
         return const QRSreen();
+      case "Profile":
+        return const Profile();
 
       default:
         return Column(

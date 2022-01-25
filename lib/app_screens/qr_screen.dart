@@ -58,76 +58,85 @@ class _QRSreenState extends State<QRSreen> {
               borderWidth: 10,
               cutOutSize: dynamicWidth(context, 0.8)),
         ),
-        Positioned(
-          bottom: dynamicHeight(context, 0.1),
-          child: ClipRRect(
-            borderRadius: BorderRadius.circular(dynamicWidth(context, 0.02)),
-            child: Container(
-              color: myWhite.withOpacity(0.4),
-              padding: EdgeInsets.all(dynamicWidth(context, 0.02)),
-              child: text(
-                  context,
-                  // barcode != "" ? "${barcode!.code}" : "Scan the QR code",
-                  "Scan the QR code",
-                  0.04,
-                  myWhite),
-            ),
-          ),
-        ),
-        Positioned(
-            top: dynamicHeight(context, 0.02),
-            child: Container(
-              padding: EdgeInsets.all(dynamicWidth(context, 0.01)),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(dynamicWidth(context, 0.1)),
-                color: Colors.white24,
-              ),
-              child: Row(
-                mainAxisSize: MainAxisSize.max,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  IconButton(
-                    onPressed: () async {
-                      await controller?.toggleFlash();
-                      setState(() {});
-                    },
-                    icon: FutureBuilder<bool?>(
-                      future: controller?.getFlashStatus(),
-                      builder: (context, snapshot) {
-                        if (snapshot.data != null) {
-                          return Icon(
-                            snapshot.data! ? Icons.flash_on : Icons.flash_off,
-                            color: myWhite,
-                          );
-                        } else {
-                          return Container();
-                        }
-                      },
-                    ),
-                  ),
-                  IconButton(
-                    onPressed: () async {
-                      await controller?.flipCamera();
-                      setState(() {});
-                    },
-                    icon: FutureBuilder(
-                      future: controller?.getCameraInfo(),
-                      builder: (context, snapshot) {
-                        if (snapshot.data != null) {
-                          return const Icon(
-                            Icons.switch_camera,
-                            color: myWhite,
-                          );
-                        } else {
-                          return Container();
-                        }
-                      },
-                    ),
-                  ),
-                ],
-              ),
-            ))
+        bottomText(),
+        toggleIcons()
       ],
+    );
+  }
+
+  Widget bottomText() {
+    return Positioned(
+      bottom: dynamicHeight(context, 0.1),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(dynamicWidth(context, 0.02)),
+        child: Container(
+          color: myWhite.withOpacity(0.4),
+          padding: EdgeInsets.all(dynamicWidth(context, 0.02)),
+          child: text(
+              context,
+              // barcode != "" ? "${barcode!.code}" : "Scan the QR code",
+              "Scan the QR code",
+              0.04,
+              myWhite),
+        ),
+      ),
+    );
+  }
+
+  Widget toggleIcons() {
+    return Positioned(
+      top: dynamicHeight(context, 0.02),
+      child: Container(
+        padding: EdgeInsets.all(dynamicWidth(context, 0.01)),
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(dynamicWidth(context, 0.1)),
+          color: Colors.white24,
+        ),
+        child: Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            IconButton(
+              onPressed: () async {
+                await controller?.toggleFlash();
+                setState(() {});
+              },
+              icon: FutureBuilder<bool?>(
+                future: controller?.getFlashStatus(),
+                builder: (context, snapshot) {
+                  if (snapshot.data != null) {
+                    return Icon(
+                      snapshot.data! ? Icons.flash_on : Icons.flash_off,
+                      color: myWhite,
+                    );
+                  } else {
+                    return Container();
+                  }
+                },
+              ),
+            ),
+            IconButton(
+              onPressed: () async {
+                await controller?.flipCamera();
+                setState(() {});
+              },
+              icon: FutureBuilder(
+                future: controller?.getCameraInfo(),
+                builder: (context, snapshot) {
+                  if (snapshot.data != null) {
+                    return const Icon(
+                      Icons.switch_camera,
+                      color: myWhite,
+                    );
+                  } else {
+                    return Container();
+                  }
+                },
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
