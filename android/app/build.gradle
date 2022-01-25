@@ -40,11 +40,13 @@ android {
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
+   
 
+    
     defaultConfig {
         // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.baranh.baranh_user.baranh_user"
-        minSdkVersion flutter.minSdkVersion
+        minSdkVersion 20
         targetSdkVersion flutter.targetSdkVersion
         versionCode flutterVersionCode.toInteger()
         versionName flutterVersionName
