@@ -24,3 +24,5 @@ dynamic menuRefresh;
 dynamic drawerRefresh;
 var cartItems = [].obs;
 var reservedTable = [];
+
+dynamic selectedCity = "";

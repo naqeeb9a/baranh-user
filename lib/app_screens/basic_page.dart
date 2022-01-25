@@ -1,7 +1,7 @@
-import 'package:baranh/app_screens/customer_care.dart';
 import 'package:baranh/app_screens/arrived_guests.dart';
+import 'package:baranh/app_screens/choice.dart';
+import 'package:baranh/app_screens/customer_care.dart';
 import 'package:baranh/app_screens/home.dart';
-import 'package:baranh/app_screens/online_order.dart';
 import 'package:baranh/app_screens/new_reservations.dart';
 import 'package:baranh/app_screens/order_history.dart';
 import 'package:baranh/app_screens/profile.dart';
@@ -41,6 +41,7 @@ class _BasicPageState extends State<BasicPage> with TickerProviderStateMixin {
 
   var hintText = "mm/dd/yyy";
   var index = 0;
+
   @override
   Widget build(BuildContext context) {
     startAnimation();
@@ -109,7 +110,7 @@ class _BasicPageState extends State<BasicPage> with TickerProviderStateMixin {
       case "New Reservations":
         return const NewReservationsPage();
       case "Online order":
-        return const OnlineOrder();
+        return const Choice();
       case "Active Order":
         return const ActiveOrders();
       case "Order History":
@@ -119,7 +120,7 @@ class _BasicPageState extends State<BasicPage> with TickerProviderStateMixin {
       case "Home":
         return const Home();
       case "QR Screen":
-        return const QRSreen();
+        return const QRScreen();
       case "Profile":
         return const Profile();
 

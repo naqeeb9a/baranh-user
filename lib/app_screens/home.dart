@@ -53,71 +53,71 @@ class _HomeState extends State<Home> {
       backgroundColor: myBlack,
       body: SingleChildScrollView(
           child: Column(
-        children: [
-          heightBox(context, 0.03),
-          slider(context),
-          heightBox(context, 0.03),
-          FutureBuilder(
-            future: _initializeVideoPlayerFuture,
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.done) {
-                _controller.play();
-                return Padding(
-                  padding: EdgeInsets.symmetric(
-                      horizontal: dynamicWidth(context, 0.04)),
-                  child: ClipRRect(
-                    borderRadius:
+            children: [
+              heightBox(context, 0.03),
+              slider(context),
+              heightBox(context, 0.03),
+              FutureBuilder(
+                future: _initializeVideoPlayerFuture,
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    _controller.play();
+                    return Padding(
+                      padding: EdgeInsets.symmetric(
+                          horizontal: dynamicWidth(context, 0.04)),
+                      child: ClipRRect(
+                        borderRadius:
                         BorderRadius.circular(dynamicWidth(context, 0.04)),
-                    child: Center(
-                      child: AspectRatio(
-                        aspectRatio: _controller.value.aspectRatio,
-                        child: VideoPlayer(_controller),
+                        child: Center(
+                          child: AspectRatio(
+                            aspectRatio: _controller.value.aspectRatio,
+                            child: VideoPlayer(_controller),
+                          ),
+                        ),
                       ),
-                    ),
-                  ),
-                );
-              } else {
-                return const Center(
-                  child: CircularProgressIndicator(),
-                );
-              }
-            },
-          ),
-          heightBox(context, 0.03),
-          text(context, "OUR SPECIALTY", 0.05, myWhite, bold: true),
-          heightBox(context, 0.02),
-          listSpeciality(context, itemList),
-          heightBox(context, 0.02),
-          stackCard(
-              context,
-              "https://baranh.pk/assets/img/op-cover-04-small.jpg",
-              "ORDER FOOD",
-              "Order Food Online From The Best Restaurants And Shops On Baranh.",
-              "Order Now"),
-          stackCard(
-              context,
-              "https://baranh.pk/assets/img/op-cover-02-small.jpg",
-              "TABLE RESERVATION",
-              "Find Your Table For Any Occasion.",
-              "Reserve Table", function: () {
-            pageDecider = "New Reservations";
-            globalRefresh();
-          }),
-          stackCard(
-              context,
-              "https://baranh.pk/assets/img/op-cover-03-small.jpg",
-              "DISCOVER A UNIQUE EXPERIENCE",
-              "We Bring Professional Chefs To Your Home To Prepare Delicious, Customized Meals At A Fraction Of The Cost.",
-              "Menu"),
-          stackCard(
-              context,
-              "https://baranh.pk/assets/img/op-cover-01-small-fix.jpg",
-              "ABOUT US",
-              "Exotic Food Of Old Lahore To Your City. A Myraid Variety Of Handpicked Cuisine To Capsulate What The True Lahore Food Represents.",
-              "Menu",
-              buttonVisible: false),
-        ],
-      )),
+                    );
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                },
+              ),
+              heightBox(context, 0.03),
+              text(context, "OUR SPECIALTY", 0.05, myWhite, bold: true),
+              heightBox(context, 0.02),
+              listSpeciality(context, itemList),
+              heightBox(context, 0.02),
+              stackCard(
+                  context,
+                  "https://baranh.pk/assets/img/op-cover-04-small.jpg",
+                  "ORDER FOOD",
+                  "Order Food Online From The Best Restaurants And Shops On Baranh.",
+                  "Order Now"),
+              stackCard(
+                  context,
+                  "https://baranh.pk/assets/img/op-cover-02-small.jpg",
+                  "TABLE RESERVATION",
+                  "Find Your Table For Any Occasion.",
+                  "Reserve Table", function: () {
+                pageDecider = "New Reservations";
+                globalRefresh();
+              }),
+              stackCard(
+                  context,
+                  "https://baranh.pk/assets/img/op-cover-03-small.jpg",
+                  "DISCOVER A UNIQUE EXPERIENCE",
+                  "We Bring Professional Chefs To Your Home To Prepare Delicious, Customized Meals At A Fraction Of The Cost.",
+                  "Menu"),
+              stackCard(
+                  context,
+                  "https://baranh.pk/assets/img/op-cover-01-small-fix.jpg",
+                  "ABOUT US",
+                  "Exotic Food Of Old Lahore To Your City. A Myraid Variety Of Handpicked Cuisine To Capsulate What The True Lahore Food Represents.",
+                  "Menu",
+                  buttonVisible: false),
+            ],
+          )),
     );
   }
 }
@@ -139,19 +139,21 @@ slider(context) {
       "https://baranh.pk/assets/img/delicious-food-banner-m.jpg",
       "https://baranh.pk/assets/img/now-open-gulberg-mob-m.jpg",
       "https://baranh.pk/assets/img/baranh_banner_hp_mob_001.jpg",
-    ].map((i) {
-      return Builder(
-        builder: (BuildContext context) {
-          return ClipRRect(
-            borderRadius: BorderRadius.circular(dynamicWidth(context, 0.04)),
-            child: Image.network(
-              i,
-              fit: BoxFit.cover,
-            ),
+    ].map(
+            (i) {
+          return Builder(
+            builder: (BuildContext context) {
+              return ClipRRect(
+                borderRadius: BorderRadius.circular(
+                    dynamicWidth(context, 0.04)),
+                child: Image.network(
+                  i,
+                  fit: BoxFit.cover,
+                ),
+              );
+            },
           );
-        },
-      );
-    }).toList(),
+        }).toList(),
   );
 }
 
@@ -165,7 +167,7 @@ listSpeciality(context, itemList) {
       itemBuilder: (BuildContext context, int index) {
         return Padding(
           padding:
-              EdgeInsets.symmetric(horizontal: dynamicWidth(context, 0.03)),
+          EdgeInsets.symmetric(horizontal: dynamicWidth(context, 0.03)),
           child: Column(
             children: [
               ClipRRect(

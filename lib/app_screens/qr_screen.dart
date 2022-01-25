@@ -6,17 +6,18 @@ import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
 
-class QRSreen extends StatefulWidget {
-  const QRSreen({Key? key}) : super(key: key);
+class QRScreen extends StatefulWidget {
+  const QRScreen({Key? key}) : super(key: key);
 
   @override
-  State<QRSreen> createState() => _QRSreenState();
+  State<QRScreen> createState() => _QRScreenState();
 }
 
-class _QRSreenState extends State<QRSreen> {
+class _QRScreenState extends State<QRScreen> {
   dynamic barcode = "";
   final qrKey = GlobalKey();
   QRViewController? controller;
+
   void qrCreated(QRViewController controller) {
     setState(() {
       this.controller = controller;

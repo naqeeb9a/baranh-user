@@ -19,22 +19,16 @@ class _OnlineOrderState extends State<OnlineOrder> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: myBlack,
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: dynamicWidth(context, 0.05)),
-        child: RefreshIndicator(
-          onRefresh: () {
-            return Future.delayed(const Duration(milliseconds: 0), () {
-              setState(() {});
-            });
-          },
+      body: RefreshIndicator(
+        onRefresh: () {
+          return Future.delayed(const Duration(milliseconds: 0), () {
+            setState(() {});
+          });
+        },
+        child: SizedBox(
+          width: dynamicWidth(context, 1),
           child: Column(
             children: [
-              heightBox(context, 0.02),
-              text(context, "Menu", 0.05, myWhite),
-              const Divider(
-                thickness: 1,
-                color: myWhite,
-              ),
               heightBox(context, 0.02),
               Expanded(
                 child: FutureBuilder(
@@ -56,24 +50,6 @@ class _OnlineOrderState extends State<OnlineOrder> {
                               builder: (context, changeState) {
                             return Column(
                               children: [
-                                SizedBox(
-                                  height: dynamicWidth(context, 0.3),
-                                  child: ListView.builder(
-                                      scrollDirection: Axis.horizontal,
-                                      itemCount:
-                                          snapshot.data["categories"].length,
-                                      itemBuilder: (context, index) {
-                                        return Padding(
-                                          padding: EdgeInsets.symmetric(
-                                              horizontal:
-                                                  dynamicWidth(context, 0.03)),
-                                          child: categoryCircle(
-                                              context,
-                                              snapshot.data["categories"],
-                                              index),
-                                        );
-                                      }),
-                                ),
                                 InkWell(
                                   onTap: () {
                                     showSearch(
@@ -82,44 +58,86 @@ class _OnlineOrderState extends State<OnlineOrder> {
                                           snapshot.data["menu"]),
                                     ).then((value) => changeState(() {}));
                                   },
-                                  child: Container(
-                                    decoration: BoxDecoration(
-                                        color: myWhite,
-                                        borderRadius: BorderRadius.circular(
-                                            dynamicWidth(context, 0.1))),
-                                    child: TextFormField(
-                                      decoration: InputDecoration(
-                                          isDense: true,
-                                          border: const UnderlineInputBorder(
-                                              borderSide: BorderSide.none),
-                                          hintText: "Search",
-                                          enabled: false,
-                                          contentPadding: EdgeInsets.symmetric(
-                                              horizontal:
-                                                  dynamicWidth(context, 0.05),
-                                              vertical: dynamicHeight(
-                                                  context, 0.012))),
+                                  child: Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal:
+                                            dynamicWidth(context, 0.05)),
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                          color: myWhite,
+                                          borderRadius: BorderRadius.circular(
+                                              dynamicWidth(context, 0.1))),
+                                      child: TextFormField(
+                                        decoration: InputDecoration(
+                                            isDense: true,
+                                            border: const UnderlineInputBorder(
+                                                borderSide: BorderSide.none),
+                                            hintText: "Search",
+                                            enabled: false,
+                                            contentPadding:
+                                                EdgeInsets.symmetric(
+                                                    horizontal: dynamicWidth(
+                                                        context, 0.05),
+                                                    vertical: dynamicHeight(
+                                                        context, 0.012))),
+                                      ),
                                     ),
                                   ),
                                 ),
                                 heightBox(context, 0.02),
+                                text(context, "Categories", 0.04, myWhite,
+                                    bold: true),
+                                heightBox(context, 0.03),
+                                SizedBox(
+                                  height: dynamicWidth(context, 0.28),
+                                  child: ListView.builder(
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount:
+                                          snapshot.data["categories"].length,
+                                      itemBuilder: (context, index) {
+                                        return Padding(
+                                          padding: EdgeInsets.symmetric(
+                                              horizontal:
+                                                  dynamicWidth(context, 0.02)),
+                                          child: categoryCircle(
+                                              context,
+                                              snapshot.data["categories"],
+                                              index),
+                                        );
+                                      }),
+                                ),
+                                Divider(
+                                  color: myWhite,
+                                  endIndent: dynamicWidth(context, 0.3),
+                                  indent: dynamicWidth(context, 0.3),
+                                ),
+                                heightBox(context, 0.005),
+                                text(context, "Menu", 0.04, myWhite,
+                                    bold: true),
+                                heightBox(context, 0.01),
                                 StatefulBuilder(
                                     builder: (context, changeState) {
                                   menuRefresh = () {
                                     changeState(() {});
                                   };
                                   return Expanded(
-                                    child: ListView.builder(
-                                        itemCount: snapshot.data["menu"].length,
-                                        itemBuilder: (context, index) {
-                                          return Padding(
-                                            padding: EdgeInsets.symmetric(
-                                                vertical: dynamicHeight(
-                                                    context, 0.01)),
-                                            child: menuCards(context,
-                                                snapshot.data["menu"], index),
-                                          );
-                                        }),
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(
+                                          horizontal:
+                                              dynamicWidth(context, 0.03)),
+                                      child: ListView.builder(
+                                          itemCount:
+                                              snapshot.data["menu"].length,
+                                          itemBuilder: (context, index) {
+                                            return Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                  vertical: dynamicHeight(
+                                                      context, 0.01)),
+                                              child: menuCards(context,
+                                                  snapshot.data["menu"], index),
+                                            );
+                                          }),
+                                    ),
                                   );
                                 }),
                               ],
