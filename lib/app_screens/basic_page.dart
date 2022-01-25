@@ -4,6 +4,7 @@ import 'package:baranh/app_screens/home.dart';
 import 'package:baranh/app_screens/online_order.dart';
 import 'package:baranh/app_screens/new_reservations.dart';
 import 'package:baranh/app_screens/order_history.dart';
+import 'package:baranh/app_screens/qr_screen.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
@@ -16,14 +17,89 @@ class BasicPage extends StatefulWidget {
 }
 
 class _BasicPageState extends State<BasicPage> with TickerProviderStateMixin {
-  var hintText = "mm/dd/yyy";
+  late AnimationController _controller;
+
+  startAnimation() {
+    _controller = AnimationController(
+      duration: const Duration(seconds: 1),
+      vsync: this,
+    )..forward();
+    _animation = CurvedAnimation(
+      parent: _controller,
+      curve: Curves.easeIn,
+    );
+  }
+
+  late Animation<double> _animation;
 
   @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  var hintText = "mm/dd/yyy";
+  var index = 0;
+  @override
   Widget build(BuildContext context) {
+    startAnimation();
     customContext = context;
     return Scaffold(
+      extendBody: true,
       backgroundColor: myBlack,
-      body: bodyPage(pageDecider),
+      body: FadeTransition(
+        opacity: _animation,
+        child: bodyPage(pageDecider),
+      ),
+      bottomNavigationBar: BottomNavigationBar(
+        type: BottomNavigationBarType.fixed,
+        currentIndex: index,
+        onTap: (value) {
+          setState(() {
+            if (value == 0) {
+              pageDecider = "Home";
+            } else if (value == 1) {
+              pageDecider = "New Reservations";
+            } else if (value == 2) {
+              pageDecider = "Online order";
+            } else if (value == 3) {
+              pageDecider = "QR Screen";
+            } else if (value == 4) {
+              pageDecider = "Profile";
+            } else {
+              pageDecider = "Home";
+            }
+            index = value;
+          });
+        },
+        unselectedItemColor: myWhite,
+        unselectedIconTheme: const IconThemeData(color: myWhite),
+        selectedItemColor: myOrange,
+        backgroundColor: myBlack.withOpacity(0.7),
+        showUnselectedLabels: true,
+        items: const [
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: "Home",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.book_online),
+            label: "Reserve",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.menu),
+            label: "Menu",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.qr_code),
+            label: "QR code",
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.person),
+            label: "Profile",
+          ),
+        ],
+      ),
     );
   }
 
@@ -41,6 +117,8 @@ class _BasicPageState extends State<BasicPage> with TickerProviderStateMixin {
         return const CustomerCare();
       case "Home":
         return const Home();
+      case "QR Screen":
+        return const QRSreen();
 
       default:
         return Column(

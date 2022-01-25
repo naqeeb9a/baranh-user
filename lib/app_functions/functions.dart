@@ -6,8 +6,7 @@ import 'package:http/http.dart' as http;
 getReservationData(query) async {
   try {
     var response = await http.get(
-      Uri.parse(
-          "https://baranhweb.cmcmtech.com/api/$query/${userResponse['outlet_id']}"),
+      Uri.parse("https://baranhweb.cmcmtech.com/api/$query/1}"),
     );
     var jsonData = jsonDecode(response.body);
     if (response.statusCode == 200) {
@@ -267,7 +266,7 @@ checkAvailability(date, timeDropdown, seats) async {
     var response = await http
         .post(Uri.parse("https://baranhweb.cmcmtech.com/api/get-avail"),
             body: json.encode({
-              "outlet_id": "${userResponse["outlet_id"]}",
+              "outlet_id": "1",
               "filter_date": "$date",
               "timedropdown": "$timeDropdown",
               "seats": "$seats"

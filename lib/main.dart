@@ -27,27 +27,6 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
-  late AnimationController _controller;
-
-  startAnimation() {
-    _controller = AnimationController(
-      duration: const Duration(seconds: 1),
-      vsync: this,
-    )..forward();
-    _animation = CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeIn,
-    );
-  }
-
-  late Animation<double> _animation;
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
   bool loader = false;
   final MaterialColor primaryColor = const MaterialColor(
     0xff000000,
@@ -70,7 +49,7 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
     globalRefresh = () {
       setState(() {});
     };
-    startAnimation();
+
     final _scaffoldKey = GlobalKey<ScaffoldState>();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
@@ -129,16 +108,12 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                       child: Drawer(child: drawerItems2(context)),
                     ),
                     body: child,
-                    
                   );
           });
         },
-        home: Scaffold(
+        home: const Scaffold(
           backgroundColor: myBlack,
-          body: FadeTransition(
-            opacity: _animation,
-            child: const BasicPage(),
-          ),
+          body: BasicPage(),
         ),
       ),
     );
