@@ -4,9 +4,34 @@ import 'package:baranh/widgets/buttons.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:carousel_slider/carousel_slider.dart';
+import 'package:video_player/video_player.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   const Home({Key? key}) : super(key: key);
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  late VideoPlayerController _controller;
+  late Future<void> _initializeVideoPlayerFuture;
+
+  @override
+  void initState() {
+    _controller = VideoPlayerController.asset("assets/baranh.mp4");
+    _initializeVideoPlayerFuture = _controller.initialize();
+    _controller.setLooping(true);
+    _controller.setVolume(0);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -29,9 +54,36 @@ class Home extends StatelessWidget {
       body: SingleChildScrollView(
           child: Column(
         children: [
-          heightBox(context, 0.05),
+          heightBox(context, 0.03),
           slider(context),
-          heightBox(context, 0.05),
+          heightBox(context, 0.03),
+          FutureBuilder(
+            future: _initializeVideoPlayerFuture,
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.done) {
+                _controller.play();
+                return Padding(
+                  padding: EdgeInsets.symmetric(
+                      horizontal: dynamicWidth(context, 0.04)),
+                  child: ClipRRect(
+                    borderRadius:
+                        BorderRadius.circular(dynamicWidth(context, 0.04)),
+                    child: Center(
+                      child: AspectRatio(
+                        aspectRatio: _controller.value.aspectRatio,
+                        child: VideoPlayer(_controller),
+                      ),
+                    ),
+                  ),
+                );
+              } else {
+                return const Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            },
+          ),
+          heightBox(context, 0.03),
           text(context, "OUR SPECIALTY", 0.05, myWhite, bold: true),
           heightBox(context, 0.02),
           listSpeciality(context, itemList),
@@ -73,21 +125,20 @@ class Home extends StatelessWidget {
 slider(context) {
   return CarouselSlider(
     options: CarouselOptions(
-      height: dynamicWidth(context, 0.33),
-      // viewportFraction: 0.8,
-      initialPage: 0,
-      enableInfiniteScroll: true,
-      autoPlay: true,
-      autoPlayInterval: const Duration(seconds: 3),
-      autoPlayAnimationDuration: const Duration(milliseconds: 800),
-      autoPlayCurve: Curves.fastOutSlowIn,
-      enlargeCenterPage: true,
-      scrollDirection: Axis.horizontal,
-    ),
+        height: dynamicWidth(context, 1),
+        initialPage: 0,
+        enableInfiniteScroll: true,
+        autoPlay: true,
+        autoPlayInterval: const Duration(seconds: 3),
+        autoPlayAnimationDuration: const Duration(milliseconds: 800),
+        autoPlayCurve: Curves.fastOutSlowIn,
+        enlargeCenterPage: true,
+        scrollDirection: Axis.horizontal,
+        enlargeStrategy: CenterPageEnlargeStrategy.height),
     items: [
-      "https://baranh.pk/assets/img/delicious-food-banner-d.jpg",
-      "https://baranh.pk/assets/img/now-open-gulberg-web-d.jpg",
-      "https://baranh.pk/assets/img/baranh_banner_hp_desktop_001.jpg",
+      "https://baranh.pk/assets/img/delicious-food-banner-m.jpg",
+      "https://baranh.pk/assets/img/now-open-gulberg-mob-m.jpg",
+      "https://baranh.pk/assets/img/baranh_banner_hp_mob_001.jpg",
     ].map((i) {
       return Builder(
         builder: (BuildContext context) {
@@ -117,10 +168,14 @@ listSpeciality(context, itemList) {
               EdgeInsets.symmetric(horizontal: dynamicWidth(context, 0.03)),
           child: Column(
             children: [
-              Image.network(
-                itemList[index]["img"],
-                width: dynamicWidth(context, 0.5),
-                height: dynamicWidth(context, 0.6),
+              ClipRRect(
+                borderRadius:
+                    BorderRadius.circular(dynamicWidth(context, 0.04)),
+                child: Image.network(
+                  itemList[index]["img"],
+                  width: dynamicWidth(context, 0.5),
+                  height: dynamicWidth(context, 0.6),
+                ),
               ),
               text(context, itemList[index]["name"], 0.04, myWhite)
             ],

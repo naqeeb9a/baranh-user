@@ -50,6 +50,7 @@ dependencies:
   dio: ^4.0.4
   url_launcher: ^6.0.18
   carousel_slider: ^4.0.0
+  video_player: ^2.2.14
 
 dev_dependencies:
   flutter_test:
