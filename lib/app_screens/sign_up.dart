@@ -67,8 +67,9 @@ class _SignUpState extends State<SignUp> {
               ),
             )
           : Padding(
-              padding:
-                  EdgeInsets.symmetric(horizontal: dynamicWidth(context, 0.05)),
+              padding: EdgeInsets.symmetric(
+                horizontal: dynamicWidth(context, 0.05),
+              ),
               child: Center(
                 child: Form(
                   key: _formKey,
@@ -85,7 +86,7 @@ class _SignUpState extends State<SignUp> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              text(context, "Your Name", .05, myWhite),
+                              text(context, "Your Name", .044, myWhite),
                               SizedBox(
                                 height: dynamicHeight(context, 0.01),
                               ),
@@ -97,7 +98,7 @@ class _SignUpState extends State<SignUp> {
                               SizedBox(
                                 height: dynamicHeight(context, 0.01),
                               ),
-                              text(context, "Phone", .05, myWhite),
+                              text(context, "Phone", .044, myWhite),
                               SizedBox(
                                 height: dynamicHeight(context, 0.01),
                               ),
@@ -109,7 +110,7 @@ class _SignUpState extends State<SignUp> {
                               SizedBox(
                                 height: dynamicHeight(context, 0.01),
                               ),
-                              text(context, "Address:", .05, myWhite),
+                              text(context, "Address:", .044, myWhite),
                               SizedBox(
                                 height: dynamicHeight(context, 0.01),
                               ),
@@ -121,7 +122,7 @@ class _SignUpState extends State<SignUp> {
                               SizedBox(
                                 height: dynamicHeight(context, 0.01),
                               ),
-                              text(context, "Email", .05, myWhite),
+                              text(context, "Email", .044, myWhite),
                               SizedBox(
                                 height: dynamicHeight(context, 0.01),
                               ),
@@ -133,7 +134,7 @@ class _SignUpState extends State<SignUp> {
                               SizedBox(
                                 height: dynamicHeight(context, 0.01),
                               ),
-                              text(context, "Password", .05, myWhite),
+                              text(context, "Password", .044, myWhite),
                               SizedBox(
                                 height: dynamicHeight(context, 0.01),
                               ),
@@ -150,67 +151,96 @@ class _SignUpState extends State<SignUp> {
                               ),
                             ],
                           ),
-                          coloredButton(context, "REGISTER", myOrange,
-                              function: () async {
-                            if (!EmailValidator.validate(email.text)) {
-                              MotionToast.error(
-                                title: const Text("Error"),
-                                dismissable: true,
-                                description:
-                                    const Text("Please enter valid email!"),
-                              ).show(context);
-                            } else if (password.text.isEmpty) {
-                              MotionToast.error(
-                                title: const Text("Error"),
-                                dismissable: true,
-                                description:
-                                    const Text("Please enter valid password!"),
-                              ).show(context);
-                            } else if (name.text.isEmpty ||
-                                phone.text.isEmpty ||
-                                address.text.isEmpty) {
-                              MotionToast.error(
-                                title: const Text("Error"),
-                                dismissable: true,
-                                description: const Text("Fill all the fields"),
-                              ).show(context);
-                            } else {
-                              var response = await signUpFunction();
-
-                              if (response == "Error") {
-                                setState(() {
-                                  loading = false;
-                                });
+                          coloredButton(
+                            context,
+                            "REGISTER",
+                            myOrange,
+                            width: dynamicWidth(context, .5),
+                            function: () async {
+                              if (!EmailValidator.validate(email.text)) {
                                 MotionToast.error(
                                   title: const Text("Error"),
                                   dismissable: true,
-                                  description: const Text(
-                                      "Invalid Information Provided Try Again"),
+                                  description:
+                                      const Text("Please enter valid email!"),
                                 ).show(context);
-                              } else if (response == false) {
-                                setState(() {
-                                  loading = false;
-                                });
+                              } else if (password.text.isEmpty) {
                                 MotionToast.error(
                                   title: const Text("Error"),
                                   dismissable: true,
                                   description: const Text(
-                                      "Check your Internet or try again later"),
+                                      "Please enter valid password!"),
+                                ).show(context);
+                              } else if (name.text.isEmpty ||
+                                  phone.text.isEmpty ||
+                                  address.text.isEmpty) {
+                                MotionToast.error(
+                                  title: const Text("Error"),
+                                  dismissable: true,
+                                  description:
+                                      const Text("Fill all the fields"),
                                 ).show(context);
                               } else {
-                                setState(() {
-                                  loading = false;
-                                });
-                                pop(context);
-                                MotionToast.success(
-                                  title: const Text("Successfully Registered"),
-                                  dismissable: true,
-                                  description: const Text(
-                                      "You have successfully signed up now please login"),
-                                ).show(context);
+                                var response = await signUpFunction();
+
+                                if (response == "Error") {
+                                  setState(() {
+                                    loading = false;
+                                  });
+                                  MotionToast.error(
+                                    title: const Text("Error"),
+                                    dismissable: true,
+                                    description: const Text(
+                                        "Invalid Information Provided Try Again"),
+                                  ).show(context);
+                                } else if (response == false) {
+                                  setState(() {
+                                    loading = false;
+                                  });
+                                  MotionToast.error(
+                                    title: const Text("Error"),
+                                    dismissable: true,
+                                    description: const Text(
+                                        "Check your Internet or try again later"),
+                                  ).show(context);
+                                } else {
+                                  setState(() {
+                                    loading = false;
+                                  });
+                                  pop(context);
+                                  MotionToast.success(
+                                    title:
+                                        const Text("Successfully Registered"),
+                                    dismissable: true,
+                                    description: const Text(
+                                        "You have successfully signed up now please login"),
+                                  ).show(context);
+                                }
                               }
-                            }
-                          }),
+                            },
+                          ),
+                          InkWell(
+                            onTap: () {
+                              pop(context);
+                            },
+                            child: RichText(
+                              text: const TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: "Already have an account? ",
+                                    style: TextStyle(color: myWhite),
+                                  ),
+                                  TextSpan(
+                                    text: "LogIn",
+                                    style: TextStyle(
+                                      color: myOrange,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),

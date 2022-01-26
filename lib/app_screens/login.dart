@@ -81,22 +81,17 @@ class _LoginScreenState extends State<LoginScreen> {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              text(context, "Email", .05, myWhite),
-                              SizedBox(
-                                height: dynamicHeight(context, 0.01),
-                              ),
+                              heightBox(context, .06),
+                              text(context, "Email", .044, myWhite),
+                              heightBox(context, .01),
                               inputTextField(
                                 context,
                                 "Email",
                                 email,
                               ),
-                              SizedBox(
-                                height: dynamicHeight(context, 0.01),
-                              ),
-                              text(context, "Password", .05, myWhite),
-                              SizedBox(
-                                height: dynamicHeight(context, 0.01),
-                              ),
+                              heightBox(context, .01),
+                              text(context, "Password", .044, myWhite),
+                              heightBox(context, .01),
                               inputTextField(
                                 context,
                                 "Password",
@@ -108,92 +103,102 @@ class _LoginScreenState extends State<LoginScreen> {
                                   });
                                 },
                               ),
-                              SizedBox(
-                                height: dynamicHeight(context, 0.01),
-                              ),
+                              heightBox(context, .01),
                               InkWell(
                                 onTap: () {
                                   push(context, const ForgotPassword());
                                 },
                                 child: Align(
-                                    alignment: Alignment.centerRight,
-                                    child: text(context, "Forgot password",
-                                        0.04, myWhite)),
+                                  alignment: Alignment.centerRight,
+                                  child: text(context, "Forgot password", 0.04,
+                                      myWhite),
+                                ),
                               )
                             ],
                           ),
-                          coloredButton(context, "SIGN IN", myOrange,
-                              function: () async {
-                            if (!EmailValidator.validate(email.text)) {
-                              MotionToast.error(
-                                title: const Text("Error"),
-                                dismissable: true,
-                                description:
-                                    const Text("Please enter valid email!"),
-                              ).show(context);
-                            } else if (password.text.isEmpty) {
-                              MotionToast.error(
-                                title: const Text("Error"),
-                                dismissable: true,
-                                description:
-                                    const Text("Please enter valid password!"),
-                              ).show(context);
-                            } else {
-                              var response = await loginFunction();
-
-                              if (response == "Error") {
-                                setState(() {
-                                  loading = false;
-                                });
+                          coloredButton(
+                            context,
+                            "SIGN IN",
+                            myOrange,
+                            width: dynamicWidth(context, .5),
+                            function: () async {
+                              if (!EmailValidator.validate(email.text)) {
                                 MotionToast.error(
                                   title: const Text("Error"),
                                   dismissable: true,
                                   description:
-                                      const Text("Invalid Credentials"),
+                                      const Text("Please enter valid email!"),
                                 ).show(context);
-                              } else if (response == false) {
-                                setState(() {
-                                  loading = false;
-                                });
+                              } else if (password.text.isEmpty) {
                                 MotionToast.error(
                                   title: const Text("Error"),
                                   dismissable: true,
                                   description: const Text(
-                                      "Check your Internet or try again later"),
+                                      "Please enter valid password!"),
                                 ).show(context);
                               } else {
-                                SharedPreferences loginUser =
-                                    await SharedPreferences.getInstance();
-                                loginUser.setString(
-                                  "userResponse",
-                                  json.encode(response),
-                                );
-                                setState(() {
-                                  pageDecider = "Home";
-                                });
-                                pushAndRemoveUntil(
-                                  context,
-                                  const MyApp(),
-                                );
+                                var response = await loginFunction();
+
+                                if (response == "Error") {
+                                  setState(() {
+                                    loading = false;
+                                  });
+                                  MotionToast.error(
+                                    title: const Text("Error"),
+                                    dismissable: true,
+                                    description:
+                                        const Text("Invalid Credentials"),
+                                  ).show(context);
+                                } else if (response == false) {
+                                  setState(() {
+                                    loading = false;
+                                  });
+                                  MotionToast.error(
+                                    title: const Text("Error"),
+                                    dismissable: true,
+                                    description: const Text(
+                                        "Check your Internet or try again later"),
+                                  ).show(context);
+                                } else {
+                                  SharedPreferences loginUser =
+                                      await SharedPreferences.getInstance();
+                                  loginUser.setString(
+                                    "userResponse",
+                                    json.encode(response),
+                                  );
+                                  setState(() {
+                                    pageDecider = "Home";
+                                  });
+                                  pushAndRemoveUntil(
+                                    context,
+                                    const MyApp(),
+                                  );
+                                }
                               }
-                            }
-                          }),
+                            },
+                          ),
                           InkWell(
                             onTap: () {
                               push(context, const SignUp());
                             },
                             child: RichText(
-                                text: const TextSpan(children: [
-                              TextSpan(
-                                  text: "Don't have an account? ",
-                                  style: TextStyle(color: myWhite)),
-                              TextSpan(
-                                  text: "Sign up",
-                                  style: TextStyle(
+                              text: const TextSpan(
+                                children: [
+                                  TextSpan(
+                                    text: "Don't have an account? ",
+                                    style: TextStyle(color: myWhite),
+                                  ),
+                                  TextSpan(
+                                    text: "Sign up",
+                                    style: TextStyle(
                                       color: myOrange,
-                                      fontWeight: FontWeight.bold))
-                            ])),
-                          )
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
                         ],
                       ),
                     ),

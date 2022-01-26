@@ -51,10 +51,16 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                 ),
                 heightBox(context, 0.01),
                 text(context, "BARANH LAHORE", 0.04, myWhite),
-                inputFieldsHome("Date", hintText, context,
-                    check: true, timeSlot: true, function: () {
-                  setState(() {});
-                }),
+                inputFieldsHome(
+                  "Date",
+                  hintText,
+                  context,
+                  check: true,
+                  timeSlot: true,
+                  function: () {
+                    setState(() {});
+                  },
+                ),
                 heightBox(context, 0.02),
                 hintText == "mm/dd/yyyy"
                     ? Container()
@@ -169,7 +175,7 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                   context,
                   "CHECK AVAILABILITY",
                   myOrange,
-                  width: dynamicWidth(context, .56),
+                  width: dynamicWidth(context, .5),
                   function: () async {
                     if (_seats.text.isEmpty || hintText == "mm/dd/yyyy") {
                       MotionToast.info(

@@ -22,10 +22,8 @@ Widget inputFieldsHome(text1, hintText1, context,
         text(context, text1, 0.04, myWhite),
         heightBox(context, .01),
         Container(
-          color: myWhite,
-          padding: EdgeInsets.symmetric(
-            horizontal: dynamicWidth(context, 0.04),
-          ),
+          color: noColor,
+          width: dynamicWidth(context, 1),
           child: (check == true)
               ? InkWell(
                   onTap: () async {
@@ -56,23 +54,74 @@ Widget inputFieldsHome(text1, hintText1, context,
                       });
                     }
                   },
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      SizedBox(
-                        width: dynamicWidth(context, 0.5),
-                        child: TextFormField(
-                          readOnly: true,
-                          decoration: InputDecoration(
-                            enabledBorder: InputBorder.none,
-                            focusedBorder: InputBorder.none,
-                            hintText: hintText.toString(),
-                            fillColor: myWhite,
+                  child: Container(
+                    decoration: BoxDecoration(
+                      color: myWhite,
+                      borderRadius: BorderRadius.circular(
+                        dynamicWidth(context, 1),
+                      ),
+                    ),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Expanded(
+                          child: TextFormField(
+                            readOnly: true,
+                            decoration: InputDecoration(
+                              fillColor: myWhite,
+                              focusColor: myWhite,
+                              hoverColor: myWhite,
+                              filled: true,
+                              isDense: true,
+                              hintText: hintText.toString(),
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: const BorderSide(color: myBlack),
+                                borderRadius: BorderRadius.circular(
+                                  dynamicWidth(context, .4),
+                                ),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: const BorderSide(color: myBlack),
+                                borderRadius: BorderRadius.circular(
+                                  dynamicWidth(context, .4),
+                                ),
+                              ),
+                              errorBorder: UnderlineInputBorder(
+                                borderSide: const BorderSide(color: myBlack),
+                                borderRadius: BorderRadius.circular(
+                                  dynamicWidth(context, .4),
+                                ),
+                              ),
+                              focusedErrorBorder: UnderlineInputBorder(
+                                borderSide: const BorderSide(color: myBlack),
+                                borderRadius: BorderRadius.circular(
+                                  dynamicWidth(context, .4),
+                                ),
+                              ),
+                              border: UnderlineInputBorder(
+                                borderSide: const BorderSide(color: myBlack),
+                                borderRadius: BorderRadius.circular(
+                                  dynamicWidth(context, .4),
+                                ),
+                              ),
+                              contentPadding: EdgeInsets.symmetric(
+                                vertical: dynamicHeight(context, .014),
+                                horizontal: dynamicWidth(context, .05),
+                              ),
+                            ),
                           ),
                         ),
-                      ),
-                      const Icon(Icons.calendar_today_outlined)
-                    ],
+                        Padding(
+                          padding: EdgeInsets.only(
+                            right: dynamicWidth(context, .04),
+                          ),
+                          child: const Icon(
+                            Icons.calendar_today_outlined,
+                            color: myBlack,
+                          ),
+                        )
+                      ],
+                    ),
                   ),
                 )
               : generatePasswordCheck == true
@@ -93,9 +142,46 @@ Widget inputFieldsHome(text1, hintText1, context,
                               LengthLimitingTextInputFormatter(11),
                             ],
                             decoration: InputDecoration(
-                              enabledBorder: InputBorder.none,
-                              focusedBorder: InputBorder.none,
+                              fillColor: myWhite,
+                              focusColor: myWhite,
+                              hoverColor: myWhite,
+                              filled: true,
+                              isDense: true,
                               hintText: hintText1,
+                              enabledBorder: UnderlineInputBorder(
+                                borderSide: const BorderSide(color: myBlack),
+                                borderRadius: BorderRadius.circular(
+                                  dynamicWidth(context, .4),
+                                ),
+                              ),
+                              focusedBorder: UnderlineInputBorder(
+                                borderSide: const BorderSide(color: myBlack),
+                                borderRadius: BorderRadius.circular(
+                                  dynamicWidth(context, .4),
+                                ),
+                              ),
+                              errorBorder: UnderlineInputBorder(
+                                borderSide: const BorderSide(color: myBlack),
+                                borderRadius: BorderRadius.circular(
+                                  dynamicWidth(context, .4),
+                                ),
+                              ),
+                              focusedErrorBorder: UnderlineInputBorder(
+                                borderSide: const BorderSide(color: myBlack),
+                                borderRadius: BorderRadius.circular(
+                                  dynamicWidth(context, .4),
+                                ),
+                              ),
+                              border: UnderlineInputBorder(
+                                borderSide: const BorderSide(color: myBlack),
+                                borderRadius: BorderRadius.circular(
+                                  dynamicWidth(context, .4),
+                                ),
+                              ),
+                              contentPadding: EdgeInsets.symmetric(
+                                vertical: dynamicHeight(context, .014),
+                                horizontal: dynamicWidth(context, .05),
+                              ),
                             ),
                           ),
                         ),
@@ -132,10 +218,46 @@ Widget inputFieldsHome(text1, hintText1, context,
                               ),
                       ],
                       decoration: InputDecoration(
-                        enabled: enable,
-                        enabledBorder: InputBorder.none,
-                        focusedBorder: InputBorder.none,
+                        fillColor: myWhite,
+                        focusColor: myWhite,
+                        hoverColor: myWhite,
+                        filled: true,
+                        isDense: true,
                         hintText: hintText1,
+                        enabledBorder: UnderlineInputBorder(
+                          borderSide: const BorderSide(color: myBlack),
+                          borderRadius: BorderRadius.circular(
+                            dynamicWidth(context, .4),
+                          ),
+                        ),
+                        focusedBorder: UnderlineInputBorder(
+                          borderSide: const BorderSide(color: myBlack),
+                          borderRadius: BorderRadius.circular(
+                            dynamicWidth(context, .4),
+                          ),
+                        ),
+                        errorBorder: UnderlineInputBorder(
+                          borderSide: const BorderSide(color: myBlack),
+                          borderRadius: BorderRadius.circular(
+                            dynamicWidth(context, .4),
+                          ),
+                        ),
+                        focusedErrorBorder: UnderlineInputBorder(
+                          borderSide: const BorderSide(color: myBlack),
+                          borderRadius: BorderRadius.circular(
+                            dynamicWidth(context, .4),
+                          ),
+                        ),
+                        border: UnderlineInputBorder(
+                          borderSide: const BorderSide(color: myBlack),
+                          borderRadius: BorderRadius.circular(
+                            dynamicWidth(context, .4),
+                          ),
+                        ),
+                        contentPadding: EdgeInsets.symmetric(
+                          vertical: dynamicHeight(context, .014),
+                          horizontal: dynamicWidth(context, .05),
+                        ),
                       ),
                     ),
         )
