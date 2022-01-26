@@ -165,74 +165,80 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                   controller: _seats,
                 ),
                 heightBox(context, 0.03),
-                coloredButton(context, "CHECK AVAILABILITY", myOrange,
-                    function: () async {
-                  if (_seats.text.isEmpty || hintText == "mm/dd/yyyy") {
-                    MotionToast.info(
-                      description: const Text("check provided seats or dates"),
-                      dismissable: true,
-                    ).show(context);
-                  } else {
-                    CoolAlert.show(
-                        context: context,
-                        type: CoolAlertType.loading,
-                        lottieAsset: "assets/loader.json");
-                    var response = await checkAvailability(
-                        hintText,
-                        indexValue.substring(indexValue.indexOf("#") + 1),
-                        _seats.text);
-                    if (response == true) {
-                      Navigator.of(context, rootNavigator: true).pop();
+                coloredButton(
+                  context,
+                  "CHECK AVAILABILITY",
+                  myOrange,
+                  width: dynamicWidth(context, .56),
+                  function: () async {
+                    if (_seats.text.isEmpty || hintText == "mm/dd/yyyy") {
+                      MotionToast.info(
+                        description:
+                            const Text("check provided seats or dates"),
+                        dismissable: true,
+                      ).show(context);
+                    } else {
                       CoolAlert.show(
-                          onConfirmBtnTap: () {
-                            Navigator.of(context, rootNavigator: true).pop();
-                            push(
-                                context,
-                                ContactInformation(
-                                  dropDownTime: indexValue
-                                      .substring(indexValue.indexOf("#") + 1),
-                                  seats: _seats.text,
-                                  date: hintText,
-                                ));
-                          },
-                          title: "Slots Available",
-                          text: "Do you wish to proceed?",
+                          context: context,
+                          type: CoolAlertType.loading,
+                          lottieAsset: "assets/loader.json");
+                      var response = await checkAvailability(
+                          hintText,
+                          indexValue.substring(indexValue.indexOf("#") + 1),
+                          _seats.text);
+                      if (response == true) {
+                        Navigator.of(context, rootNavigator: true).pop();
+                        CoolAlert.show(
+                            onConfirmBtnTap: () {
+                              Navigator.of(context, rootNavigator: true).pop();
+                              push(
+                                  context,
+                                  ContactInformation(
+                                    dropDownTime: indexValue
+                                        .substring(indexValue.indexOf("#") + 1),
+                                    seats: _seats.text,
+                                    date: hintText,
+                                  ));
+                            },
+                            title: "Slots Available",
+                            text: "Do you wish to proceed?",
+                            context: context,
+                            loopAnimation: true,
+                            backgroundColor: myOrange,
+                            confirmBtnColor: myOrange,
+                            confirmBtnText: "Continue",
+                            type: CoolAlertType.confirm,
+                            animType: CoolAlertAnimType.slideInRight);
+                      } else if (response == false) {
+                        Navigator.of(context, rootNavigator: true).pop();
+                        MotionToast.error(
+                          description: const Text(
+                              "Slots are not available try again after some time"),
+                          dismissable: true,
+                        ).show(context);
+                      } else if (response == "internet") {
+                        Navigator.of(context, rootNavigator: true).pop();
+                        MotionToast.warning(
+                          description: const Text("Check your internet"),
+                          dismissable: true,
+                        );
+                      } else {
+                        Navigator.of(context, rootNavigator: true).pop();
+                        CoolAlert.show(
+                          title: "Server Error",
+                          text: "please Try again",
                           context: context,
                           loopAnimation: true,
                           backgroundColor: myOrange,
                           confirmBtnColor: myOrange,
-                          confirmBtnText: "Continue",
-                          type: CoolAlertType.confirm,
-                          animType: CoolAlertAnimType.slideInRight);
-                    } else if (response == false) {
-                      Navigator.of(context, rootNavigator: true).pop();
-                      MotionToast.error(
-                        description:
-                            const Text("Slots are not available try again after some time"),
-                        dismissable: true,
-                      ).show(context);
-                    } else if (response == "internet") {
-                      Navigator.of(context, rootNavigator: true).pop();
-                      MotionToast.warning(
-                        description: const Text("Check your internet"),
-                        dismissable: true,
-                      );
-                    } else {
-                      Navigator.of(context, rootNavigator: true).pop();
-                      CoolAlert.show(
-                        title: "Server Error",
-                        text: "please Try again",
-                        context: context,
-                        loopAnimation: true,
-                        backgroundColor: myOrange,
-                        confirmBtnColor: myOrange,
-                        confirmBtnText: "Retry",
-                        type: CoolAlertType.error,
-                        animType: CoolAlertAnimType.slideInRight,
-                      );
+                          confirmBtnText: "Retry",
+                          type: CoolAlertType.error,
+                          animType: CoolAlertAnimType.slideInRight,
+                        );
+                      }
                     }
-                  }
-                }),
+                  },
+                ),
               ],
             ),
           ),
@@ -248,14 +254,11 @@ getConvertedTime(String time) {
     return (parsedTime - 12) >= 10
         ? (parsedTime - 12).toString() + time.substring(2) + " pm"
         : "0" + (parsedTime - 12).toString() + time.substring(2) + " pm";
-  }
-  else if(parsedTime==12){
-    return "12"+time.substring(2)+" pm";
-  }
-  else if(parsedTime==00){
-    return "12"+time.substring(2)+" am";
-  }
-  else {
+  } else if (parsedTime == 12) {
+    return "12" + time.substring(2) + " pm";
+  } else if (parsedTime == 00) {
+    return "12" + time.substring(2) + " am";
+  } else {
     return time + " am";
   }
 }

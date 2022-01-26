@@ -12,69 +12,83 @@ class Profile extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: myBlack,
-      body: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(
-              vertical: dynamicHeight(context, .04),
-            ),
-            child: Container(
-              width: dynamicWidth(context, .9),
-              height: dynamicHeight(context, .2),
-              decoration: BoxDecoration(
-                color: myWhite,
-                borderRadius: BorderRadius.circular(
-                  dynamicWidth(context, .04),
+      body: SizedBox(
+
+      width: dynamicWidth(context, 1),
+      height: dynamicHeight(context, 1),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            CircleAvatar(
+              radius: dynamicWidth(context, .18),
+              backgroundColor: myOrange,
+              child: Center(
+                child: LineIcon(
+                  LineIcons.user,
+                  color: myBlack,
+                  size: dynamicHeight(context, .1),
                 ),
               ),
-              child: Row(
-                children: [
-                  SizedBox(
-                    width: dynamicWidth(context, .3),
-                    height: dynamicHeight(context, .2),
-                  ),
-                ],
-              ),
             ),
-          ),
-          Container(
-            width: dynamicWidth(context, 1),
-            height: dynamicHeight(context, .4),
-            // color: myWhite.withOpacity(.4),
-            decoration: const BoxDecoration(
-                gradient: LinearGradient(
-              begin: Alignment.centerLeft,
-              end: Alignment.centerRight,
-              stops: [
-                0.0,
-                0.9,
-              ],
-              colors: [
-                myOrange,
-                myBlack,
-              ],
-            )),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                heightBox(context, .1),
-                CircleAvatar(
-                  radius: dynamicWidth(context, .16),
-                  backgroundColor: myWhite,
-                  child: LineIcon(
-                    LineIcons.user,
-                    size: dynamicWidth(context, .22),
-                  ),
-                ),
-                text(context, userResponse['name'], .05, myWhite),
-                text(context, userResponse['phone'], .05, myWhite),
-                text(context, userResponse['email'], .05, myWhite),
-                heightBox(context, .02),
-              ],
+            heightBox(context, .03),
+            text(
+              context,
+              userResponse['name'].toString().toUpperCase(),
+              .06,
+              myOrange,
+              bold: true,
             ),
-          ),
-        ],
+            heightBox(context, .01),
+            text(context, userResponse['phone'], .04, myWhite),
+            text(context, userResponse['email'], .04, myWhite),
+            heightBox(context, .06),
+            profileRow(context, LineIcons.history, "Order History"),
+            profileRow(context, Icons.contact_support, "Customer Care"),
+            profileRow(context, Icons.logout_rounded, "Log Out"),
+          ],
+        ),
       ),
     );
   }
+}
+
+Widget profileRow(context, icon, title) {
+  return Padding(
+    padding: EdgeInsets.symmetric(
+      vertical: dynamicHeight(context, .01),
+    ),
+    child: Container(
+      width: dynamicWidth(context, .7),
+      height: dynamicHeight(context, .056),
+      decoration: BoxDecoration(
+        color: myOrange,
+        borderRadius: BorderRadius.circular(
+          dynamicWidth(context, 1),
+        ),
+      ),
+      child: Padding(
+        padding: EdgeInsets.only(
+          left: dynamicWidth(context, .04),
+        ),
+        child: Row(
+          children: [
+            LineIcon(
+              icon,
+              color: myBlack,
+              size: dynamicHeight(context, .04),
+            ),
+            widthBox(context, .04),
+            text(
+              context,
+              title,
+              .044,
+              myBlack,
+              bold: true,
+            ),
+          ],
+        ),
+      ),
+    ),
+  );
 }

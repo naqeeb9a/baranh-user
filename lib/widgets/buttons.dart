@@ -6,17 +6,25 @@ import 'package:lottie/lottie.dart';
 import '../utils/config.dart';
 
 Widget coloredButton(context, text, color,
-    {function = "", width = "", fontSize = 0.05}) {
+    {function = "", width = "", fontSize = 0.04}) {
   return GestureDetector(
     onTap: function == "" ? () {} : function,
     child: Container(
       width: width == "" ? dynamicWidth(context, 1) : width,
-      height: dynamicHeight(context, .056),
+      height: dynamicHeight(context, .052),
       decoration: color == noColor
           ? BoxDecoration(
-              color: color, border: Border.all(width: 1, color: myWhite))
+              color: color,
+              border: Border.all(width: 1, color: myWhite),
+              borderRadius: BorderRadius.circular(
+                dynamicWidth(context, 1),
+              ),
+            )
           : BoxDecoration(
               color: color,
+              borderRadius: BorderRadius.circular(
+                dynamicWidth(context, 1),
+              ),
             ),
       child: Center(
         child: Text(
