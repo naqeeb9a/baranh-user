@@ -40,10 +40,12 @@ class _BasicPageState extends State<BasicPage> with TickerProviderStateMixin {
   }
 
   var hintText = "mm/dd/yyy";
-  var index = 0;
 
   @override
   Widget build(BuildContext context) {
+    staticRefresh = () {
+      setState(() {});
+    };
     startAnimation();
     customContext = context;
     return Scaffold(
