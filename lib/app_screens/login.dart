@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:baranh/app_screens/forgot_password.dart';
 import 'package:baranh/app_screens/sign_up.dart';
 import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
@@ -110,10 +111,15 @@ class _LoginScreenState extends State<LoginScreen> {
                               SizedBox(
                                 height: dynamicHeight(context, 0.01),
                               ),
-                              Align(
-                                  alignment: Alignment.centerRight,
-                                  child: text(context, "Forgot password", 0.04,
-                                      myWhite))
+                              InkWell(
+                                onTap: () {
+                                  push(context, const ForgotPassword());
+                                },
+                                child: Align(
+                                    alignment: Alignment.centerRight,
+                                    child: text(context, "Forgot password",
+                                        0.04, myWhite)),
+                              )
                             ],
                           ),
                           coloredButton(context, "SIGN IN", myOrange,

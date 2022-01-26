@@ -302,3 +302,17 @@ getOrderHistory(id) async {
     return false;
   }
 }
+
+sendEmailForgotPassword(String email) async {
+  var response = await http.post(
+      Uri.parse("https://baranhweb.cmcmtech.com/api/forget-password-email"),
+      body: {"email": email});
+  var jsonData = jsonDecode(response.body);
+  if (response.statusCode == 200) {
+    return jsonData["data"]["message"];
+  } else if (response.statusCode == 400) {
+    return "No Email";
+  } else {
+    return false;
+  }
+}
