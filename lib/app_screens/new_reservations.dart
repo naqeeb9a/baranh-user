@@ -190,18 +190,57 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                         Navigator.of(context, rootNavigator: true).pop();
                         CoolAlert.show(
                             onConfirmBtnTap: () {
-                              Navigator.of(context, rootNavigator: true).pop();
-                              push(
-                                  context,
-                                  ContactInformation(
-                                    dropDownTime: indexValue
-                                        .substring(indexValue.indexOf("#") + 1),
-                                    seats: _seats.text,
-                                    date: hintText,
-                                  ));
+                              if (userResponse == null) {
+                                Navigator.of(context, rootNavigator: true)
+                                    .pop();
+                                push(
+                                    context,
+                                    ContactInformation(
+                                      dropDownTime: indexValue.substring(
+                                          indexValue.indexOf("#") + 1),
+                                      seats: _seats.text,
+                                      date: hintText,
+                                    ));
+                              } else {
+                                Navigator.of(context, rootNavigator: true)
+                                    .pop();
+                                var response = reserveTable(
+                                    userResponse["name"],
+                                    userResponse["phone"],
+                                    userResponse["email"],
+                                    _seats.text,
+                                    hintText,
+                                    indexValue.substring(
+                                        indexValue.indexOf("#") + 1));
+                                CoolAlert.show(
+                                    context: context,
+                                    type: CoolAlertType.loading,
+                                    barrierDismissible: false,
+                                    lottieAsset: "assets/loader.json");
+                                if (response == false) {
+                                  Navigator.of(context, rootNavigator: true)
+                                      .pop();
+                                  MotionToast.error(
+                                    description: const Text(
+                                        "Check your internet or try again"),
+                                    dismissable: true,
+                                  );
+                                } else {
+                                  Navigator.of(context, rootNavigator: true)
+                                      .pop();
+                                  MotionToast.info(
+                                    description: const Text(
+                                        "A verfication code has been sent to your Mail"),
+                                    dismissable: true,
+                                  );
+                                  // push(context, VerifyCode(saleId: response[]));
+                                }
+                              }
                             },
                             title: "Slots Available",
-                            text: "Do you wish to proceed?",
+                            text: userResponse != null
+                                ? "Do you wish to proceed"
+                                : "Do you wish to Book a slot?",
                             context: context,
                             loopAnimation: true,
                             backgroundColor: myOrange,

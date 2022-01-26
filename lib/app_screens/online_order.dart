@@ -1,4 +1,5 @@
 import 'package:baranh/app_functions/functions.dart';
+import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/widgets/menu_widgets.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
@@ -62,25 +63,49 @@ class _OnlineOrderState extends State<OnlineOrder> {
                                     padding: EdgeInsets.symmetric(
                                         horizontal:
                                             dynamicWidth(context, 0.05)),
-                                    child: Container(
-                                      decoration: BoxDecoration(
-                                          color: myWhite,
-                                          borderRadius: BorderRadius.circular(
-                                              dynamicWidth(context, 0.1))),
-                                      child: TextFormField(
-                                        decoration: InputDecoration(
-                                            isDense: true,
-                                            border: const UnderlineInputBorder(
-                                                borderSide: BorderSide.none),
-                                            hintText: "Search",
-                                            enabled: false,
-                                            contentPadding:
-                                                EdgeInsets.symmetric(
-                                                    horizontal: dynamicWidth(
-                                                        context, 0.05),
-                                                    vertical: dynamicHeight(
-                                                        context, 0.012))),
-                                      ),
+                                    child: Row(
+                                      children: [
+                                        InkWell(
+                                          onTap: () {
+                                            pop(context);
+                                          },
+                                          child: const Icon(
+                                            Icons.arrow_back,
+                                            color: myWhite,
+                                          ),
+                                        ),
+                                        widthBox(context, 0.05),
+                                        Expanded(
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                                color: myWhite,
+                                                borderRadius:
+                                                    BorderRadius.circular(
+                                                        dynamicWidth(
+                                                            context, 0.1))),
+                                            child: TextFormField(
+                                              decoration: InputDecoration(
+                                                  isDense: true,
+                                                  border:
+                                                      const UnderlineInputBorder(
+                                                          borderSide:
+                                                              BorderSide.none),
+                                                  hintText: "Search",
+                                                  enabled: false,
+                                                  contentPadding:
+                                                      EdgeInsets.symmetric(
+                                                          horizontal:
+                                                              dynamicWidth(
+                                                                  context,
+                                                                  0.05),
+                                                          vertical:
+                                                              dynamicHeight(
+                                                                  context,
+                                                                  0.012))),
+                                            ),
+                                          ),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ),
