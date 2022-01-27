@@ -9,7 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 class OnlineOrder extends StatefulWidget {
-  const OnlineOrder({Key? key}) : super(key: key);
+  final String outletId;
+  const OnlineOrder({Key? key, required this.outletId}) : super(key: key);
   @override
   State<OnlineOrder> createState() => _OnlineOrderState();
 }
@@ -33,7 +34,7 @@ class _OnlineOrderState extends State<OnlineOrder> {
               heightBox(context, 0.02),
               Expanded(
                 child: FutureBuilder(
-                  future: getMenu(),
+                  future: getMenu(widget.outletId),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
                     if (snapshot.connectionState == ConnectionState.done) {
                       if (snapshot.data == false) {

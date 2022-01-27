@@ -156,10 +156,10 @@ getTimeSlots(date) async {
   }
 }
 
-getMenu() async {
+getMenu(id) async {
   try {
     var response = await http
-        .get(Uri.parse("https://baranhweb.cmcmtech.com/api/menu/all"));
+        .get(Uri.parse("https://baranhweb.cmcmtech.com/api/menu/all-$id"));
     var jsonData = json.decode(response.body);
     if (response.statusCode == 200) {
       return jsonData["data"];
@@ -313,6 +313,22 @@ sendEmailForgotPassword(String email) async {
   } else if (response.statusCode == 400) {
     return "No Email";
   } else {
+    return false;
+  }
+}
+
+getOutlets() async {
+  try {
+    var response = await http.get(
+      Uri.parse("https://baranhweb.cmcmtech.com/api/outlets"),
+    );
+    var jsonData = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      return jsonData["data"];
+    } else {
+      return false;
+    }
+  } catch (e) {
     return false;
   }
 }

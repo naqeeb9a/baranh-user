@@ -29,20 +29,22 @@ class _ChoiceState extends State<Choice> {
             children: [
               GestureDetector(
                 onTap: () {
-                  setState(() {
-                    selectedCity = "Lahore";
-                  });
-                  push(context, const OnlineOrder());
+                  push(
+                      context,
+                      const OnlineOrder(
+                        outletId: "1",
+                      ));
                 },
                 child: branchCard(
                     context, "Baranh Lahore", "assets/baranh_lahore.jpg"),
               ),
               GestureDetector(
                 onTap: () {
-                  setState(() {
-                    selectedCity = "Lahore";
-                  });
-                  push(context, const OnlineOrder());
+                  push(
+                      context,
+                      const OnlineOrder(
+                        outletId: "6",
+                      ));
                 },
                 child: branchCard(
                     context, "Baranh Jhang", "assets/baranh_jhang.jpg"),
