@@ -371,11 +371,9 @@ Widget dividerRowWidgets(context, text1, text2, {check = false}) {
                 myWhite,
               )
             : InkWell(
-                onTap: () {
-                  pop(context);
-                },
+                onTap: () {},
                 child: Icon(
-                  Icons.close_rounded,
+                  Icons.clear_all,
                   color: myWhite,
                   size: dynamicWidth(context, .08),
                 ),

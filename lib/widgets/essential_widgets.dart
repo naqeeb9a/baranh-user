@@ -1,15 +1,13 @@
-import 'package:badges/badges.dart';
+import 'package:baranh/app_screens/qr_screen.dart';
+import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
-import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:lottie/lottie.dart';
 
 bar(
   context, {
-  function = "",
-  function1 = "",
+  qrVisibility = true,
 }) {
   return AppBar(
     backgroundColor: myBlack,
@@ -19,41 +17,18 @@ bar(
         width: dynamicWidth(context, 0.2),
       ),
     ),
-    leading: GestureDetector(
-      onTap: function == "" ? () {} : function,
-      child: Image.asset(
-        "assets/menu.png",
-        scale: 30,
-      ),
-    ),
+    automaticallyImplyLeading: false,
     centerTitle: true,
     actions: [
-      InkWell(
-        onTap: function1 == "" ? () {} : function1,
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: dynamicWidth(context, .02),
-          ),
-          child: Obx(() {
-            return Padding(
-              padding: const EdgeInsets.only(top: 10),
-              child: Badge(
-                position: BadgePosition.topEnd(),
-                badgeContent: text(
-                  context,
-                  cartItems.length.toString(),
-                  0.02,
-                  myWhite,
-                ),
-                child: const Icon(
-                  Icons.shopping_cart_outlined,
-                ),
-              ),
-            );
-          }),
-        ),
+      Visibility(
+        visible: qrVisibility,
+        child: InkWell(
+            onTap: () {
+              push(context, const QRScreen());
+            },
+            child: const Icon(Icons.qr_code)),
       ),
-      widthBox(context, 0.01)
+      widthBox(context, 0.02)
     ],
     bottom: PreferredSize(
       child: Container(

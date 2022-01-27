@@ -1,7 +1,9 @@
 import 'dart:io';
 
+import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
+import 'package:baranh/widgets/essential_widgets.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
@@ -46,22 +48,25 @@ class _QRScreenState extends State<QRScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      alignment: Alignment.center,
-      children: [
-        QRView(
-          key: qrKey,
-          onQRViewCreated: qrCreated,
-          overlay: QrScannerOverlayShape(
-              borderColor: myOrange,
-              borderLength: 20,
-              borderRadius: 10,
-              borderWidth: 10,
-              cutOutSize: dynamicWidth(context, 0.8)),
-        ),
-        bottomText(),
-        toggleIcons()
-      ],
+    return Scaffold(
+      appBar: bar(context, qrVisibility: false),
+      body: Stack(
+        alignment: Alignment.center,
+        children: [
+          QRView(
+            key: qrKey,
+            onQRViewCreated: qrCreated,
+            overlay: QrScannerOverlayShape(
+                borderColor: myOrange,
+                borderLength: 20,
+                borderRadius: 10,
+                borderWidth: 10,
+                cutOutSize: dynamicWidth(context, 0.8)),
+          ),
+          bottomText(),
+          toggleIcons()
+        ],
+      ),
     );
   }
 
@@ -87,54 +92,76 @@ class _QRScreenState extends State<QRScreen> {
   Widget toggleIcons() {
     return Positioned(
       top: dynamicHeight(context, 0.02),
-      child: Container(
-        padding: EdgeInsets.all(dynamicWidth(context, 0.01)),
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(dynamicWidth(context, 0.1)),
-          color: Colors.white24,
-        ),
+      child: SizedBox(
+        width: dynamicWidth(context, 1),
         child: Row(
-          mainAxisSize: MainAxisSize.max,
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             IconButton(
-              onPressed: () async {
-                await controller?.toggleFlash();
-                setState(() {});
-              },
-              icon: FutureBuilder<bool?>(
-                future: controller?.getFlashStatus(),
-                builder: (context, snapshot) {
-                  if (snapshot.data != null) {
-                    return Icon(
-                      snapshot.data! ? Icons.flash_on : Icons.flash_off,
-                      color: myWhite,
-                    );
-                  } else {
-                    return Container();
-                  }
+                onPressed: () {
+                  pop(context);
                 },
+                icon: const Icon(
+                  Icons.arrow_back,
+                  color: myWhite,
+                )),
+            Container(
+              padding: EdgeInsets.all(dynamicWidth(context, 0.01)),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(dynamicWidth(context, 0.1)),
+                color: Colors.white24,
+              ),
+              child: Row(
+                mainAxisSize: MainAxisSize.max,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  IconButton(
+                    onPressed: () async {
+                      await controller?.toggleFlash();
+                      setState(() {});
+                    },
+                    icon: FutureBuilder<bool?>(
+                      future: controller?.getFlashStatus(),
+                      builder: (context, snapshot) {
+                        if (snapshot.data != null) {
+                          return Icon(
+                            snapshot.data! ? Icons.flash_on : Icons.flash_off,
+                            color: myWhite,
+                          );
+                        } else {
+                          return Container();
+                        }
+                      },
+                    ),
+                  ),
+                  IconButton(
+                    onPressed: () async {
+                      await controller?.flipCamera();
+                      setState(() {});
+                    },
+                    icon: FutureBuilder(
+                      future: controller?.getCameraInfo(),
+                      builder: (context, snapshot) {
+                        if (snapshot.data != null) {
+                          return const Icon(
+                            Icons.switch_camera,
+                            color: myWhite,
+                          );
+                        } else {
+                          return Container();
+                        }
+                      },
+                    ),
+                  ),
+                ],
               ),
             ),
             IconButton(
-              onPressed: () async {
-                await controller?.flipCamera();
-                setState(() {});
-              },
-              icon: FutureBuilder(
-                future: controller?.getCameraInfo(),
-                builder: (context, snapshot) {
-                  if (snapshot.data != null) {
-                    return const Icon(
-                      Icons.switch_camera,
-                      color: myWhite,
-                    );
-                  } else {
-                    return Container();
-                  }
-                },
-              ),
-            ),
+                onPressed: () {},
+                icon: const Icon(
+                  Icons.arrow_back,
+                  color: Colors.transparent,
+                )),
           ],
         ),
       ),

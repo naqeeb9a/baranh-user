@@ -5,10 +5,11 @@ import 'package:baranh/app_screens/home.dart';
 import 'package:baranh/app_screens/new_reservations.dart';
 import 'package:baranh/app_screens/order_history.dart';
 import 'package:baranh/app_screens/profile.dart';
-import 'package:baranh/app_screens/qr_screen.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
+
+import 'Cart.dart';
 
 class BasicPage extends StatefulWidget {
   const BasicPage({Key? key}) : super(key: key);
@@ -67,7 +68,7 @@ class _BasicPageState extends State<BasicPage> with TickerProviderStateMixin {
             } else if (value == 2) {
               pageDecider = "Online order";
             } else if (value == 3) {
-              pageDecider = "QR Screen";
+              pageDecider = "Cart";
             } else if (value == 4) {
               pageDecider = "Profile";
             } else {
@@ -95,8 +96,8 @@ class _BasicPageState extends State<BasicPage> with TickerProviderStateMixin {
             label: "Menu",
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.qr_code),
-            label: "QR code",
+            icon: Icon(Icons.shopping_basket),
+            label: "Cart",
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.person),
@@ -121,8 +122,8 @@ class _BasicPageState extends State<BasicPage> with TickerProviderStateMixin {
         return const CustomerCare();
       case "Home":
         return const Home();
-      case "QR Screen":
-        return const QRScreen();
+      case "Cart":
+        return const Cart();
       case "Profile":
         return const Profile();
 

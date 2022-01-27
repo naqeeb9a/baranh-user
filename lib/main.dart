@@ -4,7 +4,6 @@ import 'package:baranh/app_screens/basic_page.dart';
 import 'package:baranh/app_screens/login.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
-import 'package:baranh/widgets/drawer.dart';
 import 'package:baranh/widgets/essential_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -46,7 +45,6 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
       setState(() {});
     };
 
-    final _scaffoldKey = GlobalKey<ScaffoldState>();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
@@ -81,27 +79,11 @@ class _MyAppState extends State<MyApp> with TickerProviderStateMixin {
                     ),
                   )
                 : Scaffold(
+                    backgroundColor: myBlack,
                     drawerEnableOpenDragGesture: false,
                     endDrawerEnableOpenDragGesture: false,
-                    key: _scaffoldKey,
-                    appBar: bar(context, function: () {
-                      _scaffoldKey.currentState!.openDrawer();
-                    }, function1: () {
-                      _scaffoldKey.currentState!.openEndDrawer();
-                    }),
-                    drawer: SafeArea(
-                      child: Drawer(
-                        child: drawerItems(context, () {
-                          setState(() {});
-                        }, () {
-                          setState(() {
-                            loader = true;
-                          });
-                        }),
-                      ),
-                    ),
-                    endDrawer: SafeArea(
-                      child: Drawer(child: drawerItems2(context)),
+                    appBar: bar(
+                      context,
                     ),
                     body: child,
                   );
