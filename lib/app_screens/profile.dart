@@ -7,6 +7,9 @@ import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icon.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../main.dart';
 
 class Profile extends StatelessWidget {
   const Profile({Key? key}) : super(key: key);
@@ -62,7 +65,14 @@ class Profile extends StatelessWidget {
                   function: () {
                 push(context, const CustomerCare());
               }),
-              profileRow(context, Icons.logout_rounded, "Log Out"),
+              profileRow(context, Icons.logout_rounded, "Log Out",
+                  function: () async {
+                SharedPreferences loginUser =
+                    await SharedPreferences.getInstance();
+                loginUser.clear();
+                userResponse = "";
+                checkLoginStatus(context);
+              }),
             ],
           ),
         ],

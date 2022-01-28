@@ -6,6 +6,7 @@ import 'package:baranh/app_screens/new_reservations.dart';
 import 'package:baranh/app_screens/order_history.dart';
 import 'package:baranh/app_screens/profile.dart';
 import 'package:baranh/utils/config.dart';
+import 'package:baranh/widgets/essential_widgets.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -19,26 +20,7 @@ class BasicPage extends StatefulWidget {
 }
 
 class _BasicPageState extends State<BasicPage> with TickerProviderStateMixin {
-  late AnimationController _controller;
-
-  startAnimation() {
-    _controller = AnimationController(
-      duration: const Duration(seconds: 1),
-      vsync: this,
-    )..forward();
-    _animation = CurvedAnimation(
-      parent: _controller,
-      curve: Curves.easeIn,
-    );
-  }
-
-  late Animation<double> _animation;
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+  final pageController = PageController(initialPage: 0);
 
   var hintText = "mm/dd/yyy";
 
@@ -47,33 +29,55 @@ class _BasicPageState extends State<BasicPage> with TickerProviderStateMixin {
     staticRefresh = () {
       setState(() {});
     };
-    startAnimation();
+
     customContext = context;
     return Scaffold(
+      appBar: bar(context),
       extendBody: true,
       backgroundColor: myBlack,
-      body: FadeTransition(
-        opacity: _animation,
-        child: bodyPage(pageDecider),
+      body: PageView(
+        onPageChanged: (value) => setState(() {
+          index = value;
+        }),
+        controller: pageController,
+        children: const [
+          Home(),
+          NewReservationsPage(),
+          Choice(),
+          Cart(),
+          Profile()
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
         currentIndex: index,
         onTap: (value) {
+          if (value == 0) {
+            pageController.animateToPage(0,
+                duration: const Duration(milliseconds: 600),
+                curve: Curves.easeIn);
+          } else if (value == 1) {
+            pageController.animateToPage(1,
+                duration: const Duration(milliseconds: 600),
+                curve: Curves.easeIn);
+          } else if (value == 2) {
+            pageController.animateToPage(2,
+                duration: const Duration(milliseconds: 600),
+                curve: Curves.easeIn);
+          } else if (value == 3) {
+            pageController.animateToPage(3,
+                duration: const Duration(milliseconds: 600),
+                curve: Curves.easeIn);
+          } else if (value == 4) {
+            pageController.animateToPage(4,
+                duration: const Duration(milliseconds: 600),
+                curve: Curves.easeIn);
+          } else {
+            pageController.animateToPage(0,
+                duration: const Duration(milliseconds: 600),
+                curve: Curves.easeIn);
+          }
           setState(() {
-            if (value == 0) {
-              pageDecider = "Home";
-            } else if (value == 1) {
-              pageDecider = "New Reservations";
-            } else if (value == 2) {
-              pageDecider = "Online order";
-            } else if (value == 3) {
-              pageDecider = "Cart";
-            } else if (value == 4) {
-              pageDecider = "Profile";
-            } else {
-              pageDecider = "Home";
-            }
             index = value;
           });
         },
