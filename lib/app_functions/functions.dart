@@ -344,8 +344,6 @@ getQRSummary(id) async {
 }
 
 getVerified(saleId, code) async {
-  print(saleId);
-  print(code);
   try {
     var response = await http
         .post(Uri.parse(callBackUrl + "/api/customer-verify"), body: {
@@ -359,7 +357,6 @@ getVerified(saleId, code) async {
       return false;
     }
   } catch (e) {
-    print(e);
     return false;
   }
 }

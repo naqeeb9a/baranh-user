@@ -100,9 +100,7 @@ genericCardsExtension(context, snapshot, index) {
                     push(
                         context,
                         VerifyCode(
-                            saleId: snapshot[index]["sale_no"]
-                                .toString()
-                                .replaceAll("0", "")));
+                            saleId: snapshot[index]["id"]));
                   }),
                 ],
               )),
