@@ -9,7 +9,7 @@ import 'package:baranh/utils/config.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 
-import 'Cart.dart';
+import 'cart.dart';
 
 class BasicPage extends StatefulWidget {
   const BasicPage({Key? key}) : super(key: key);

@@ -26,5 +26,4 @@ dynamic menuRefresh;
 dynamic drawerRefresh;
 var cartItems = [].obs;
 var reservedTable = [];
-
-
+var callBackUrl = "https://baranh.pk";
