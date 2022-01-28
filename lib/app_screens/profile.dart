@@ -71,6 +71,7 @@ class Profile extends StatelessWidget {
                     await SharedPreferences.getInstance();
                 loginUser.clear();
                 userResponse = "";
+                indexPage = 0;
                 checkLoginStatus(context);
               }),
             ],

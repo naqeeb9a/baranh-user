@@ -9,6 +9,7 @@ import 'package:baranh/utils/config.dart';
 import 'package:baranh/widgets/essential_widgets.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 import 'cart.dart';
 
@@ -21,7 +22,21 @@ class BasicPage extends StatefulWidget {
 
 class _BasicPageState extends State<BasicPage> with TickerProviderStateMixin {
   final pageController = PageController(initialPage: 0);
-
+  final MaterialColor primaryColor = const MaterialColor(
+    0xff000000,
+    <int, Color>{
+      50: Color(0xff000000),
+      100: Color(0xff000000),
+      200: Color(0xff000000),
+      300: Color(0xff000000),
+      400: Color(0xff000000),
+      500: Color(0xff000000),
+      600: Color(0xff000000),
+      700: Color(0xff000000),
+      800: Color(0xff000000),
+      900: Color(0xff000000),
+    },
+  );
   var hintText = "mm/dd/yyy";
 
   @override
@@ -37,20 +52,29 @@ class _BasicPageState extends State<BasicPage> with TickerProviderStateMixin {
       backgroundColor: myBlack,
       body: PageView(
         onPageChanged: (value) => setState(() {
-          index = value;
+          indexPage = value;
         }),
         controller: pageController,
-        children: const [
-          Home(),
-          NewReservationsPage(),
-          Choice(),
-          Cart(),
-          Profile()
+        children: [
+          const Home(),
+          const NewReservationsPage(),
+          MaterialApp(
+              title: 'Baranh Team',
+              debugShowCheckedModeBanner: false,
+              theme: ThemeData(
+                primarySwatch: primaryColor,
+                textTheme: GoogleFonts.sourceSansProTextTheme(
+                  Theme.of(context).textTheme,
+                ),
+              ),
+              home: const Choice()),
+          const Cart(),
+          const Profile()
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         type: BottomNavigationBarType.fixed,
-        currentIndex: index,
+        currentIndex: indexPage,
         onTap: (value) {
           if (value == 0) {
             pageController.animateToPage(0,
@@ -78,7 +102,7 @@ class _BasicPageState extends State<BasicPage> with TickerProviderStateMixin {
                 curve: Curves.easeIn);
           }
           setState(() {
-            index = value;
+            indexPage = value;
           });
         },
         unselectedItemColor: myWhite,

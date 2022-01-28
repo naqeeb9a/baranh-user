@@ -11,7 +11,7 @@ const myRed = Color(0xFFff0000);
 const noColor = Colors.transparent;
 
 bool obscureText = true;
-var index = 0;
+var indexPage = 0;
 dynamic staticRefresh;
 var pageDecider = "Home";
 dynamic hintText = DateFormat('yyyy-MM-dd').format(DateTime.now()).toString();

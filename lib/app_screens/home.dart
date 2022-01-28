@@ -95,7 +95,6 @@ class _HomeState extends State<Home> {
               "Order Food Online From The Best Restaurants And Shops On Baranh.",
               "Order Now", function: () {
             pageDecider = "Online order";
-            index = 2;
 
             staticRefresh();
           }),
@@ -106,7 +105,6 @@ class _HomeState extends State<Home> {
               "Find Your Table For Any Occasion.",
               "Reserve Table", function: () {
             pageDecider = "New Reservations";
-            index = 1;
 
             staticRefresh();
           }),
@@ -117,7 +115,6 @@ class _HomeState extends State<Home> {
               "We Bring Professional Chefs To Your Home To Prepare Delicious, Customized Meals At A Fraction Of The Cost.",
               "Menu", function: () {
             pageDecider = "Online order";
-            index = 2;
 
             staticRefresh();
           }),
