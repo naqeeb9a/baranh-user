@@ -1,7 +1,10 @@
 import 'package:baranh/app_functions/functions.dart';
+import 'package:baranh/app_screens/verification_screen.dart';
+import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/buttons.dart';
+import 'package:baranh/widgets/green_buttons.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -81,6 +84,29 @@ genericCardsExtension(context, snapshot, index) {
               bold: true,
               alignText: TextAlign.center,
             )),
+        Align(
+          alignment: Alignment.center,
+          child: Visibility(
+              visible: snapshot[index]["verification_status"]
+                          .toString()
+                          .toLowerCase() ==
+                      "unverified"
+                  ? true
+                  : false,
+              child: Column(
+                children: [
+                  heightBox(context, 0.02),
+                  greenButtons(context, "Verify", function: () {
+                    push(
+                        context,
+                        VerifyCode(
+                            saleId: snapshot[index]["sale_no"]
+                                .toString()
+                                .replaceAll("0", "")));
+                  }),
+                ],
+              )),
+        )
       ],
     ),
   );

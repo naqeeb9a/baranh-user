@@ -1,3 +1,4 @@
+import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/generic_cards.dart';
@@ -23,8 +24,27 @@ class _OrderHistoryState extends State<OrderHistory> {
           ),
           child: Column(
             children: [
-              heightBox(context, 0.05),
-              text(context, "Order History", 0.05, myWhite),
+              heightBox(context, 0.02),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  InkWell(
+                    onTap: () {
+                      pop(context);
+                    },
+                    child: const Icon(
+                      Icons.arrow_back,
+                      color: myWhite,
+                    ),
+                  ),
+                  text(context, "My Orders", 0.05, myWhite),
+                  const Icon(
+                    Icons.arrow_back,
+                    color: myBlack,
+                  ),
+                ],
+              ),
+              heightBox(context, 0.01),
               const Divider(
                 thickness: 1,
                 color: myWhite,
@@ -37,4 +57,3 @@ class _OrderHistoryState extends State<OrderHistory> {
     );
   }
 }
-

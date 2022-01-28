@@ -1,3 +1,4 @@
+import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/text_widget.dart';
@@ -20,131 +21,104 @@ class _CustomerCareState extends State<CustomerCare> {
       backgroundColor: myBlack,
       body: Padding(
         padding: EdgeInsets.symmetric(horizontal: dynamicWidth(context, 0.05)),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Container(
-              width: dynamicWidth(context, .9),
-              height: dynamicHeight(context, .26),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(
-                  dynamicWidth(context, 0.02),
-                ),
-                image: const DecorationImage(
-                  image: AssetImage("assets/baranh_lahore.jpg"),
-                  fit: BoxFit.fitHeight,
-                ),
+        child: SingleChildScrollView(
+          child: Column(
+            children: [
+              heightBox(context, 0.03),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: InkWell(
+                    onTap: () {
+                      pop(context);
+                    },
+                    child: const Icon(
+                      Icons.arrow_back,
+                      color: myWhite,
+                    )),
               ),
-              child: Container(
-                width: dynamicWidth(context, .9),
-                height: dynamicHeight(context, .26),
-                decoration: BoxDecoration(
-                  color: myBlack.withOpacity(.6),
-                  borderRadius: BorderRadius.circular(
-                    dynamicWidth(context, 0.02),
-                  ),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    text(
-                      context,
-                      "BARANH LAHORE",
-                      0.06,
-                      myWhite,
-                      bold: true,
-                    ),
-                    text(
-                      context,
-                      "TIME : 7 PM TO 3 AM",
-                      0.04,
-                      myWhite,
-                    ),
-                    text(
-                      context,
-                      "GULBERG GALLERIA 18 GULBERG BOULEVARD GULBERG LAHORE",
-                      0.04,
-                      myWhite,
-                      alignText: TextAlign.center,
-                    ),
-                    heightBox(context, .06),
-                    essentialsRow(
-                      context,
-                      LineIcons.phone,
-                      LineIcons.whatSApp,
-                      "042 35745701",
-                      "+92 346 8697097",
-                    ),
-                  ],
-                ),
+              heightBox(context, 0.03),
+              customerCareCard(
+                  context,
+                  "assets/baranh_lahore.jpg",
+                  "BARANH LAHORE",
+                  "TIME : 7 PM TO 3 AM",
+                  "GULBERG GALLERIA 18 GULBERG BOULEVARD GULBERG LAHORE"),
+              heightBox(context, 0.04),
+              const Divider(
+                color: myWhite,
               ),
-            ),
-            heightBox(context, 0.04),
-            const Divider(
-              color: myWhite,
-            ),
-            heightBox(context, 0.04),
-            Container(
-              width: dynamicWidth(context, .9),
-              height: dynamicHeight(context, .26),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(
-                  dynamicWidth(context, 0.02),
-                ),
-                image: const DecorationImage(
-                  image: AssetImage("assets/baranh_jhang.jpg"),
-                  fit: BoxFit.fitHeight,
-                ),
-              ),
-              child: Container(
-                width: dynamicWidth(context, .9),
-                height: dynamicHeight(context, .26),
-                decoration: BoxDecoration(
-                  color: myBlack.withOpacity(.6),
-                  borderRadius: BorderRadius.circular(
-                    dynamicWidth(context, 0.02),
-                  ),
-                ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    text(
-                      context,
-                      "BARANH JHANG",
-                      0.06,
-                      myWhite,
-                      bold: true,
-                    ),
-                    text(
-                      context,
-                      "TIME : 7 PM TO 3 AM",
-                      0.04,
-                      myWhite,
-                    ),
-                    text(
-                      context,
-                      "LDS - LONDON DEPARTMENTAL STORE NEAR SHELL PUMP, SESSION CHOWK, JHANG SADAR",
-                      0.04,
-                      myWhite,
-                      alignText: TextAlign.center,
-                    ),
-                    heightBox(context, .06),
-                    essentialsRow(
-                      context,
-                      LineIcons.phone,
-                      LineIcons.whatSApp,
-                      "042 35745701",
-                      "+92 346 8697097",
-                    ),
-                  ],
-                ),
-              ),
-            ),
-          ],
+              heightBox(context, 0.04),
+              customerCareCard(
+                  context,
+                  "assets/baranh_jhang.jpg",
+                  "BARANH JHANG",
+                  "TIME : 7 PM TO 3 AM",
+                  "LDS - LONDON DEPARTMENTAL STORE NEAR SHELL PUMP, SESSION CHOWK, JHANG SADAR")
+            ],
+          ),
         ),
       ),
     );
   }
+}
+
+customerCareCard(context, img, outletName, timing, description) {
+  return Container(
+    width: dynamicWidth(context, .9),
+    height: dynamicHeight(context, .26),
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(
+        dynamicWidth(context, 0.02),
+      ),
+      image: DecorationImage(
+        image: AssetImage(img),
+        fit: BoxFit.fitHeight,
+      ),
+    ),
+    child: Container(
+      width: dynamicWidth(context, .9),
+      height: dynamicHeight(context, .26),
+      decoration: BoxDecoration(
+        color: myBlack.withOpacity(.6),
+        borderRadius: BorderRadius.circular(
+          dynamicWidth(context, 0.02),
+        ),
+      ),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        children: [
+          text(
+            context,
+            outletName,
+            0.06,
+            myWhite,
+            bold: true,
+          ),
+          text(
+            context,
+            timing,
+            0.04,
+            myWhite,
+          ),
+          text(
+            context,
+            description,
+            0.04,
+            myWhite,
+            alignText: TextAlign.center,
+          ),
+          heightBox(context, .06),
+          essentialsRow(
+            context,
+            LineIcons.phone,
+            LineIcons.whatSApp,
+            "042 35745701",
+            "+92 346 8697097",
+          ),
+        ],
+      ),
+    ),
+  );
 }
 
 essentialsRow(context, icon1, icon2, phone1, phone2) {

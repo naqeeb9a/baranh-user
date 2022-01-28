@@ -14,6 +14,7 @@ Widget inputFieldsHome(text1, hintText1, context,
     function = "",
     keyBoardType = TextInputType.text,
     controller = "",
+    width=1,
     enable = true}) {
   return StatefulBuilder(builder: (context, changeState) {
     return Column(
@@ -23,7 +24,7 @@ Widget inputFieldsHome(text1, hintText1, context,
         heightBox(context, .01),
         Container(
           color: noColor,
-          width: dynamicWidth(context, 1),
+          width: dynamicWidth(context, width),
           child: (check == true)
               ? InkWell(
                   onTap: () async {

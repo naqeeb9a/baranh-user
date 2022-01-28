@@ -35,7 +35,7 @@ class _SignUpState extends State<SignUp> {
         loading = true;
       });
       var response = await http.post(
-          Uri.parse("https://baranhweb.cmcmtech.com/api/register-customer"),
+          Uri.parse(callBackUrl+"/api/register-customer"),
           body: {
             "yourname": name.text,
             "phone": phone.text,

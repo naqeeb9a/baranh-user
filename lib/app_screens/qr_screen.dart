@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:baranh/app_screens/qr_info.dart';
 import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
@@ -16,7 +17,6 @@ class QRScreen extends StatefulWidget {
 }
 
 class _QRScreenState extends State<QRScreen> {
-  dynamic barcode = "";
   final qrKey = GlobalKey();
   QRViewController? controller;
 
@@ -24,11 +24,35 @@ class _QRScreenState extends State<QRScreen> {
     setState(() {
       this.controller = controller;
     });
+
     controller.scannedDataStream.listen((event) {
-      setState(() {
-        barcode = event;
-      });
+      var tableCode = event.code.toString().substring(
+          event.code.toString().length - 3, event.code.toString().length);
+
+      onDone(tableCode);
+
+      // onDone() {
+      //   controller.resumeCamera();
+      //   push(
+      //     context,
+      //     QRInfo(
+      //       tableId: tableCode,
+      //     ),
+      //   );
+      // }
+      //
+      // onDone();
     });
+  }
+
+  onDone(tableCode) async {
+    controller?.pauseCamera();
+    push(
+      context,
+      QRInfo(
+        tableId: tableCode,
+      ),
+    ).then((value) => controller?.resumeCamera());
   }
 
   @override
@@ -78,12 +102,7 @@ class _QRScreenState extends State<QRScreen> {
         child: Container(
           color: myWhite.withOpacity(0.4),
           padding: EdgeInsets.all(dynamicWidth(context, 0.02)),
-          child: text(
-              context,
-              // barcode != "" ? "${barcode!.code}" : "Scan the QR code",
-              "Scan the QR code",
-              0.04,
-              myWhite),
+          child: text(context, "Scan the QR code", 0.04, myWhite),
         ),
       ),
     );

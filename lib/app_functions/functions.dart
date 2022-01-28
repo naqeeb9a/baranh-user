@@ -107,7 +107,7 @@ arrivedGuests(id) async {
   }
 }
 
-reserveTable(name, phone, email, seats, date, dropDownTime,outletId) async {
+reserveTable(name, phone, email, seats, date, dropDownTime, outletId) async {
   try {
     var response = await http.post(Uri.parse(callBackUrl + "/api/reserve"),
         body: json.encode({
@@ -127,7 +127,7 @@ reserveTable(name, phone, email, seats, date, dropDownTime,outletId) async {
     var jsonData = jsonDecode(response.body);
 
     if (response.statusCode == 200) {
-      return jsonData["data"];
+      return jsonData["data"]["id"];
     } else {
       return false;
     }
@@ -325,6 +325,41 @@ getOutlets() async {
       return false;
     }
   } catch (e) {
+    return false;
+  }
+}
+
+getQRSummary(id) async {
+  try {
+    var response = await http.get(Uri.parse(callBackUrl + "/api/barcode/$id"));
+    var jsonData = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      return jsonData["data"];
+    } else {
+      return false;
+    }
+  } catch (e) {
+    return false;
+  }
+}
+
+getVerified(saleId, code) async {
+  print(saleId);
+  print(code);
+  try {
+    var response = await http
+        .post(Uri.parse(callBackUrl + "/api/customer-verify"), body: {
+      "sale_id": saleId.toString(),
+      "verification_code": code.toString()
+    });
+    var jsonData = jsonDecode(response.body);
+    if (response.statusCode == 200) {
+      return jsonData["data"];
+    } else {
+      return false;
+    }
+  } catch (e) {
+    print(e);
     return false;
   }
 }

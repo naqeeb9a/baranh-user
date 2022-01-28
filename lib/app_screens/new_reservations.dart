@@ -283,7 +283,7 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                       if (response == true) {
                         Navigator.of(context, rootNavigator: true).pop();
                         CoolAlert.show(
-                            onConfirmBtnTap: () {
+                            onConfirmBtnTap: () async {
                               if (userResponse == null) {
                                 Navigator.of(context, rootNavigator: true)
                                     .pop();
@@ -298,7 +298,12 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                               } else {
                                 Navigator.of(context, rootNavigator: true)
                                     .pop();
-                                var response = reserveTable(
+                                CoolAlert.show(
+                                    context: context,
+                                    type: CoolAlertType.loading,
+                                    barrierDismissible: false,
+                                    lottieAsset: "assets/loader.json");
+                                var response = await reserveTable(
                                     userResponse["name"],
                                     userResponse["phone"],
                                     userResponse["email"],
@@ -307,11 +312,6 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                                     indexValue
                                         .substring(indexValue.indexOf("#") + 1),
                                     outletId.toString());
-                                CoolAlert.show(
-                                    context: context,
-                                    type: CoolAlertType.loading,
-                                    barrierDismissible: false,
-                                    lottieAsset: "assets/loader.json");
                                 if (response == false) {
                                   Navigator.of(context, rootNavigator: true)
                                       .pop();
@@ -319,7 +319,7 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                                     description: const Text(
                                         "Check your internet or try again"),
                                     dismissable: true,
-                                  );
+                                  ).show(context);
                                 } else {
                                   Navigator.of(context, rootNavigator: true)
                                       .pop();
@@ -327,13 +327,17 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                                     description: const Text(
                                         "A verfication code has been sent to your Mail"),
                                     dismissable: true,
-                                  );
-                                  push(context, const VerifyCode());
+                                  ).show(context);
+                                  push(
+                                      context,
+                                      VerifyCode(
+                                        saleId: response[0]["sale_id"],
+                                      ));
                                 }
                               }
                             },
                             title: "Slots Available",
-                            text: userResponse != null
+                            text: userResponse == null
                                 ? "Do you wish to proceed"
                                 : "Do you wish to Book a slot?",
                             context: context,

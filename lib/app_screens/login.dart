@@ -37,7 +37,7 @@ class _LoginScreenState extends State<LoginScreen> {
         loading = true;
       });
       var response = await http.post(
-          Uri.parse("https://baranhweb.cmcmtech.com/api/signin-customer"),
+          Uri.parse(callBackUrl + "/api/signin-customer"),
           body: {"emailphone": email.text, "password": password.text});
       if (response.statusCode == 200) {
         var jsonData = jsonDecode(response.body);

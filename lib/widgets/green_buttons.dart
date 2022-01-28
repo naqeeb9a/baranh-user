@@ -3,7 +3,7 @@ import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 
-Widget greenButtons(context, text1, snapshot, index, {function = ""}) {
+Widget greenButtons(context, text1, {function = ""}) {
   return InkWell(
     onTap: function == "" ? () {} : function,
     child: Container(
