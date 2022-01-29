@@ -72,7 +72,7 @@ class Profile extends StatelessWidget {
                 loginUser.clear();
                 userResponse = "";
                 indexPage = 0;
-                checkLoginStatus(context);
+                checkLoginStatus(globalContextMain);
               }),
             ],
           ),

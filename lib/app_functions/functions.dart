@@ -334,7 +334,7 @@ getQRSummary(id) async {
     var response = await http.get(Uri.parse(callBackUrl + "/api/barcode/$id"));
     var jsonData = jsonDecode(response.body);
     if (response.statusCode == 200) {
-      return jsonData["data"];
+      return jsonData["data"]["message"];
     } else {
       return false;
     }

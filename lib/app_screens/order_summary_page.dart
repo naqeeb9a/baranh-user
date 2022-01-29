@@ -22,51 +22,56 @@ class _OrderSummaryPageState extends State<OrderSummaryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: myBlack,
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: dynamicWidth(context, 0.05)),
-        child: Column(
-          children: [
-            heightBox(context, 0.02),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: InkWell(
-                onTap: () {
-                  pop(context);
-                },
-                child: const Icon(
-                  LineIcons.arrowLeft,
-                  color: myWhite,
+      body: SafeArea(
+        child: Padding(
+          padding:
+              EdgeInsets.symmetric(horizontal: dynamicWidth(context, 0.05)),
+          child: Column(
+            children: [
+              heightBox(context, 0.02),
+              Align(
+                alignment: Alignment.centerLeft,
+                child: InkWell(
+                  onTap: () {
+                    pop(context);
+                  },
+                  child: const Icon(
+                    LineIcons.arrowLeft,
+                    color: myWhite,
+                  ),
                 ),
               ),
-            ),
-            heightBox(context, 0.02),
-            FutureBuilder(
-              future: getOrderSummary(widget.saleId),
-              builder: (BuildContext context, AsyncSnapshot snapshot) {
-                if (snapshot.connectionState == ConnectionState.done) {
-                  if (snapshot.data == null) {
-                    return Expanded(
-                      child: Center(
-                        child: text(
-                          context,
-                          "No details",
-                          0.04,
-                          myWhite,
+              heightBox(context, 0.02),
+              FutureBuilder(
+                future: getOrderSummary(widget.saleId),
+                builder: (BuildContext context, AsyncSnapshot snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done) {
+                    if (snapshot.data == null) {
+                      return Expanded(
+                        child: Center(
+                          child: text(
+                            context,
+                            "No details",
+                            0.04,
+                            myWhite,
+                          ),
                         ),
-                      ),
-                    );
-                  } else if (snapshot.data == false) {
-                    return Expanded(
-                        child: retry(context, ));
+                      );
+                    } else if (snapshot.data == false) {
+                      return Expanded(
+                          child: retry(
+                        context,
+                      ));
+                    } else {
+                      return orderDetails(context, snapshot.data);
+                    }
                   } else {
-                    return orderDetails(context, snapshot.data);
+                    return Expanded(child: loader(context));
                   }
-                } else {
-                  return Expanded(child: loader(context));
-                }
-              },
-            ),
-          ],
+                },
+              ),
+            ],
+          ),
         ),
       ),
     );

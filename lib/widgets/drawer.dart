@@ -344,7 +344,7 @@ cartCards(context, index, function) {
       InkWell(
         onTap: () {
           cartItems.remove(cartItems[index]);
-
+          menuRefresh();
           function();
         },
         child: const Icon(
@@ -356,7 +356,8 @@ cartCards(context, index, function) {
   );
 }
 
-Widget dividerRowWidgets(context, text1, text2, {check = false}) {
+Widget dividerRowWidgets(context, text1, text2,
+    {check = false, function = ""}) {
   return Padding(
     padding: EdgeInsets.symmetric(vertical: dynamicHeight(context, 0.01)),
     child: Row(
@@ -371,9 +372,11 @@ Widget dividerRowWidgets(context, text1, text2, {check = false}) {
                 myWhite,
               )
             : InkWell(
-                onTap: () {},
+                onTap: () {
+                  pop(context);
+                },
                 child: Icon(
-                  Icons.clear_all,
+                  Icons.close,
                   color: myWhite,
                   size: dynamicWidth(context, .08),
                 ),

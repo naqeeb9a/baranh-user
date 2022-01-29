@@ -4,7 +4,6 @@ import 'package:baranh/app_screens/qr_info.dart';
 import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
-import 'package:baranh/widgets/essential_widgets.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:qr_code_scanner/qr_code_scanner.dart';
@@ -18,6 +17,7 @@ class QRScreen extends StatefulWidget {
 
 class _QRScreenState extends State<QRScreen> {
   final qrKey = GlobalKey();
+
   QRViewController? controller;
 
   void qrCreated(QRViewController controller) {
@@ -25,34 +25,11 @@ class _QRScreenState extends State<QRScreen> {
       this.controller = controller;
     });
 
-    controller.scannedDataStream.listen((event) {
+    controller.scannedDataStream.listen((event) async {
       var tableCode = event.code.toString().substring(
           event.code.toString().length - 3, event.code.toString().length);
-
-      onDone(tableCode);
-
-      // onDone() {
-      //   controller.resumeCamera();
-      //   push(
-      //     context,
-      //     QRInfo(
-      //       tableId: tableCode,
-      //     ),
-      //   );
-      // }
-      //
-      // onDone();
+      await checkQr(tableCode);
     });
-  }
-
-  onDone(tableCode) async {
-    controller?.pauseCamera();
-    push(
-      context,
-      QRInfo(
-        tableId: tableCode,
-      ),
-    ).then((value) => controller?.resumeCamera());
   }
 
   @override
@@ -70,10 +47,19 @@ class _QRScreenState extends State<QRScreen> {
     super.reassemble();
   }
 
+  checkQr(tableCode) async {
+    await controller!.pauseCamera();
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+            builder: (context) => QRInfo(
+                  tableId: tableCode,
+                ))).then((value) => controller!.resumeCamera());
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: bar(context, qrVisibility: false),
       body: Stack(
         alignment: Alignment.center,
         children: [
@@ -114,16 +100,8 @@ class _QRScreenState extends State<QRScreen> {
       child: SizedBox(
         width: dynamicWidth(context, 1),
         child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            IconButton(
-                onPressed: () {
-                  pop(context);
-                },
-                icon: const Icon(
-                  Icons.arrow_back,
-                  color: myWhite,
-                )),
             Container(
               padding: EdgeInsets.all(dynamicWidth(context, 0.01)),
               decoration: BoxDecoration(
@@ -175,12 +153,6 @@ class _QRScreenState extends State<QRScreen> {
                 ],
               ),
             ),
-            IconButton(
-                onPressed: () {},
-                icon: const Icon(
-                  Icons.arrow_back,
-                  color: Colors.transparent,
-                )),
           ],
         ),
       ),

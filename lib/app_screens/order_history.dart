@@ -1,3 +1,4 @@
+import 'package:baranh/app_functions/functions.dart';
 import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
@@ -49,7 +50,7 @@ class _OrderHistoryState extends State<OrderHistory> {
                 thickness: 1,
                 color: myWhite,
               ),
-              Expanded(child: genericCards())
+              Expanded(child: genericCards(getOrderHistory(userResponse["id"])))
             ],
           ),
         ),

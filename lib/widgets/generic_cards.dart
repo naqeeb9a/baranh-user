@@ -1,4 +1,4 @@
-import 'package:baranh/app_functions/functions.dart';
+import 'package:baranh/app_screens/order_summary_page.dart';
 import 'package:baranh/app_screens/verification_screen.dart';
 import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
@@ -10,17 +10,16 @@ import 'package:flutter/material.dart';
 
 import 'essential_widgets.dart';
 
-genericCards() {
+genericCards(function) {
   return FutureBuilder(
-    future: getOrderHistory(userResponse["id"]),
+    future: function,
     builder: (BuildContext context, AsyncSnapshot snapshot) {
       if (snapshot.connectionState == ConnectionState.done) {
         if (snapshot.data == false) {
           return retry(context);
         } else if (snapshot.data.length == 0 ||
             snapshot.data == "Nothing found!") {
-          return Center(
-              child: text(context, "No Order History", 0.04, myWhite));
+          return Center(child: text(context, "No Orders Found", 0.04, myWhite));
         } else {
           return ListView.builder(
             itemCount: snapshot.data.length,
@@ -87,20 +86,27 @@ genericCardsExtension(context, snapshot, index) {
         Align(
           alignment: Alignment.center,
           child: Visibility(
-              visible: snapshot[index]["verification_status"]
-                          .toString()
-                          .toLowerCase() ==
-                      "unverified"
-                  ? true
-                  : false,
+              visible: true,
               child: Column(
                 children: [
                   heightBox(context, 0.02),
-                  greenButtons(context, "Verify", function: () {
-                    push(
-                        context,
-                        VerifyCode(
-                            saleId: snapshot[index]["id"]));
+                  greenButtons(
+                      context,
+                      snapshot[index]["verification_status"]
+                                  .toString()
+                                  .toLowerCase() ==
+                              "unverified"
+                          ? "Verify"
+                          : "View Details", function: () {
+                    if (snapshot[index]["verification_status"]
+                            .toString()
+                            .toLowerCase() ==
+                        "unverified") {
+                      push(context, VerifyCode(saleId: snapshot[index]["id"]));
+                    } else {
+                      push(context,
+                          OrderSummaryPage(saleId: snapshot[index]["id"]));
+                    }
                   }),
                 ],
               )),

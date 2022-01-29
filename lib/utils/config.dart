@@ -23,6 +23,7 @@ dynamic globalDineInContext;
 dynamic globalDineInRefresh;
 dynamic userResponse = "";
 dynamic menuRefresh;
+dynamic globalContextMain;
 
 var cartItems = [].obs;
 var reservedTable = [];

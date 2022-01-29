@@ -1,14 +1,11 @@
-import 'package:baranh/app_screens/qr_screen.dart';
-import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:flutter/material.dart';
 import 'package:lottie/lottie.dart';
 
 bar(
-  context, {
-  qrVisibility = true,
-}) {
+  context,
+) {
   return AppBar(
     backgroundColor: myBlack,
     title: Center(
@@ -19,17 +16,6 @@ bar(
     ),
     automaticallyImplyLeading: false,
     centerTitle: true,
-    actions: [
-      Visibility(
-        visible: qrVisibility,
-        child: InkWell(
-            onTap: () {
-              push(context, const QRScreen());
-            },
-            child: const Icon(Icons.qr_code)),
-      ),
-      widthBox(context, 0.02)
-    ],
     bottom: PreferredSize(
       child: Container(
         color: myWhite.withOpacity(0.5),

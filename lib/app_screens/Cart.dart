@@ -8,9 +8,14 @@ import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:motion_toast/motion_toast.dart';
 
-class Cart extends StatelessWidget {
+class Cart extends StatefulWidget {
   const Cart({Key? key}) : super(key: key);
 
+  @override
+  State<Cart> createState() => _CartState();
+}
+
+class _CartState extends State<Cart> {
   @override
   Widget build(BuildContext context) {
     return StatefulBuilder(builder: (context, changeState) {
@@ -39,7 +44,11 @@ class Cart extends StatelessWidget {
           ),
           child: Column(
             children: [
-              dividerRowWidgets(context, "YOUR CART", ""),
+              dividerRowWidgets(context, "YOUR CART", "", function: () {
+                setState(() {
+                  cartItems.clear();
+                });
+              }),
               Divider(
                 thickness: 1,
                 color: myWhite.withOpacity(0.5),

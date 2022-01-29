@@ -36,9 +36,13 @@ class _LoginScreenState extends State<LoginScreen> {
       setState(() {
         loading = true;
       });
-      var response = await http.post(
-          Uri.parse(callBackUrl + "/api/signin-customer"),
-          body: {"emailphone": email.text, "password": password.text});
+      var response = await http
+          .post(Uri.parse(callBackUrl + "/api/signin-customer"), body: {
+        "emailphone": email.text,
+        "password": password.text
+      }).timeout(const Duration(seconds: 10), onTimeout: () {
+        return http.Response('Error', 408);
+      });
       if (response.statusCode == 200) {
         var jsonData = jsonDecode(response.body);
 
@@ -138,7 +142,6 @@ class _LoginScreenState extends State<LoginScreen> {
                                 ).show(context);
                               } else {
                                 var response = await loginFunction();
-
                                 if (response == "Error") {
                                   setState(() {
                                     loading = false;
