@@ -1,4 +1,3 @@
-import 'dart:math';
 
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
@@ -14,7 +13,7 @@ Widget inputFieldsHome(text1, hintText1, context,
     function = "",
     keyBoardType = TextInputType.text,
     controller = "",
-    width=1,
+    width = 1,
     enable = true}) {
   return StatefulBuilder(builder: (context, changeState) {
     return Column(
@@ -127,7 +126,6 @@ Widget inputFieldsHome(text1, hintText1, context,
                 )
               : generatePasswordCheck == true
                   ? Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Expanded(
                           child: TextFormField(
@@ -186,13 +184,6 @@ Widget inputFieldsHome(text1, hintText1, context,
                             ),
                           ),
                         ),
-                        InkWell(
-                          onTap: () {
-                            var rng = Random();
-                            controller.text = rng.nextInt(9999999).toString();
-                          },
-                          child: const Icon(Icons.rotate_left),
-                        )
                       ],
                     )
                   : TextFormField(

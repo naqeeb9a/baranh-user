@@ -284,7 +284,7 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                         Navigator.of(context, rootNavigator: true).pop();
                         CoolAlert.show(
                             onConfirmBtnTap: () async {
-                              if (userResponse == null) {
+                              if (userResponse == "Guest") {
                                 Navigator.of(context, rootNavigator: true)
                                     .pop();
                                 push(
@@ -323,21 +323,33 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                                 } else {
                                   Navigator.of(context, rootNavigator: true)
                                       .pop();
-                                  MotionToast.info(
-                                    description: const Text(
-                                        "A verfication code has been sent to your Mail"),
-                                    dismissable: true,
-                                  ).show(context);
-                                  push(
-                                      context,
-                                      VerifyCode(
-                                        saleId: response[0]["sale_id"],
-                                      ));
+
+                                  CoolAlert.show(
+                                      context: context,
+                                      type: CoolAlertType.info,
+                                      title: "Verify",
+                                      text:
+                                          "A verification message has been sent to your Email and Number",
+                                      confirmBtnText: "Verify",
+                                      confirmBtnColor: myOrange,
+                                      backgroundColor: myOrange,
+                                      onConfirmBtnTap: () {
+                                        Navigator.of(context,
+                                                rootNavigator: true)
+                                            .pop();
+                                        pop(context);
+                                        push(
+                                            context,
+                                            VerifyCode(
+                                              saleId: response[0]["sale_id"],
+                                             
+                                            ));
+                                      });
                                 }
                               }
                             },
                             title: "Slots Available",
-                            text: userResponse == null
+                            text: userResponse == "Guest"
                                 ? "Do you wish to proceed"
                                 : "Do you wish to Book a slot?",
                             context: context,

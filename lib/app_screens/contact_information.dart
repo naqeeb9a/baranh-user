@@ -1,4 +1,5 @@
 import 'package:baranh/app_functions/functions.dart';
+import 'package:baranh/app_screens/verification_screen.dart';
 import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
@@ -131,12 +132,22 @@ class _ContactInformationState extends State<ContactInformation> {
                         animType: CoolAlertAnimType.slideInRight);
                   } else {
                     Navigator.of(context, rootNavigator: true).pop();
-                    MotionToast.info(
-                      description: const Text("Reserved successfully"),
-                      dismissable: true,
-                    ).show(context);
-                    pageDecider = "All Reservations";
-                    popUntil(customContext);
+                    CoolAlert.show(
+                        context: context,
+                        type: CoolAlertType.info,
+                        barrierDismissible: false,
+                        title: "Verify",
+                        text:
+                            "A verification message has been sent to your Email and Number",
+                        confirmBtnText: "Verify",
+                        confirmBtnColor: myOrange,
+                        backgroundColor: myOrange,
+                        onConfirmBtnTap: () {
+                          Navigator.of(context, rootNavigator: true).pop();
+                          pop(context);
+                          push(context,
+                              VerifyCode(saleId: response[0]["sale_id"]));
+                        });
                   }
                 }
               })

@@ -45,7 +45,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    globalContextMain = context;
     globalRefresh = () {
       setState(() {});
     };
@@ -70,6 +69,7 @@ class _MyAppState extends State<MyApp> {
         ),
         builder: (context, child) {
           return StatefulBuilder(builder: (context1, changeState) {
+            globalContextMain = context1;
             checkLoginStatus(context1);
             return loader == true
                 ? Scaffold(
@@ -102,7 +102,10 @@ class _MyAppState extends State<MyApp> {
 checkLoginStatus(context1) async {
   SharedPreferences loginUser = await SharedPreferences.getInstance();
   dynamic temp = loginUser.getString("userResponse");
-  userResponse = temp == null ? "" : await json.decode(temp);
+  userResponse = temp;
+  if (temp != "Guest") {
+    userResponse = temp == null ? "" : await json.decode(temp);
+  }
 
   if (temp == null) {
     Navigator.pushAndRemoveUntil(

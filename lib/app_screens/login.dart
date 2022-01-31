@@ -78,6 +78,37 @@ class _LoginScreenState extends State<LoginScreen> {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
+                          GestureDetector(
+                              onTap: () async {
+                                SharedPreferences loginUser =
+                                    await SharedPreferences.getInstance();
+                                loginUser.setString(
+                                  "userResponse",
+                                  "Guest",
+                                );
+                                setState(() {
+                                  pageDecider = "Home";
+                                });
+                                pushAndRemoveUntil(
+                                  context,
+                                  const MyApp(),
+                                );
+                              },
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.end,
+                                children: [
+                                  CircleAvatar(
+                                      radius: dynamicWidth(context, 0.05),
+                                      backgroundColor: myOrange,
+                                      child: text(
+                                          context, "Skip", 0.03, myWhite,
+                                          bold: true)),
+                                  const Icon(
+                                    Icons.double_arrow,
+                                    color: myOrange,
+                                  )
+                                ],
+                              )),
                           Image.asset(
                             "assets/logo.png",
                             width: dynamicWidth(context, 0.46),

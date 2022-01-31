@@ -82,12 +82,16 @@ class _OnlineOrderState extends State<OnlineOrder> {
                                               cartItems.clear();
                                               pop(context);
                                             },
-                                            child: const Icon(
-                                              Icons.arrow_back,
-                                              color: myWhite,
+                                            child: Row(
+                                              children: [
+                                                const Icon(
+                                                  Icons.arrow_back,
+                                                  color: myWhite,
+                                                ),
+                                                widthBox(context, 0.05),
+                                              ],
                                             ),
                                           ),
-                                          widthBox(context, 0.05),
                                           Expanded(
                                             child: Container(
                                               decoration: BoxDecoration(
@@ -119,22 +123,30 @@ class _OnlineOrderState extends State<OnlineOrder> {
                                               ),
                                             ),
                                           ),
-                                          widthBox(context, 0.05),
-                                          InkWell(onTap: () {
-                                            _key.currentState!.openEndDrawer();
-                                          }, child: Obx(() {
-                                            return Badge(
-                                              badgeContent: text(
-                                                  context,
-                                                  cartItems.length.toString(),
-                                                  0.02,
-                                                  myWhite),
-                                              child: const Icon(
-                                                Icons.shopping_basket,
-                                                color: myWhite,
-                                              ),
-                                            );
-                                          })),
+                                          InkWell(
+                                              onTap: () {
+                                                _key.currentState!
+                                                    .openEndDrawer();
+                                              },
+                                              child: Row(
+                                                children: [
+                                                  widthBox(context, 0.05),
+                                                  Obx(() {
+                                                    return Badge(
+                                                      badgeContent: text(
+                                                          context,
+                                                          cartItems.length
+                                                              .toString(),
+                                                          0.02,
+                                                          myWhite),
+                                                      child: const Icon(
+                                                        Icons.shopping_basket,
+                                                        color: myWhite,
+                                                      ),
+                                                    );
+                                                  }),
+                                                ],
+                                              )),
                                         ],
                                       ),
                                     ),

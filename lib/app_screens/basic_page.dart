@@ -207,6 +207,9 @@ class _BasicPageState extends State<BasicPage> with TickerProviderStateMixin {
   late Animation<double> _animation;
   @override
   Widget build(BuildContext context) {
+    staticRefresh = () {
+      setState(() {});
+    };
     startAnimation();
     customContext = context;
     return Scaffold(

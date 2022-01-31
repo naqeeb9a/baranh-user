@@ -94,6 +94,7 @@ class _HomeState extends State<Home> {
               "ORDER FOOD",
               "Order Food Online From The Best Restaurants And Shops On Baranh.",
               "Order Now", function: () {
+            indexPage = 2;
             pageDecider = "Online order";
 
             staticRefresh();
@@ -104,6 +105,7 @@ class _HomeState extends State<Home> {
               "TABLE RESERVATION",
               "Find Your Table For Any Occasion.",
               "Reserve Table", function: () {
+            indexPage = 1;
             pageDecider = "New Reservations";
 
             staticRefresh();
@@ -114,6 +116,7 @@ class _HomeState extends State<Home> {
               "DISCOVER A UNIQUE EXPERIENCE",
               "We Bring Professional Chefs To Your Home To Prepare Delicious, Customized Meals At A Fraction Of The Cost.",
               "Menu", function: () {
+            indexPage = 2;
             pageDecider = "Online order";
 
             staticRefresh();

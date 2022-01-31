@@ -1,7 +1,6 @@
 import 'dart:io';
 
 import 'package:baranh/app_screens/qr_info.dart';
-import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/text_widget.dart';

@@ -21,7 +21,7 @@ dynamic saleIdGlobal;
 dynamic tableNoGlobal;
 dynamic globalDineInContext;
 dynamic globalDineInRefresh;
-dynamic userResponse = "";
+dynamic userResponse = "Guest";
 dynamic menuRefresh;
 dynamic globalContextMain;
 

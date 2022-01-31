@@ -55,10 +55,14 @@ genericCardsExtension(context, snapshot, index) {
           thickness: 1,
           color: myWhite.withOpacity(0.5),
         ),
-        text(context, "Date: " + snapshot[index]["sale_date"].toString(), 0.035,
+        text(
+            context,
+            "Date and Time: " +
+                snapshot[index]["sale_date"].toString() +
+                " " +
+                snapshot[index]["order_time"].toString(),
+            0.035,
             myWhite),
-        text(context, "Time: " + snapshot[index]["order_time"].toString(),
-            0.035, myWhite),
         text(
             context,
             "Total items: " + snapshot[index]["total_items"].toString(),
@@ -66,12 +70,9 @@ genericCardsExtension(context, snapshot, index) {
             myWhite),
         text(
             context,
-            "Discount: " +
-                snapshot[index]["sub_total_discount_value"].toString(),
+            "Total: " + snapshot[index]["sub_total_with_discount"].toString(),
             0.035,
             myWhite),
-        text(context, "Sub total: " + snapshot[index]["sub_total"].toString(),
-            0.035, myWhite),
         Align(
             alignment: Alignment.center,
             child: text(
@@ -102,7 +103,13 @@ genericCardsExtension(context, snapshot, index) {
                             .toString()
                             .toLowerCase() ==
                         "unverified") {
-                      push(context, VerifyCode(saleId: snapshot[index]["id"]));
+                      push(
+                        context,
+                        VerifyCode(
+                          saleId: snapshot[index]["id"],
+                         
+                        ),
+                      );
                     } else {
                       push(context,
                           OrderSummaryPage(saleId: snapshot[index]["id"]));
