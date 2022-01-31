@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "71756467139",
+    "project_id": "baranh-ee4b8",
+    "storage_bucket": "baranh-ee4b8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:71756467139:android:827c7322b2d8849c250b76",
+        "android_client_info": {
+          "package_name": "com.baranh.baranh_user.baranh_user"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "71756467139-5dcs9d1d8lpmdspslcvkipqnionq776m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAiZb4rMJNacyGssaidHX75nF9qE3FHDzM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "71756467139-5dcs9d1d8lpmdspslcvkipqnionq776m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
