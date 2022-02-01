@@ -24,6 +24,8 @@ dynamic globalDineInRefresh;
 dynamic userResponse = "Guest";
 dynamic menuRefresh;
 dynamic globalContextMain;
+dynamic globalWaiterId;
+dynamic globalTableId;
 
 var cartItems = [].obs;
 var reservedTable = [];

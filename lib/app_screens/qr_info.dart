@@ -1,3 +1,4 @@
+import 'package:baranh/app_functions/fcm_services.dart';
 import 'package:baranh/app_functions/functions.dart';
 import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
@@ -5,6 +6,8 @@ import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/generic_cards.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
+import 'package:line_icons/line_icon.dart';
+import 'package:line_icons/line_icons.dart';
 
 class QRInfo extends StatefulWidget {
   final dynamic tableId;
@@ -19,6 +22,21 @@ class _QRInfoState extends State<QRInfo> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      floatingActionButton: FloatingActionButton.extended(
+          onPressed: () async {
+            if (globalWaiterId != null || globalWaiterId != null) {
+              var temp = FCMServices.sendFCM(
+                'waiter',
+                globalWaiterId,
+                "Customer Message",
+                "Table $globalTableId is calling you.",
+              );
+
+              await temp.then((value) {});
+            }
+          },
+          backgroundColor: myOrange,
+          label: LineIcon(LineIcons.bell)),
       backgroundColor: myBlack,
       body: SafeArea(
         child: Padding(

@@ -7,12 +7,8 @@ import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/essential_widgets.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:line_icons/line_icon.dart';
-import 'package:line_icons/line_icons.dart';
 import 'package:lottie/lottie.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
-import 'app_functions/fcm_services.dart';
 
 Future<void> main() async {
   runApp(const MyApp());
@@ -90,24 +86,9 @@ class _MyAppState extends State<MyApp> {
                   );
           });
         },
-        home: Scaffold(
-          floatingActionButton: FloatingActionButton(
-              onPressed: () async {
-                // print("object 67");
-                var temp = FCMServices.sendFCM(
-                  'waiter',
-                  63,
-                  "Customer Message",
-                  "Table 2 is calling you.",
-                );
-
-                await temp.then((value) {
-                  // print("object876 ${value.body} & ${value.statusCode}");
-                });
-              },
-              child: LineIcon(LineIcons.bell)),
+        home: const Scaffold(
           backgroundColor: myBlack,
-          body: const BasicPage(),
+          body: BasicPage(),
         ),
       ),
     );

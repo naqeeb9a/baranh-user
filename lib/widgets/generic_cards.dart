@@ -36,6 +36,8 @@ genericCards(function) {
 }
 
 genericCardsExtension(context, snapshot, index) {
+  globalWaiterId = snapshot[index]["waiter_id"];
+  globalTableId = snapshot[index]["table_name"];
   return Container(
     margin: EdgeInsets.symmetric(vertical: dynamicHeight(context, 0.01)),
     decoration: BoxDecoration(
@@ -47,13 +49,26 @@ genericCardsExtension(context, snapshot, index) {
       children: [
         text(
             context,
-            "Order : " + snapshot[index]["sale_no"].toString().toString(),
+            snapshot[index]["table_name"] == null
+                ? "Order no : " + snapshot[index]["sale_no"]
+                : "Table no : " +
+                    snapshot[index]["table_name"].toString().toString(),
             0.04,
             myWhite,
             bold: true),
         Divider(
           thickness: 1,
           color: myWhite.withOpacity(0.5),
+        ),
+        text(context, "Customer Name: " + snapshot[index]["customer_name"],
+            0.035, myWhite),
+        Visibility(
+          visible: snapshot[index]["waiter_name"] == null ? false : true,
+          child: text(
+              context,
+              "Waiter: " + snapshot[index]["waiter_name"].toString(),
+              0.035,
+              myWhite),
         ),
         text(
             context,
@@ -107,7 +122,6 @@ genericCardsExtension(context, snapshot, index) {
                         context,
                         VerifyCode(
                           saleId: snapshot[index]["id"],
-                         
                         ),
                       );
                     } else {

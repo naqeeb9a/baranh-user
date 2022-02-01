@@ -1,5 +1,4 @@
 import 'package:baranh/app_screens/contact_information.dart';
-import 'package:baranh/main.dart';
 import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
@@ -7,128 +6,6 @@ import 'package:baranh/widgets/buttons.dart';
 import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:motion_toast/motion_toast.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-Widget drawerItems(context, function, changeState) {
-  getitem(icon, page) {
-    return {
-      "icon": icon,
-      "text": page,
-      "function": () {
-        pageDecider = page;
-        popUntil(customContext);
-        Navigator.pop(context, function());
-      },
-    };
-  }
-
-  List drawerItemList = [
-    getitem(Icons.home, "Home"),
-    getitem(Icons.calendar_today, "New Reservations"),
-    getitem(Icons.calendar_today, "Online order"),
-    getitem(Icons.food_bank, "Active Order"),
-    getitem(Icons.history, "Order History"),
-    getitem(Icons.contact_support, "Customer Care"),
-    {
-      "icon": Icons.logout,
-      "text": "LogOut",
-      "function": () async {
-        changeState();
-        SharedPreferences loginUser = await SharedPreferences.getInstance();
-        loginUser.clear();
-        userResponse = "";
-        checkLoginStatus(context);
-      },
-    },
-  ];
-  return SafeArea(
-    child: ColoredBox(
-      color: myBlack.withOpacity(.9),
-      child: Column(
-        children: [
-          Padding(
-            padding: EdgeInsets.symmetric(
-              vertical: dynamicHeight(context, .02),
-              horizontal: dynamicWidth(context, .02),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Image.asset(
-                  "assets/menu.png",
-                  scale: 30,
-                ),
-                text(context, "MENU", .05, myWhite, bold: true),
-                InkWell(
-                  onTap: () {
-                    pop(context);
-                  },
-                  child: Icon(
-                    Icons.close_rounded,
-                    color: myWhite,
-                    size: dynamicWidth(context, .08),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const Divider(
-            height: 0,
-            color: myWhite,
-          ),
-          Padding(
-            padding: EdgeInsets.symmetric(
-              vertical: dynamicHeight(context, .04),
-            ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                text(
-                  context,
-                  userResponse == ""
-                      ? ""
-                      : "Hi ${userResponse["name"] ?? ""}"
-                          "\n(${userResponse["email"] ?? ""})",
-                  .05,
-                  myWhite,
-                  bold: true,
-                ),
-              ],
-            ),
-          ),
-          Flexible(
-            child: Padding(
-              padding: EdgeInsets.only(
-                top: dynamicHeight(context, .036),
-                left: dynamicWidth(context, .02),
-              ),
-              child: ListView.builder(
-                itemCount: drawerItemList.length,
-                itemBuilder: (context, index) {
-                  return ListTile(
-                    onTap: drawerItemList[index]["function"],
-                    leading: Icon(
-                      drawerItemList[index]["icon"],
-                      color: myWhite,
-                    ),
-                    title: Text(
-                      drawerItemList[index]["text"].toString().toUpperCase(),
-                      style: TextStyle(
-                        color: myWhite,
-                        fontWeight: FontWeight.bold,
-                        fontSize: dynamicWidth(context, .044),
-                      ),
-                    ),
-                  );
-                },
-              ),
-            ),
-          ),
-        ],
-      ),
-    ),
-  );
-}
 
 Widget drawerItems2(context) {
   return StatefulBuilder(builder: (context, changeState) {
@@ -192,14 +69,16 @@ Widget drawerItems2(context) {
                     dismissable: true,
                   ).show(context);
                 } else {
-                  push(
-                      context,
-                      ContactInformation(
-                        seats: getTotal().toString(),
-                        dropDownTime: getCost().toString(),
-                        date: "",
-                        onlineOrderCheck: true,
-                      ));
+                  if (userResponse == "Guest") {
+                    push(
+                        context,
+                        ContactInformation(
+                          seats: getTotal().toString(),
+                          dropDownTime: getCost().toString(),
+                          date: "",
+                          onlineOrderCheck: true,
+                        ));
+                  } else {}
                 }
               },
             ),
