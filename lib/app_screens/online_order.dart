@@ -23,6 +23,7 @@ class _OnlineOrderState extends State<OnlineOrder> {
   dynamic checkState;
   @override
   Widget build(BuildContext context) {
+    outletNoGlobal = widget.outletId;
     return Scaffold(
       key: _key,
       endDrawer: Drawer(child: drawerItems2(context)),

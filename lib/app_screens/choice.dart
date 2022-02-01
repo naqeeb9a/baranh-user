@@ -1,3 +1,4 @@
+
 import 'package:baranh/app_functions/functions.dart';
 import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
@@ -46,8 +47,8 @@ class _ChoiceState extends State<Choice> {
                               onTap: () {
                                 push(context, OnlineOrder(outletId: i["id"]));
                               },
-                              child: branchCard(
-                                  context, i["outlet_name"], i["image"])))
+                              child: branchCard(context, i["outlet_name"],
+                                  "https://pos.baranh.pk/" + i["image"])))
                           .toList(),
                     ),
                   );
@@ -74,7 +75,7 @@ Widget branchCard(context, text1, image) {
           backgroundColor: myOrange,
           child: CircleAvatar(
             radius: dynamicHeight(context, .076),
-            backgroundImage: AssetImage(image),
+            backgroundImage: NetworkImage(image),
           ),
         ),
         heightBox(context, .02),

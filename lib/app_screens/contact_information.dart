@@ -13,12 +13,13 @@ import 'package:motion_toast/motion_toast.dart';
 
 class ContactInformation extends StatefulWidget {
   final String seats, dropDownTime, date;
-
+  final bool onlineOrderCheck;
   const ContactInformation(
       {Key? key,
       required this.seats,
       required this.dropDownTime,
-      required this.date})
+      required this.date,
+      required this.onlineOrderCheck})
       : super(key: key);
 
   @override
@@ -92,7 +93,10 @@ class _ContactInformationState extends State<ContactInformation> {
                 controller: _email,
               ),
               heightBox(context, 0.04),
-              coloredButton(context, "Submit", myOrange, function: () async {
+              coloredButton(
+                  context,
+                  widget.onlineOrderCheck == true ? "Place Order" : "Submit",
+                  myOrange, function: () async {
                 if (_name.text.isEmpty || _phone.text.isEmpty) {
                   MotionToast.info(
                     description: const Text("Fill all fields appropriately"),
@@ -104,6 +108,33 @@ class _ContactInformationState extends State<ContactInformation> {
                     description: const Text("Enter a Valid Email"),
                     dismissable: true,
                   ).show(context);
+                } else if (widget.onlineOrderCheck == true) {
+                  var response = await punchOrder(
+                      widget.seats,
+                      widget.dropDownTime,
+                      outletNoGlobal,
+                      _name.text,
+                      _phone.text,
+                      _email.text == "" ? "" : _email.text,
+                      _address.text);
+                  if (response == false) {
+                    MotionToast.error(
+                      description: const Text("Check your internet"),
+                      dismissable: true,
+                    ).show(context);
+                  } else {
+                    popUntil(context);
+                    CoolAlert.show(
+                        context: context,
+                        type: CoolAlertType.confirm,
+                        title: "Verification",
+                        confirmBtnText: "Verify",
+                        text:
+                            "A verification code has been sent to your number and mail",
+                        onConfirmBtnTap: () {
+                          push(context, VerifyCode(saleId: response));
+                        });
+                  }
                 } else {
                   CoolAlert.show(
                       context: context,

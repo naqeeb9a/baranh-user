@@ -93,7 +93,7 @@ class _MyAppState extends State<MyApp> {
         home: Scaffold(
           floatingActionButton: FloatingActionButton(
               onPressed: () async {
-                print("object 67");
+                // print("object 67");
                 var temp = FCMServices.sendFCM(
                   'waiter',
                   63,
@@ -101,8 +101,9 @@ class _MyAppState extends State<MyApp> {
                   "Table 2 is calling you.",
                 );
 
-                await temp.then((value) => print("object876 ${value.body} & ${value.statusCode}"));
-
+                await temp.then((value) {
+                  // print("object876 ${value.body} & ${value.statusCode}");
+                });
               },
               child: LineIcon(LineIcons.bell)),
           backgroundColor: myBlack,

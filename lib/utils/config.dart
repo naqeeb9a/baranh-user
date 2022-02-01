@@ -18,7 +18,7 @@ dynamic hintText = DateFormat('yyyy-MM-dd').format(DateTime.now()).toString();
 dynamic customContext = "";
 dynamic globalRefresh = "";
 dynamic saleIdGlobal;
-dynamic tableNoGlobal;
+dynamic outletNoGlobal;
 dynamic globalDineInContext;
 dynamic globalDineInRefresh;
 dynamic userResponse = "Guest";

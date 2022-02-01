@@ -109,17 +109,19 @@ arrivedGuests(id) async {
 
 reserveTable(name, phone, email, seats, date, dropDownTime, outletId) async {
   try {
+    var bodyRequest = {
+      "name": "$name",
+      "phone": "$phone",
+      "email": "$email",
+      "seats": "$seats",
+      "date": "$date",
+      "timedropdown": "$dropDownTime",
+      "outlet_id": outletId,
+      "reservation_type": "customer"
+    };
+
     var response = await http.post(Uri.parse(callBackUrl + "/api/reserve"),
-        body: json.encode({
-          "name": "$name",
-          "phone": "$phone",
-          "email": "$email",
-          "seats": "$seats",
-          "date": "$date",
-          "timedropdown": "$dropDownTime",
-          "outlet_id": outletId,
-          "reservation_type:": "customer"
-        }),
+        body: json.encode(bodyRequest),
         headers: {
           'Content-type': 'application/json',
           'Accept': 'application/json',
@@ -210,7 +212,7 @@ assignWaiterOnline(saleId, waiterId) async {
   }
 }
 
-punchOrder(total, cost) async {
+punchOrder(total, cost, outletId, name, phone, email, address) async {
   var filteredItems = [];
   filterFunction() {
     for (var item in cartItems) {
@@ -228,14 +230,19 @@ punchOrder(total, cost) async {
   }
 
   dynamic bodyJson = {
-    "outlet_id": "${userResponse["outlet_id"]}",
+    "outlet_id": "$outletId",
     "total_items": "${cartItems.length}",
     "sub_total": "$total",
     "total_payable": "$total",
     "total_cost": "$cost",
     "cart": filterFunction(),
-    "table_no": "$tableNoGlobal",
-    "saleid": "$saleIdGlobal"
+    "table_no": "",
+    "saleid": "",
+    "billing_name": "$name",
+    "billing_email": "$email",
+    "billing_phone": "$phone",
+    "billing_address": "$address",
+    "payment_method": "cod"
   };
   try {
     var response = await http.post(
