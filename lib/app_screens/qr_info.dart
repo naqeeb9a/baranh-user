@@ -5,6 +5,7 @@ import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/generic_cards.dart';
 import 'package:baranh/widgets/text_widget.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icon.dart';
 import 'package:line_icons/line_icons.dart';
@@ -25,16 +26,23 @@ class _QRInfoState extends State<QRInfo> {
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
           onPressed: () async {
+            CoolAlert.show(
+                context: context,
+                type: CoolAlertType.loading,
+                lottieAsset: "assets/bell.json",
+                text: "Calling waiter",
+                barrierDismissible: false);
             if (globalWaiterId != null || globalWaiterId != null) {
               var temp = FCMServices.sendFCM(
                 'waiter',
                 63,
-                "Customer Message",
-                "Table $globalTableId is calling you.",
+                "Table no : $globalTableId",
+                "Customer is calling you..........!",
               );
 
               try {
                 await temp.then((value) {
+                  Navigator.of(context, rootNavigator: true).pop();
                   MotionToast.success(
                     description:
                         const Text("Bell is ringing on your waiter's Phone"),
@@ -42,6 +50,7 @@ class _QRInfoState extends State<QRInfo> {
                   ).show(context);
                 });
               } catch (e) {
+                Navigator.of(context, rootNavigator: true).pop();
                 MotionToast.error(
                   description: const Text(
                       "Sorry we can't call your waiter check your internet or call him yourself"),
@@ -90,7 +99,9 @@ class _QRInfoState extends State<QRInfo> {
                 thickness: 1,
                 color: myWhite,
               ),
-              Expanded(child: genericCards(getQRSummary(widget.tableId)))
+              Expanded(
+                  child:
+                      genericCards(getQRSummary(widget.tableId), check: true))
             ],
           ),
         ),

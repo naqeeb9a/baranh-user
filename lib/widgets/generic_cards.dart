@@ -1,3 +1,4 @@
+import 'package:baranh/app_functions/fcm_services.dart';
 import 'package:baranh/app_screens/order_summary_page.dart';
 import 'package:baranh/app_screens/verification_screen.dart';
 import 'package:baranh/utils/app_routes.dart';
@@ -6,11 +7,13 @@ import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/buttons.dart';
 import 'package:baranh/widgets/green_buttons.dart';
 import 'package:baranh/widgets/text_widget.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
+import 'package:motion_toast/motion_toast.dart';
 
 import 'essential_widgets.dart';
 
-genericCards(function) {
+genericCards(function, {check = false}) {
   return FutureBuilder(
     future: function,
     builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -24,7 +27,8 @@ genericCards(function) {
           return ListView.builder(
             itemCount: snapshot.data.length,
             itemBuilder: (BuildContext context, int index) {
-              return genericCardsExtension(context, snapshot.data, index);
+              return genericCardsExtension(
+                  context, snapshot.data, index, check);
             },
           );
         }
@@ -35,7 +39,7 @@ genericCards(function) {
   );
 }
 
-genericCardsExtension(context, snapshot, index) {
+genericCardsExtension(context, snapshot, index, check) {
   globalWaiterId = snapshot[index]["waiter_id"];
   globalTableId = snapshot[index]["table_name"];
   return Container(
@@ -99,38 +103,124 @@ genericCardsExtension(context, snapshot, index) {
               bold: true,
               alignText: TextAlign.center,
             )),
-        Align(
-          alignment: Alignment.center,
-          child: Visibility(
-              visible: true,
-              child: Column(
-                children: [
-                  heightBox(context, 0.02),
-                  greenButtons(
+        heightBox(context, 0.02),
+        Row(
+          mainAxisAlignment: check == true
+              ? MainAxisAlignment.spaceEvenly
+              : MainAxisAlignment.center,
+          children: [
+            Visibility(
+                visible: true,
+                child: greenButtons(
+                    context,
+                    snapshot[index]["verification_status"]
+                                .toString()
+                                .toLowerCase() ==
+                            "unverified"
+                        ? "Verify"
+                        : "View Details", function: () {
+                  if (snapshot[index]["verification_status"]
+                          .toString()
+                          .toLowerCase() ==
+                      "unverified") {
+                    push(
                       context,
-                      snapshot[index]["verification_status"]
-                                  .toString()
-                                  .toLowerCase() ==
-                              "unverified"
-                          ? "Verify"
-                          : "View Details", function: () {
-                    if (snapshot[index]["verification_status"]
-                            .toString()
-                            .toLowerCase() ==
-                        "unverified") {
-                      push(
-                        context,
-                        VerifyCode(
-                          saleId: snapshot[index]["id"],
-                        ),
-                      );
-                    } else {
-                      push(context,
-                          OrderSummaryPage(saleId: snapshot[index]["id"]));
-                    }
-                  }),
-                ],
-              )),
+                      VerifyCode(
+                        saleId: snapshot[index]["id"],
+                      ),
+                    );
+                  } else {
+                    push(context,
+                        OrderSummaryPage(saleId: snapshot[index]["id"]));
+                  }
+                })),
+            Visibility(
+                visible: check == true ? true : false,
+                child:
+                    greenButtons(context, "Request Bill", function: () async {
+                  CoolAlert.show(
+                      context: context,
+                      type: CoolAlertType.info,
+                      backgroundColor: myOrange,
+                      title: "Select your payment method",
+                      confirmBtnText: "Card",
+                      showCancelBtn: true,
+                      confirmBtnColor: myOrange,
+                      cancelBtnTextStyle: const TextStyle(
+                          color: myOrange, fontWeight: FontWeight.bold),
+                      cancelBtnText: "Cash",
+                      onCancelBtnTap: () async {
+                        Navigator.of(context, rootNavigator: true).pop();
+                        CoolAlert.show(
+                            context: context,
+                            type: CoolAlertType.loading,
+                            lottieAsset: "assets/cash.json",
+                            text: "Requesting Bill .....",
+                            barrierDismissible: false);
+                        if (globalWaiterId != null || globalWaiterId != null) {
+                          var temp = FCMServices.sendFCM(
+                            'waiter',
+                            63,
+                            "Table no : $globalTableId",
+                            "Requesting bill via Cash",
+                          );
+
+                          try {
+                            await temp.then((value) {
+                              Navigator.of(context, rootNavigator: true).pop();
+                              MotionToast.success(
+                                description:
+                                    const Text("Bill requested successfully"),
+                                dismissable: true,
+                              ).show(context);
+                            });
+                          } catch (e) {
+                            Navigator.of(context, rootNavigator: true).pop();
+                            MotionToast.error(
+                              description: const Text(
+                                  "Sorry we can't request your Bill check your internet or Ask yourself"),
+                              dismissable: true,
+                            ).show(context);
+                          }
+                        }
+                      },
+                      onConfirmBtnTap: () async {
+                        Navigator.of(context, rootNavigator: true).pop();
+                        CoolAlert.show(
+                            context: context,
+                            type: CoolAlertType.loading,
+                            lottieAsset: "assets/card.json",
+                            text: "Requesting Bill .....",
+                            barrierDismissible: false);
+                        if (globalWaiterId != null || globalWaiterId != null) {
+                          var temp = FCMServices.sendFCM(
+                            'waiter',
+                            63,
+                            "Table no : $globalTableId",
+                            "Requesting bill via Card",
+                          );
+
+                          try {
+                            await temp.then((value) {
+                              Navigator.of(context, rootNavigator: true).pop();
+                              MotionToast.success(
+                                description:
+                                    const Text("Bill requested successfully"),
+                                dismissable: true,
+                              ).show(context);
+                            });
+                          } catch (e) {
+                            Navigator.of(context, rootNavigator: true).pop();
+                            MotionToast.error(
+                              description: const Text(
+                                  "Sorry we can't request your Bill check your internet or Ask yourself"),
+                              dismissable: true,
+                            ).show(context);
+                          }
+                        }
+                      });
+                })),
+          ],
         )
       ],
     ),
