@@ -8,6 +8,7 @@ import 'package:baranh/widgets/text_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:line_icons/line_icon.dart';
 import 'package:line_icons/line_icons.dart';
+import 'package:motion_toast/motion_toast.dart';
 
 class QRInfo extends StatefulWidget {
   final dynamic tableId;
@@ -27,16 +28,35 @@ class _QRInfoState extends State<QRInfo> {
             if (globalWaiterId != null || globalWaiterId != null) {
               var temp = FCMServices.sendFCM(
                 'waiter',
-                globalWaiterId,
+                63,
                 "Customer Message",
                 "Table $globalTableId is calling you.",
               );
 
-              await temp.then((value) {});
+              try {
+                await temp.then((value) {
+                  MotionToast.success(
+                    description:
+                        const Text("Bell is ringing on your waiter's Phone"),
+                    dismissable: true,
+                  ).show(context);
+                });
+              } catch (e) {
+                MotionToast.error(
+                  description: const Text(
+                      "Sorry we can't call your waiter check your internet or call him yourself"),
+                  dismissable: true,
+                ).show(context);
+              }
             }
           },
           backgroundColor: myOrange,
-          label: LineIcon(LineIcons.bell)),
+          label: Row(
+            children: [
+              LineIcon(LineIcons.bell),
+              text(context, " Call Waiter", 0.04, myWhite)
+            ],
+          )),
       backgroundColor: myBlack,
       body: SafeArea(
         child: Padding(
