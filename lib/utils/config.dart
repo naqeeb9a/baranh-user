@@ -28,3 +28,6 @@ dynamic globalContextMain;
 var cartItems = [].obs;
 var reservedTable = [];
 var callBackUrl = "https://baranh.pk";
+
+const serverKey =
+    'AAAAELUEy8M:APA91bHj4D-x3M1ThDFQXFMGXssPLgLu32qMHs2-j87YlyHuUV4BCVYCPzpM_cGJDsvkpgHLThU96j6C7ZPx-7Mmjbifr1OHZvdJFGEHoXaiSBOrKMIFEwDN7GcNniMXhw9Wlq2Ult2j';
