@@ -23,59 +23,68 @@ class Profile extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.center,
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              CircleAvatar(
-                radius: dynamicWidth(context, .1),
-                backgroundColor: myOrange,
-                child: Center(
-                  child: LineIcon(
-                    LineIcons.user,
-                    color: myBlack,
-                    size: dynamicHeight(context, .05),
+          Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: dynamicHeight(context, .1),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                CircleAvatar(
+                  radius: dynamicWidth(context, .1),
+                  backgroundColor: myOrange,
+                  child: Center(
+                    child: LineIcon(
+                      LineIcons.user,
+                      color: myBlack,
+                      size: dynamicHeight(context, .05),
+                    ),
                   ),
                 ),
-              ),
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  text(
-                    context,
-                    userResponse == "Guest"
-                        ? "Guest"
-                        : userResponse['name'].toString().toUpperCase(),
-                    .06,
-                    myOrange,
-                    bold: true,
-                  ),
-                  heightBox(context, .01),
-                  text(
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    text(
                       context,
                       userResponse == "Guest"
-                          ? "Features in Guest mode are Limited"
-                          : userResponse['phone'],
-                      .04,
-                      myWhite),
-                  text(
-                      context,
-                      userResponse == "Guest"
-                          ? "Sign in to use all features"
-                          : userResponse['email'],
-                      .04,
-                      myWhite),
-                ],
-              )
-            ],
+                          ? "Guest"
+                          : userResponse['name'].toString().toUpperCase(),
+                      .06,
+                      myOrange,
+                      bold: true,
+                    ),
+                    heightBox(context, .01),
+                    text(
+                        context,
+                        userResponse == "Guest"
+                            ? "Features in Guest mode are Limited"
+                            : userResponse['phone'],
+                        .04,
+                        myWhite),
+                    text(
+                        context,
+                        userResponse == "Guest"
+                            ? "Sign in to use all features"
+                            : userResponse['email'],
+                        .04,
+                        myWhite),
+                  ],
+                )
+              ],
+            ),
           ),
           const Divider(
             color: myWhite,
           ),
+          heightBox(context, .1),
           Padding(
-            padding:
-                EdgeInsets.symmetric(horizontal: dynamicWidth(context, 0.02)),
+            padding: EdgeInsets.symmetric(
+              horizontal: dynamicWidth(context, 0.02),
+            ),
             child: ClipRRect(
-              borderRadius: BorderRadius.circular(dynamicWidth(context, 0.02)),
+              borderRadius: BorderRadius.circular(
+                dynamicWidth(context, 0.02),
+              ),
               child: Column(
                 children: [
                   profileRow(context, LineIcons.history, "My Orders",
@@ -112,8 +121,23 @@ class Profile extends StatelessWidget {
                     indexPage = 0;
                     checkLoginStatus(globalContextMain);
                   }),
+
                 ],
               ),
+            ),
+          ),
+          Spacer(),
+          Padding(
+            padding: EdgeInsets.only(
+              top: dynamicHeight(context, .02),
+              bottom: dynamicHeight(context, .09),
+            ),
+            child: text(
+              context,
+              "Version: $version",
+              .034,
+              myWhite,
+              alignText: TextAlign.center,
             ),
           ),
         ],

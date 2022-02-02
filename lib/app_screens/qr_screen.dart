@@ -66,11 +66,12 @@ class _QRScreenState extends State<QRScreen> {
             key: qrKey,
             onQRViewCreated: qrCreated,
             overlay: QrScannerOverlayShape(
-                borderColor: myOrange,
-                borderLength: 20,
-                borderRadius: 10,
-                borderWidth: 10,
-                cutOutSize: dynamicWidth(context, 0.8)),
+              borderColor: myOrange,
+              borderLength: 20,
+              borderRadius: 10,
+              borderWidth: 10,
+              cutOutSize: dynamicWidth(context, 0.8),
+            ),
           ),
           bottomText(),
           toggleIcons()

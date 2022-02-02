@@ -14,4 +14,15 @@
             android:gravity="fill"
             android:src="@drawable/splash" />
     </item>
+    <item
+        android:width="140dp"
+        android:height="35dp"
+        android:bottom="80dp"
+        android:gravity="center_horizontal|bottom">
+        <bitmap
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="fill"
+            android:src="@drawable/watermark_white" />
+    </item>
 </layer-list>
