@@ -25,9 +25,7 @@ class _QRScreenState extends State<QRScreen> {
     });
 
     controller.scannedDataStream.listen((event) async {
-      var tableCode = event.code.toString().substring(
-          event.code.toString().length - 3, event.code.toString().length);
-      await checkQr(tableCode);
+      await checkQr(event.code.toString());
     });
   }
 
@@ -52,7 +50,7 @@ class _QRScreenState extends State<QRScreen> {
         context,
         MaterialPageRoute(
             builder: (context) => QRInfo(
-                  tableId: tableCode,
+                  qrApi: tableCode,
                 ))).then((value) => controller!.resumeCamera());
   }
 

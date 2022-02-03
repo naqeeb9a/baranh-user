@@ -12,11 +12,12 @@ import 'package:line_icons/line_icons.dart';
 import 'package:motion_toast/motion_toast.dart';
 
 class ContactInformation extends StatefulWidget {
-  final String seats, dropDownTime, date;
+  final String seats, dropDownTime, date, outletID;
   final bool onlineOrderCheck;
   const ContactInformation(
       {Key? key,
       required this.seats,
+      required this.outletID,
       required this.dropDownTime,
       required this.date,
       required this.onlineOrderCheck})
@@ -78,12 +79,9 @@ class _ContactInformationState extends State<ContactInformation> {
                 generatePasswordCheck: true,
               ),
               heightBox(context, 0.02),
-              inputFieldsHome(
-                "Address",
-                "Enter Address",
-                context,
-                controller: _address,
-              ),
+              inputFieldsHome("Address", "Enter Address", context,
+                  controller: _address,
+                  keyBoardType: TextInputType.emailAddress),
               heightBox(context, 0.02),
               inputFieldsHome(
                 "Email",
@@ -109,6 +107,11 @@ class _ContactInformationState extends State<ContactInformation> {
                     dismissable: true,
                   ).show(context);
                 } else if (widget.onlineOrderCheck == true) {
+                  CoolAlert.show(
+                      context: context,
+                      type: CoolAlertType.loading,
+                      lottieAsset: "assets/loader.json",
+                      barrierDismissible: false);
                   var response = await punchOrder(
                       widget.seats,
                       widget.dropDownTime,
@@ -118,21 +121,28 @@ class _ContactInformationState extends State<ContactInformation> {
                       _email.text == "" ? "" : _email.text,
                       _address.text);
                   if (response == false) {
+                    Navigator.of(context, rootNavigator: true).pop();
                     MotionToast.error(
                       description: const Text("Check your internet"),
                       dismissable: true,
                     ).show(context);
                   } else {
-                    popUntil(context);
+                    Navigator.of(context, rootNavigator: true).pop();
+                    cartItems.clear();
                     CoolAlert.show(
                         context: context,
                         type: CoolAlertType.confirm,
                         title: "Verification",
+                        barrierDismissible: false,
                         confirmBtnText: "Verify",
                         text:
                             "A verification code has been sent to your number and mail",
                         onConfirmBtnTap: () {
-                          push(context, VerifyCode(saleId: response));
+                          Navigator.of(context, rootNavigator: true).pop();
+                          push(
+                              context,
+                              VerifyCode(
+                                  saleId: response["sale_no"].toString()));
                         });
                   }
                 } else {
@@ -148,7 +158,7 @@ class _ContactInformationState extends State<ContactInformation> {
                       widget.seats,
                       widget.date,
                       widget.dropDownTime,
-                      "1");
+                      widget.outletID);
                   if (response == false) {
                     Navigator.of(context, rootNavigator: true).pop();
                     CoolAlert.show(

@@ -1,4 +1,3 @@
-
 import 'package:baranh/app_functions/functions.dart';
 import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
@@ -75,6 +74,16 @@ Widget branchCard(context, text1, image) {
           backgroundColor: myOrange,
           child: CircleAvatar(
             radius: dynamicHeight(context, .076),
+            onBackgroundImageError: (e, error) => Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              const Icon(
+                Icons.error,
+                color: myWhite,
+              ),
+              text(context, "no image", 0.04, myWhite)
+            ],
+          ),
             backgroundImage: NetworkImage(image),
           ),
         ),

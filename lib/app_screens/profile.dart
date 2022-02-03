@@ -126,7 +126,7 @@ class Profile extends StatelessWidget {
               ),
             ),
           ),
-          Spacer(),
+          const Spacer(),
           Padding(
             padding: EdgeInsets.only(
               top: dynamicHeight(context, .02),

@@ -1,9 +1,12 @@
+import 'package:baranh/app_functions/functions.dart';
 import 'package:baranh/app_screens/contact_information.dart';
+import 'package:baranh/app_screens/verification_screen.dart';
 import 'package:baranh/utils/app_routes.dart';
 import 'package:baranh/utils/config.dart';
 import 'package:baranh/utils/dynamic_sizes.dart';
 import 'package:baranh/widgets/buttons.dart';
 import 'package:baranh/widgets/text_widget.dart';
+import 'package:cool_alert/cool_alert.dart';
 import 'package:flutter/material.dart';
 import 'package:motion_toast/motion_toast.dart';
 
@@ -76,9 +79,49 @@ Widget drawerItems2(context) {
                           seats: getTotal().toString(),
                           dropDownTime: getCost().toString(),
                           date: "",
+                          outletID: outletNoGlobal,
                           onlineOrderCheck: true,
                         ));
-                  } else {}
+                  } else {
+                    CoolAlert.show(
+                        context: context,
+                        type: CoolAlertType.loading,
+                        lottieAsset: "assets/loader.json",
+                        barrierDismissible: false);
+                    var response = await punchOrder(
+                        total,
+                        cost,
+                        outletNoGlobal,
+                        userResponse["name"],
+                        userResponse["phone"],
+                        userResponse["email"],
+                        userResponse["address"]);
+                    if (response == false) {
+                      Navigator.of(context, rootNavigator: true).pop();
+                      MotionToast.error(
+                        description: const Text("Check your internet"),
+                        dismissable: true,
+                      ).show(context);
+                    } else {
+                      Navigator.of(context, rootNavigator: true).pop();
+                      cartItems.clear();
+                      CoolAlert.show(
+                          context: context,
+                          type: CoolAlertType.confirm,
+                          title: "Verification",
+                          confirmBtnText: "Verify",
+                          barrierDismissible: false,
+                          text:
+                              "A verification code has been sent to your number and mail",
+                          onConfirmBtnTap: () {
+                            Navigator.of(context, rootNavigator: true).pop();
+                            push(
+                                context,
+                                VerifyCode(
+                                    saleId: response["sale_no"].toString()));
+                          });
+                    }
+                  }
                 }
               },
             ),
@@ -109,6 +152,18 @@ cartCards(context, index, function) {
         height: dynamicWidth(context, 0.2),
         width: dynamicWidth(context, 0.15),
         fit: BoxFit.cover,
+        errorBuilder: (t, error, stack) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              const Icon(
+                Icons.error,
+                color: myWhite,
+              ),
+              text(context, "no image", 0.04, myWhite)
+            ],
+          );
+        },
       ),
       FittedBox(
         child: SizedBox(

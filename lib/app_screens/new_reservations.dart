@@ -294,6 +294,7 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                                           indexValue.indexOf("#") + 1),
                                       seats: _seats.text,
                                       date: hintText,
+                                      outletID: outletId.toString(),
                                       onlineOrderCheck: false,
                                     ));
                               } else {
@@ -338,7 +339,7 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                                         Navigator.of(context,
                                                 rootNavigator: true)
                                             .pop();
-                                        pop(context);
+
                                         push(
                                             context,
                                             VerifyCode(

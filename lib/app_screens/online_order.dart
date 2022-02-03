@@ -64,36 +64,37 @@ class _OnlineOrderState extends State<OnlineOrder> {
                                 builder: (context, changeState) {
                               return Column(
                                 children: [
-                                  InkWell(
-                                    onTap: () {
-                                      showSearch(
-                                        context: context,
-                                        delegate: CustomSearchDelegate(
-                                            snapshot.data["menu"]),
-                                      ).then((value) => changeState(() {}));
-                                    },
-                                    child: Padding(
-                                      padding: EdgeInsets.symmetric(
-                                          horizontal:
-                                              dynamicWidth(context, 0.05)),
-                                      child: Row(
-                                        children: [
-                                          InkWell(
-                                            onTap: () {
-                                              cartItems.clear();
-                                              pop(context);
-                                            },
-                                            child: Row(
-                                              children: [
-                                                const Icon(
-                                                  Icons.arrow_back,
-                                                  color: myWhite,
-                                                ),
-                                                widthBox(context, 0.05),
-                                              ],
-                                            ),
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(
+                                        horizontal:
+                                            dynamicWidth(context, 0.05)),
+                                    child: Row(
+                                      children: [
+                                        InkWell(
+                                          onTap: () {
+                                            cartItems.clear();
+                                            pop(context);
+                                          },
+                                          child: Row(
+                                            children: [
+                                              const Icon(
+                                                Icons.arrow_back,
+                                                color: myWhite,
+                                              ),
+                                              widthBox(context, 0.05),
+                                            ],
                                           ),
-                                          Expanded(
+                                        ),
+                                        Expanded(
+                                          child: InkWell(
+                                            onTap: () {
+                                              showSearch(
+                                                context: context,
+                                                delegate: CustomSearchDelegate(
+                                                    snapshot.data["menu"]),
+                                              ).then((value) =>
+                                                  changeState(() {}));
+                                            },
                                             child: Container(
                                               decoration: BoxDecoration(
                                                   color: myWhite,
@@ -124,32 +125,32 @@ class _OnlineOrderState extends State<OnlineOrder> {
                                               ),
                                             ),
                                           ),
-                                          InkWell(
-                                              onTap: () {
-                                                _key.currentState!
-                                                    .openEndDrawer();
-                                              },
-                                              child: Row(
-                                                children: [
-                                                  widthBox(context, 0.05),
-                                                  Obx(() {
-                                                    return Badge(
-                                                      badgeContent: text(
-                                                          context,
-                                                          cartItems.length
-                                                              .toString(),
-                                                          0.02,
-                                                          myWhite),
-                                                      child: const Icon(
-                                                        Icons.shopping_basket,
-                                                        color: myWhite,
-                                                      ),
-                                                    );
-                                                  }),
-                                                ],
-                                              )),
-                                        ],
-                                      ),
+                                        ),
+                                        InkWell(
+                                            onTap: () {
+                                              _key.currentState!
+                                                  .openEndDrawer();
+                                            },
+                                            child: Row(
+                                              children: [
+                                                widthBox(context, 0.05),
+                                                Obx(() {
+                                                  return Badge(
+                                                    badgeContent: text(
+                                                        context,
+                                                        cartItems.length
+                                                            .toString(),
+                                                        0.02,
+                                                        myWhite),
+                                                    child: const Icon(
+                                                      Icons.shopping_basket,
+                                                      color: myWhite,
+                                                    ),
+                                                  );
+                                                }),
+                                              ],
+                                            )),
+                                      ],
                                     ),
                                   ),
                                   heightBox(context, 0.02),

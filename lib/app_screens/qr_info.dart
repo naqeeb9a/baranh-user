@@ -12,9 +12,9 @@ import 'package:line_icons/line_icons.dart';
 import 'package:motion_toast/motion_toast.dart';
 
 class QRInfo extends StatefulWidget {
-  final dynamic tableId;
+  final dynamic qrApi;
 
-  const QRInfo({Key? key, this.tableId}) : super(key: key);
+  const QRInfo({Key? key, this.qrApi}) : super(key: key);
 
   @override
   _QRInfoState createState() => _QRInfoState();
@@ -100,8 +100,7 @@ class _QRInfoState extends State<QRInfo> {
                 color: myWhite,
               ),
               Expanded(
-                  child:
-                      genericCards(getQRSummary(widget.tableId), check: true))
+                  child: genericCards(getQRSummary(widget.qrApi), check: true))
             ],
           ),
         ),

@@ -17,6 +17,16 @@ menuCards(context, snapshot, index) {
             child: CircleAvatar(
               backgroundColor: myWhite,
               radius: dynamicWidth(context, 0.075),
+              onBackgroundImageError: (e, error) => Column(
+                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                children: [
+                  const Icon(
+                    Icons.error,
+                    color: myWhite,
+                  ),
+                  text(context, "no image", 0.04, myWhite)
+                ],
+              ),
               backgroundImage: NetworkImage(snapshot[index]["photo"] ??
                   "https://hempbroker420.com/wp-content/uploads/2018/06/noimage.jpg"),
             ),

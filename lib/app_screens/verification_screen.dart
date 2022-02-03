@@ -11,9 +11,11 @@ import 'package:motion_toast/motion_toast.dart';
 
 class VerifyCode extends StatefulWidget {
   final String saleId;
-  
-  const VerifyCode({Key? key, required this.saleId, })
-      : super(key: key);
+
+  const VerifyCode({
+    Key? key,
+    required this.saleId,
+  }) : super(key: key);
 
   @override
   State<VerifyCode> createState() => _VerifyCodeState();
@@ -76,7 +78,7 @@ class _VerifyCodeState extends State<VerifyCode> {
                 ).show(context);
               } else {
                 Navigator.of(context, rootNavigator: true).pop();
-                pop(context);
+                popUntil(context);
                 MotionToast.success(
                   description: const Text("Verified Successfully"),
                   dismissable: true,

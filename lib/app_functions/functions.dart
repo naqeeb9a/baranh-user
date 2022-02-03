@@ -246,7 +246,7 @@ punchOrder(total, cost, outletId, name, phone, email, address) async {
   };
   try {
     var response = await http.post(
-      Uri.parse(callBackUrl + "/api/booking-punch-order"),
+      Uri.parse(callBackUrl + "/api/punch-order"),
       body: json.encode(bodyJson),
       headers: {
         'Content-type': 'application/json',
@@ -336,10 +336,11 @@ getOutlets() async {
   }
 }
 
-getQRSummary(id) async {
+getQRSummary(apiCall) async {
   try {
-    var response = await http.get(Uri.parse(callBackUrl + "/api/barcode/$id"));
+    var response = await http.get(Uri.parse(apiCall));
     var jsonData = jsonDecode(response.body);
+
     if (response.statusCode == 200) {
       return jsonData["data"]["message"];
     } else {
