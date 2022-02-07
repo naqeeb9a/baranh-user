@@ -21,7 +21,7 @@ class Profile extends StatelessWidget {
       backgroundColor: myBlack,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Padding(
             padding: EdgeInsets.symmetric(
@@ -76,7 +76,6 @@ class Profile extends StatelessWidget {
           const Divider(
             color: myWhite,
           ),
-          heightBox(context, .1),
           Padding(
             padding: EdgeInsets.symmetric(
               horizontal: dynamicWidth(context, 0.02),
@@ -126,11 +125,9 @@ class Profile extends StatelessWidget {
               ),
             ),
           ),
-          const Spacer(),
           Padding(
             padding: EdgeInsets.only(
-              top: dynamicHeight(context, .02),
-              bottom: dynamicHeight(context, .09),
+              bottom: dynamicHeight(context, .12),
             ),
             child: text(
               context,
