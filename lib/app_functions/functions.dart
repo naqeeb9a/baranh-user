@@ -135,7 +135,7 @@ punchOrder(total, cost, outletId, name, phone, email, address) async {
   }
 }
 
-checkAvailability(date, timeDropdown, seats,outletId) async {
+checkAvailability(date, timeDropdown, seats, outletId) async {
   try {
     var response = await http.post(Uri.parse(callBackUrl + "/api/get-avail"),
         body: json.encode({
