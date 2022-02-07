@@ -60,114 +60,6 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                   setState(() {});
                 }),
                 heightBox(context, 0.02),
-                hintText == "mm/dd/yyyy"
-                    ? Container()
-                    : SizedBox(
-                        height: dynamicHeight(context, 0.1),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            text(
-                              context,
-                              "Time",
-                              0.04,
-                              myWhite,
-                            ),
-                            StatefulBuilder(builder: (context, changeStateNow) {
-                              dynamicRefreshTimeSlot = () {
-                                changeStateNow(() {});
-                              };
-                              return FutureBuilder(
-                                future: getTimeSlots(hintText, outletId),
-                                builder: (BuildContext context,
-                                    AsyncSnapshot snapshot) {
-                                  if (snapshot.connectionState ==
-                                      ConnectionState.done) {
-                                    (snapshot.data == false)
-                                        ? ""
-                                        : indexValue = getConvertedTime(snapshot
-                                                .data[0]["opening_time"]) +
-                                            " - " +
-                                            getConvertedTime(snapshot.data[0]
-                                                ["closing_time"]) +
-                                            "  ${snapshot.data[0]["discount"]} % off" +
-                                            "#${snapshot.data[0]["id"]}#${snapshot.data[0]["seats"]}#${snapshot.data[0]["booksum"]}#${snapshot.data[0]["discount"]}";
-                                    return (snapshot.data == false)
-                                        ? InkWell(
-                                            onTap: () {
-                                              changeStateNow(() {});
-                                            },
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment.center,
-                                              children: [
-                                                Icon(
-                                                  Icons.rotate_right_outlined,
-                                                  color: myOrange,
-                                                  size: dynamicWidth(
-                                                      context, 0.08),
-                                                ),
-                                                text(context, "Retry", 0.04,
-                                                    myWhite)
-                                              ],
-                                            ),
-                                          )
-                                        : StatefulBuilder(
-                                            builder: (BuildContext context,
-                                                changeSate) {
-                                              return DropdownButton<String>(
-                                                hint: text(
-                                                  context,
-                                                  indexValue.substring(0,
-                                                      indexValue.indexOf("#")),
-                                                  0.04,
-                                                  myWhite,
-                                                ),
-                                                items: snapshot.data
-                                                    .map<
-                                                        DropdownMenuItem<
-                                                            String>>((value) =>
-                                                        DropdownMenuItem<
-                                                            String>(
-                                                          value: getConvertedTime(
-                                                                  value[
-                                                                      "opening_time"]) +
-                                                              " - " +
-                                                              getConvertedTime(
-                                                                  value[
-                                                                      "closing_time"]) +
-                                                              "  ${value["discount"]} % off" +
-                                                              "#${value["id"]}#${value["seats"]}#${value["booksum"]}#${value["discount"]}",
-                                                          child: Text(getConvertedTime(
-                                                                  value[
-                                                                      "opening_time"]) +
-                                                              " - " +
-                                                              getConvertedTime(
-                                                                  value[
-                                                                      "closing_time"]) +
-                                                              "  ${value["discount"]} % off"),
-                                                        ))
-                                                    .toList(),
-                                                onChanged: (value) {
-                                                  changeSate(() {
-                                                    indexValue = value!;
-                                                  });
-                                                },
-                                              );
-                                            },
-                                          );
-                                  } else {
-                                    return LottieBuilder.asset(
-                                      "assets/loader.json",
-                                      width: dynamicWidth(context, 0.3),
-                                    );
-                                  }
-                                },
-                              );
-                            }),
-                          ],
-                        ),
-                      ),
                 SizedBox(
                   height: dynamicHeight(context, 0.1),
                   child: Row(
@@ -255,7 +147,107 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                     ],
                   ),
                 ),
-                heightBox(context, hintText == "mm/dd/yyyy" ? 0 : 0.02),
+                SizedBox(
+                  height: dynamicHeight(context, 0.1),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      text(
+                        context,
+                        "Time",
+                        0.04,
+                        myWhite,
+                      ),
+                      StatefulBuilder(builder: (context, changeStateNow) {
+                        dynamicRefreshTimeSlot = () {
+                          changeStateNow(() {});
+                        };
+                        return FutureBuilder(
+                          future: getTimeSlots(hintText, outletId),
+                          builder:
+                              (BuildContext context, AsyncSnapshot snapshot) {
+                            if (snapshot.connectionState ==
+                                ConnectionState.done) {
+                              (snapshot.data == false)
+                                  ? ""
+                                  : indexValue = getConvertedTime(
+                                          snapshot.data[0]["opening_time"]) +
+                                      " - " +
+                                      getConvertedTime(
+                                          snapshot.data[0]["closing_time"]) +
+                                      "  ${snapshot.data[0]["discount"]} % off" +
+                                      "#${snapshot.data[0]["id"]}#${snapshot.data[0]["seats"]}#${snapshot.data[0]["booksum"]}#${snapshot.data[0]["discount"]}";
+                              return (snapshot.data == false)
+                                  ? InkWell(
+                                      onTap: () {
+                                        changeStateNow(() {});
+                                      },
+                                      child: Column(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          Icon(
+                                            Icons.rotate_right_outlined,
+                                            color: myOrange,
+                                            size: dynamicWidth(context, 0.08),
+                                          ),
+                                          text(context, "Retry", 0.04, myWhite)
+                                        ],
+                                      ),
+                                    )
+                                  : StatefulBuilder(
+                                      builder:
+                                          (BuildContext context, changeSate) {
+                                        return DropdownButton<String>(
+                                          hint: text(
+                                            context,
+                                            indexValue.substring(
+                                                0, indexValue.indexOf("#")),
+                                            0.04,
+                                            myWhite,
+                                          ),
+                                          items: snapshot.data
+                                              .map<DropdownMenuItem<String>>(
+                                                  (value) =>
+                                                      DropdownMenuItem<String>(
+                                                        value: getConvertedTime(
+                                                                value[
+                                                                    "opening_time"]) +
+                                                            " - " +
+                                                            getConvertedTime(value[
+                                                                "closing_time"]) +
+                                                            "  ${value["discount"]} % off" +
+                                                            "#${value["id"]}#${value["seats"]}#${value["booksum"]}#${value["discount"]}",
+                                                        child: Text(getConvertedTime(
+                                                                value[
+                                                                    "opening_time"]) +
+                                                            " - " +
+                                                            getConvertedTime(value[
+                                                                "closing_time"]) +
+                                                            "  ${value["discount"]} % off"),
+                                                      ))
+                                              .toList(),
+                                          onChanged: (value) {
+                                            changeSate(() {
+                                              indexValue = value!;
+                                            });
+                                          },
+                                        );
+                                      },
+                                    );
+                            } else {
+                              return LottieBuilder.asset(
+                                "assets/loader.json",
+                                width: dynamicWidth(context, 0.3),
+                              );
+                            }
+                          },
+                        );
+                      }),
+                    ],
+                  ),
+                ),
+                heightBox(context, 0.02),
                 inputFieldsHome(
                   "Seats:",
                   "",
