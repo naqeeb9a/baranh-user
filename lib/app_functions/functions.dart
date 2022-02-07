@@ -3,100 +3,11 @@ import 'dart:convert';
 import 'package:baranh/utils/config.dart';
 import 'package:http/http.dart' as http;
 
-getReservationData(query) async {
-  try {
-    var response = await http.get(
-      Uri.parse(callBackUrl + "/api/$query/1}"),
-    );
-    var jsonData = jsonDecode(response.body);
-    if (response.statusCode == 200) {
-      return jsonData["data"]["result"];
-    } else {
-      return false;
-    }
-  } catch (e) {
-    return false;
-  }
-}
-
-searchReservation(date, reservationNumber) async {
-  try {
-    var response =
-        await http.post(Uri.parse(callBackUrl + "/api/get-reservation"),
-            body: json.encode({
-              "reservation": "$reservationNumber",
-              "filter_date": "$date",
-              "outlet_id": userResponse["outlet_id"],
-            }),
-            headers: {
-          'Content-type': 'application/json',
-          'Accept': 'application/json',
-        });
-    var jsonData = jsonDecode(response.body);
-
-    if (response.statusCode == 200) {
-      return jsonData["data"]["result"];
-    } else {
-      return false;
-    }
-  } catch (e) {
-    return false;
-  }
-}
-
 getOrderSummary(id) async {
   try {
     var response =
         await http.get(Uri.parse(callBackUrl + "/api/order-summary/$id"));
     var jsonData = jsonDecode(response.body);
-    if (response.statusCode == 200) {
-      return jsonData["data"];
-    } else {
-      return false;
-    }
-  } catch (e) {
-    return false;
-  }
-}
-
-getTables(saleID) async {
-  try {
-    var response =
-        await http.get(Uri.parse(callBackUrl + "/api/booking-details/$saleID"));
-    var jsonData = jsonDecode(response.body);
-
-    if (response.statusCode == 200) {
-      return jsonData["data"][0]["tables"];
-    } else {
-      return false;
-    }
-  } catch (e) {
-    return false;
-  }
-}
-
-getWaiters(saleID) async {
-  try {
-    var response =
-        await http.get(Uri.parse(callBackUrl + "/api/booking-details/$saleID"));
-    var jsonData = jsonDecode(response.body);
-
-    if (response.statusCode == 200) {
-      return jsonData["data"][0]["waiters"];
-    } else {
-      return false;
-    }
-  } catch (e) {
-    return false;
-  }
-}
-
-arrivedGuests(id) async {
-  try {
-    var response =
-        await http.get(Uri.parse(callBackUrl + "/api/guest-arrived/$id"));
-    var jsonData = jsonDecode(response.body);
-
     if (response.statusCode == 200) {
       return jsonData["data"];
     } else {
@@ -138,10 +49,10 @@ reserveTable(name, phone, email, seats, date, dropDownTime, outletId) async {
   }
 }
 
-getTimeSlots(date) async {
+getTimeSlots(date, outletId) async {
   try {
     var response = await http.post(Uri.parse(callBackUrl + "/api/get-timeslot"),
-        body: json.encode({"outlet_id": "1", "filter_date": date}),
+        body: json.encode({"outlet_id": "$outletId", "filter_date": date}),
         headers: {
           'Content-type': 'application/json',
           'Accept': 'application/json',
@@ -161,47 +72,6 @@ getMenu(id) async {
   try {
     var response = await http.get(Uri.parse(callBackUrl + "/api/menu/all-$id"));
     var jsonData = json.decode(response.body);
-    if (response.statusCode == 200) {
-      return jsonData["data"];
-    } else {
-      return false;
-    }
-  } catch (e) {
-    return false;
-  }
-}
-
-assignTableOnline(saleId, tableId) async {
-  try {
-    var response = await http.post(Uri.parse(callBackUrl + "/api/assign-table"),
-        body: json.encode({"sale_id": saleId, "table_id": tableId}),
-        headers: {
-          'Content-type': 'application/json',
-          'Accept': 'application/json',
-        });
-    var jsonData = jsonDecode(response.body);
-
-    if (response.statusCode == 200) {
-      return jsonData["data"];
-    } else {
-      return false;
-    }
-  } catch (e) {
-    return false;
-  }
-}
-
-assignWaiterOnline(saleId, waiterId) async {
-  try {
-    var response = await http.post(
-        Uri.parse(callBackUrl + "/api/assign-waiter"),
-        body: json.encode({"saleid": saleId, "waiters": waiterId}),
-        headers: {
-          'Content-type': 'application/json',
-          'Accept': 'application/json',
-        });
-    var jsonData = jsonDecode(response.body);
-
     if (response.statusCode == 200) {
       return jsonData["data"];
     } else {
@@ -265,11 +135,11 @@ punchOrder(total, cost, outletId, name, phone, email, address) async {
   }
 }
 
-checkAvailability(date, timeDropdown, seats) async {
+checkAvailability(date, timeDropdown, seats,outletId) async {
   try {
     var response = await http.post(Uri.parse(callBackUrl + "/api/get-avail"),
         body: json.encode({
-          "outlet_id": "1",
+          "outlet_id": "$outletId",
           "filter_date": "$date",
           "timedropdown": "$timeDropdown",
           "seats": "$seats"

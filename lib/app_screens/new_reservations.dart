@@ -25,8 +25,9 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
   String indexValue = "";
   dynamic bigArray = [];
   var timeDropDown = "";
-  String outletId = "";
+  String outletId = "1";
   String outletValue = "";
+  dynamic dynamicRefreshTimeSlot;
 
   @override
   void dispose() {
@@ -73,8 +74,11 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                               myWhite,
                             ),
                             StatefulBuilder(builder: (context, changeStateNow) {
+                              dynamicRefreshTimeSlot = () {
+                                changeStateNow(() {});
+                              };
                               return FutureBuilder(
-                                future: getTimeSlots(hintText),
+                                future: getTimeSlots(hintText, outletId),
                                 builder: (BuildContext context,
                                     AsyncSnapshot snapshot) {
                                   if (snapshot.connectionState ==
@@ -234,6 +238,7 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                                               outletId = aStr;
                                               outletValue = aStr2;
                                             });
+                                            dynamicRefreshTimeSlot();
                                           },
                                         );
                                       },
@@ -279,7 +284,8 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                       var response = await checkAvailability(
                           hintText,
                           indexValue.substring(indexValue.indexOf("#") + 1),
-                          _seats.text);
+                          _seats.text,
+                          outletId);
                       if (response == true) {
                         Navigator.of(context, rootNavigator: true).pop();
                         CoolAlert.show(
