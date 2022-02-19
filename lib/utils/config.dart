@@ -30,7 +30,7 @@ dynamic globalTableId;
 var cartItems = [].obs;
 var reservedTable = [];
 var callBackUrl = "https://baranh.pk";
-var version = "1.0.2";
+var version = "1.0.3";
 
 const serverKey =
     'AAAAELUEy8M:APA91bHj4D-x3M1ThDFQXFMGXssPLgLu32qMHs2-j87YlyHuUV4BCVYCPzpM_cGJDsvkpgHLThU96j6C7ZPx-7Mmjbifr1OHZvdJFGEHoXaiSBOrKMIFEwDN7GcNniMXhw9Wlq2Ult2j';
