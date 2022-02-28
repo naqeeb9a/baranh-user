@@ -208,7 +208,8 @@ getOutlets() async {
 
 getQRSummary(apiCall) async {
   try {
-    var response = await http.get(Uri.parse(apiCall));
+    var response = await http
+        .get(Uri.parse("Https://baranh.pk/api/barcode/" + apiCall.toString()));
     var jsonData = jsonDecode(response.body);
 
     if (response.statusCode == 200) {

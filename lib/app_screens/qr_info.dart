@@ -23,6 +23,9 @@ class QRInfo extends StatefulWidget {
 class _QRInfoState extends State<QRInfo> {
   @override
   Widget build(BuildContext context) {
+    var aStr = widget.qrApi.replaceAll(RegExp(r'[^0-9]'), ''); // '23'
+    var aInt = int.parse(aStr);
+
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
           onPressed: () async {
@@ -99,8 +102,7 @@ class _QRInfoState extends State<QRInfo> {
                 thickness: 1,
                 color: myWhite,
               ),
-              Expanded(
-                  child: genericCards(getQRSummary(widget.qrApi), check: true))
+              Expanded(child: genericCards(getQRSummary(aInt), check: true))
             ],
           ),
         ),
