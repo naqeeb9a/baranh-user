@@ -51,15 +51,18 @@ genericCardsExtension(context, snapshot, index, check) {
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        text(
-            context,
-            snapshot[index]["table_name"] == null
-                ? "Order no : " + snapshot[index]["sale_no"]
-                : "Table no : " +
-                    snapshot[index]["table_name"].toString().toString(),
-            0.04,
-            myWhite,
-            bold: true),
+        Align(
+          alignment: Alignment.center,
+          child: text(
+              context,
+              snapshot[index]["table_name"] == null
+                  ? "Order no : " + snapshot[index]["sale_no"]
+                  : "Table no : " +
+                      snapshot[index]["table_name"].toString().toString(),
+              0.04,
+              myWhite,
+              bold: true),
+        ),
         Divider(
           thickness: 1,
           color: myWhite.withOpacity(0.5),
