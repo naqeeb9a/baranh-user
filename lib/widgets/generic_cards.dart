@@ -25,7 +25,10 @@ genericCards(function, {check = false}) {
           return Center(
               child: text(
                   context,
-                  "No orders on Table no : " + snapshot.data[0]["table_name"],
+                  check == true
+                      ? ("No orders on Table no : " +
+                          snapshot.data[0]["table_name"].toString())
+                      : "No Orders found",
                   0.04,
                   myWhite));
         } else {
@@ -92,7 +95,8 @@ genericCardsExtension(context, snapshot, index, check) {
         text(
             context,
             "Date/Order Time: " +
-                snapshot[index]["booking_date"].toString() +
+                snapshot[index][check == true ? "booking_date" : "sale_date"]
+                    .toString() +
                 " | " +
                 getConvertedTime(snapshot[index]["order_time"]
                     .toString()
