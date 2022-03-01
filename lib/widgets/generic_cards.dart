@@ -1,4 +1,5 @@
 import 'package:baranh/app_functions/fcm_services.dart';
+import 'package:baranh/app_screens/new_reservations.dart';
 import 'package:baranh/app_screens/order_summary_page.dart';
 import 'package:baranh/app_screens/verification_screen.dart';
 import 'package:baranh/utils/app_routes.dart';
@@ -20,9 +21,13 @@ genericCards(function, {check = false}) {
       if (snapshot.connectionState == ConnectionState.done) {
         if (snapshot.data == false) {
           return retry(context);
-        } else if (snapshot.data.length == 0 ||
-            snapshot.data == "Nothing found!") {
-          return Center(child: text(context, "No Orders Found", 0.04, myWhite));
+        } else if (snapshot.data[0]["status"] == false) {
+          return Center(
+              child: text(
+                  context,
+                  "No orders on Table no : " + snapshot.data[0]["table_name"],
+                  0.04,
+                  myWhite));
         } else {
           return ListView.builder(
             itemCount: snapshot.data.length,
@@ -67,6 +72,13 @@ genericCardsExtension(context, snapshot, index, check) {
           thickness: 1,
           color: myWhite.withOpacity(0.5),
         ),
+        text(
+            context,
+            snapshot[index]["outlet_id"].toString() == "1"
+                ? "Outlet : Baranh Lahore"
+                : "Outlet : Baranh Jhang",
+            0.035,
+            myWhite),
         text(context, "Customer Name: " + snapshot[index]["customer_name"],
             0.035, myWhite),
         Visibility(
@@ -79,10 +91,12 @@ genericCardsExtension(context, snapshot, index, check) {
         ),
         text(
             context,
-            "Date and Time: " +
-                snapshot[index]["sale_date"].toString() +
-                " " +
-                snapshot[index]["order_time"].toString(),
+            "Date/Order Time: " +
+                snapshot[index]["booking_date"].toString() +
+                " | " +
+                getConvertedTime(snapshot[index]["order_time"]
+                    .toString()
+                    .substring(0, snapshot[index]["order_time"].length - 3)),
             0.035,
             myWhite),
         text(
@@ -95,17 +109,20 @@ genericCardsExtension(context, snapshot, index, check) {
             "Total: " + snapshot[index]["sub_total_with_discount"].toString(),
             0.035,
             myWhite),
-        Align(
-            alignment: Alignment.center,
-            child: text(
-              context,
-              "Paid Amount\n PKR." +
-                  (snapshot[index]["paid_amount"] ?? "0").toString(),
-              0.04,
-              myWhite,
-              bold: true,
-              alignText: TextAlign.center,
-            )),
+        Visibility(
+          visible: snapshot[index]["paid_amount"] == null ? false : true,
+          child: Align(
+              alignment: Alignment.center,
+              child: text(
+                context,
+                "Paid Amount\n PKR." +
+                    (snapshot[index]["paid_amount"] ?? "0").toString(),
+                0.04,
+                myWhite,
+                bold: true,
+                alignText: TextAlign.center,
+              )),
+        ),
         heightBox(context, 0.02),
         Row(
           mainAxisAlignment: check == true
