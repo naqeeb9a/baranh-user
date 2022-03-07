@@ -210,30 +210,6 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                                           items: snapshot.data
                                               .map<DropdownMenuItem<String>>(
                                                   (value) {
-                                            print((double.parse(
-                                                    value["opening_time"]
-                                                        .toString()
-                                                        .replaceAll(":", ".")) -
-                                                1));
-                                            print(double.parse(
-                                                (DateTime.now().hour)
-                                                        .toString() +
-                                                    "." +
-                                                    (DateTime.now().minute)
-                                                        .toString()));
-                                            print((double.parse(
-                                                        value["opening_time"]
-                                                            .toString()
-                                                            .replaceAll(
-                                                                ":", ".")) -
-                                                    1) >
-                                                double.parse(
-                                                    (DateTime.now().hour)
-                                                            .toString() +
-                                                        "." +
-                                                        (DateTime.now().minute)
-                                                            .toString()));
-                                            print("\n\n\n");
                                             if ((double.parse(
                                                         value["opening_time"]
                                                             .toString()

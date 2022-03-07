@@ -38,7 +38,7 @@ class _QRInfoState extends State<QRInfo> {
             if (globalWaiterId != null || globalWaiterId != null) {
               var temp = FCMServices.sendFCM(
                 'waiter',
-                63,
+                "$globalWaiterId",
                 "Table no : $globalTableId",
                 "Customer is calling you..........!",
               );

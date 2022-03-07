@@ -184,7 +184,7 @@ genericCardsExtension(context, snapshot, index, check) {
                         if (globalWaiterId != null || globalWaiterId != null) {
                           var temp = FCMServices.sendFCM(
                             'waiter',
-                            63,
+                            "$globalWaiterId",
                             "Table no : $globalTableId",
                             "Requesting bill via Cash",
                           );
@@ -219,7 +219,7 @@ genericCardsExtension(context, snapshot, index, check) {
                         if (globalWaiterId != null || globalWaiterId != null) {
                           var temp = FCMServices.sendFCM(
                             'waiter',
-                            63,
+                            "$globalWaiterId",
                             "Table no : $globalTableId",
                             "Requesting bill via Card",
                           );
