@@ -223,6 +223,7 @@ getQRSummary(apiCall) async {
 }
 
 getVerified(saleId, code) async {
+  
   try {
     var response = await http
         .post(Uri.parse(callBackUrl + "/api/customer-verify"), body: {

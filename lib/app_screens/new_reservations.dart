@@ -170,13 +170,12 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                                 ConnectionState.done) {
                               (snapshot.data == false)
                                   ? ""
-                                  : indexValue = getConvertedTime(
-                                          snapshot.data[0]["opening_time"]) +
-                                      " - " +
-                                      getConvertedTime(
-                                          snapshot.data[0]["closing_time"]) +
-                                      "  ${snapshot.data[0]["discount"]} % off" +
-                                      "#${snapshot.data[0]["id"]}#${snapshot.data[0]["seats"]}#${snapshot.data[0]["booksum"]}#${snapshot.data[0]["discount"]}";
+                                  : indexValue = "Select time";
+                              // indexValue = getConvertedTime(
+                              //         snapshot.data[0]["opening_time"]) +
+                              //     "  ${snapshot.data[0]["discount"]} % off" +
+                              //     "#${snapshot.data[0]["id"]}#${snapshot.data[0]["seats"]}#${snapshot.data[0]["booksum"]}#${snapshot.data[0]["discount"]}";
+
                               return (snapshot.data == false)
                                   ? InkWell(
                                       onTap: () {
@@ -201,32 +200,78 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                                         return DropdownButton<String>(
                                           hint: text(
                                             context,
-                                            indexValue.substring(
-                                                0, indexValue.indexOf("#")),
+                                            indexValue == "Select time"
+                                                ? indexValue
+                                                : indexValue.substring(
+                                                    0, indexValue.indexOf("#")),
                                             0.04,
                                             myWhite,
                                           ),
                                           items: snapshot.data
                                               .map<DropdownMenuItem<String>>(
-                                                  (value) =>
-                                                      DropdownMenuItem<String>(
-                                                        value: getConvertedTime(
-                                                                value[
-                                                                    "opening_time"]) +
-                                                            " - " +
-                                                            getConvertedTime(value[
-                                                                "closing_time"]) +
-                                                            "  ${value["discount"]} % off" +
-                                                            "#${value["id"]}#${value["seats"]}#${value["booksum"]}#${value["discount"]}",
-                                                        child: Text(getConvertedTime(
-                                                                value[
-                                                                    "opening_time"]) +
-                                                            " - " +
-                                                            getConvertedTime(value[
-                                                                "closing_time"]) +
-                                                            "  ${value["discount"]} % off"),
-                                                      ))
-                                              .toList(),
+                                                  (value) {
+                                            print((double.parse(
+                                                    value["opening_time"]
+                                                        .toString()
+                                                        .replaceAll(":", ".")) -
+                                                1));
+                                            print(double.parse(
+                                                (DateTime.now().hour)
+                                                        .toString() +
+                                                    "." +
+                                                    (DateTime.now().minute)
+                                                        .toString()));
+                                            print((double.parse(
+                                                        value["opening_time"]
+                                                            .toString()
+                                                            .replaceAll(
+                                                                ":", ".")) -
+                                                    1) >
+                                                double.parse(
+                                                    (DateTime.now().hour)
+                                                            .toString() +
+                                                        "." +
+                                                        (DateTime.now().minute)
+                                                            .toString()));
+                                            print("\n\n\n");
+                                            if ((double.parse(
+                                                        value["opening_time"]
+                                                            .toString()
+                                                            .replaceAll(
+                                                                ":", ".")) -
+                                                    1) >
+                                                double.parse(
+                                                    (DateTime.now().hour)
+                                                            .toString() +
+                                                        "." +
+                                                        (DateTime.now().minute)
+                                                            .toString())) {
+                                              return DropdownMenuItem<String>(
+                                                value: getConvertedTime(
+                                                        value["opening_time"]) +
+                                                    "  ${value["discount"]} % off" +
+                                                    "#${value["id"]}#${value["seats"]}#${value["booksum"]}#${value["discount"]}",
+                                                child: Text(getConvertedTime(
+                                                        value["opening_time"]) +
+                                                    "  ${value["discount"]} % off"),
+                                              );
+                                            } else {
+                                              return DropdownMenuItem<String>(
+                                                value: getConvertedTime(
+                                                        value["opening_time"]) +
+                                                    "  ${value["discount"]} % off" +
+                                                    "#${value["id"]}#${value["seats"]}#${value["booksum"]}#${value["discount"]}",
+                                                child: Text(
+                                                  getConvertedTime(value[
+                                                          "opening_time"]) +
+                                                      "  ${value["discount"]} % off",
+                                                  style: const TextStyle(
+                                                      color: myGrey),
+                                                ),
+                                                enabled: false,
+                                              );
+                                            }
+                                          }).toList(),
                                           onChanged: (value) {
                                             changeSate(() {
                                               indexValue = value!;
@@ -262,10 +307,12 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                   myOrange,
                   width: dynamicWidth(context, .56),
                   function: () async {
-                    if (_seats.text.isEmpty || hintText == "mm/dd/yyyy") {
+                    if (_seats.text.isEmpty ||
+                        hintText == "mm/dd/yyyy" ||
+                        indexValue == "Select time") {
                       MotionToast.info(
-                        description:
-                            const Text("check provided seats or dates"),
+                        description: const Text(
+                            "Make sure to select and fill all the fields"),
                         dismissable: true,
                       ).show(context);
                     } else {

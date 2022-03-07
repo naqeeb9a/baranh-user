@@ -68,6 +68,7 @@ class _VerifyCodeState extends State<VerifyCode> {
                   type: CoolAlertType.loading,
                   barrierDismissible: false,
                   lottieAsset: "assets/loader.json");
+              
               var response =
                   await getVerified(widget.saleId, verifyController.text);
               if (response == false) {

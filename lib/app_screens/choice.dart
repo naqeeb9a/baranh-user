@@ -41,13 +41,18 @@ class _ChoiceState extends State<Choice> {
                       runAlignment: WrapAlignment.center,
                       crossAxisAlignment: WrapCrossAlignment.center,
                       direction: Axis.horizontal,
+                      runSpacing: dynamicHeight(context, .01),
                       children: snapshot.data
                           .map<Widget>((i) => GestureDetector(
                               onTap: () {
-                                push(context, OnlineOrder(outletId: i["id"]));
+                                push(context,
+                                    OnlineOrder(outletId: i["id"].toString()));
                               },
-                              child: branchCard(context, i["outlet_name"],
-                                  "https://pos.baranh.pk/" + i["image"])))
+                              child: branchCard(
+                                  context,
+                                  i["outlet_name"].toString(),
+                                  "https://pos.baranh.pk/" +
+                                      i["image"].toString())))
                           .toList(),
                     ),
                   );
@@ -75,15 +80,15 @@ Widget branchCard(context, text1, image) {
           child: CircleAvatar(
             radius: dynamicHeight(context, .076),
             onBackgroundImageError: (e, error) => Column(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              const Icon(
-                Icons.error,
-                color: myWhite,
-              ),
-              text(context, "no image", 0.04, myWhite)
-            ],
-          ),
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                const Icon(
+                  Icons.error,
+                  color: myWhite,
+                ),
+                text(context, "no image", 0.04, myWhite)
+              ],
+            ),
             backgroundImage: NetworkImage(image),
           ),
         ),

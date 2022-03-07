@@ -150,7 +150,7 @@ genericCardsExtension(context, snapshot, index, check) {
                     push(
                       context,
                       VerifyCode(
-                        saleId: snapshot[index]["id"],
+                        saleId: snapshot[index]["sale_no"],
                       ),
                     );
                   } else {
