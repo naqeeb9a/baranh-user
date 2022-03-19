@@ -52,7 +52,8 @@ reserveTable(name, phone, email, seats, date, dropDownTime, outletId) async {
 getTimeSlots(date, outletId) async {
   try {
     var response = await http.post(Uri.parse(callBackUrl + "/api/get-timeslot"),
-        body: json.encode({"outlet_id": "$outletId", "filter_date": date}),
+        body: json.encode(
+            {"outlet_id": "$outletId", "filter_date": date, "type": "online"}),
         headers: {
           'Content-type': 'application/json',
           'Accept': 'application/json',
@@ -223,7 +224,6 @@ getQRSummary(apiCall) async {
 }
 
 getVerified(saleId, code) async {
-  
   try {
     var response = await http
         .post(Uri.parse(callBackUrl + "/api/customer-verify"), body: {

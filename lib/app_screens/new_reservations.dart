@@ -194,92 +194,75 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                                         ],
                                       ),
                                     )
-                                  : StatefulBuilder(
-                                      builder:
-                                          (BuildContext context, changeSate) {
-                                        return DropdownButton<String>(
-                                          hint: text(
-                                            context,
-                                            indexValue == "Select time"
-                                                ? indexValue
-                                                : indexValue.substring(
-                                                    0, indexValue.indexOf("#")),
-                                            0.04,
-                                            myWhite,
-                                          ),
-                                          items: snapshot.data
-                                              .map<DropdownMenuItem<String>>(
+                                  : (snapshot.data == null)
+                                      ? text(context, "no Slots", 0.04, myWhite)
+                                      : StatefulBuilder(
+                                          builder: (BuildContext context,
+                                              changeSate) {
+                                            return DropdownButton<String>(
+                                              hint: text(
+                                                context,
+                                                indexValue == "Select time"
+                                                    ? indexValue
+                                                    : indexValue.substring(
+                                                        0,
+                                                        indexValue
+                                                            .indexOf("#")),
+                                                0.04,
+                                                myWhite,
+                                              ),
+                                              items: snapshot.data.map<
+                                                      DropdownMenuItem<String>>(
                                                   (value) {
-                                            print((double.parse(
-                                                    value["opening_time"]
-                                                        .toString()
-                                                        .replaceAll(":", ".")) -
-                                                1));
-                                            print(double.parse(
-                                                (DateTime.now().hour)
-                                                        .toString() +
-                                                    "." +
-                                                    (DateTime.now().minute)
-                                                        .toString()));
-                                            print((double.parse(
-                                                        value["opening_time"]
+                                                if ((double.parse(value[
+                                                                "opening_time"]
                                                             .toString()
                                                             .replaceAll(
                                                                 ":", ".")) -
-                                                    1) >
-                                                double.parse(
-                                                    (DateTime.now().hour)
-                                                            .toString() +
-                                                        "." +
-                                                        (DateTime.now().minute)
-                                                            .toString()));
-                                            print("\n\n\n");
-                                            if ((double.parse(
-                                                        value["opening_time"]
-                                                            .toString()
-                                                            .replaceAll(
-                                                                ":", ".")) -
-                                                    1) >
-                                                double.parse(
-                                                    (DateTime.now().hour)
+                                                        1) >
+                                                    double.parse((DateTime.now()
+                                                                .hour)
                                                             .toString() +
                                                         "." +
                                                         (DateTime.now().minute)
                                                             .toString())) {
-                                              return DropdownMenuItem<String>(
-                                                value: getConvertedTime(
-                                                        value["opening_time"]) +
-                                                    "  ${value["discount"]} % off" +
-                                                    "#${value["id"]}#${value["seats"]}#${value["booksum"]}#${value["discount"]}",
-                                                child: Text(getConvertedTime(
-                                                        value["opening_time"]) +
-                                                    "  ${value["discount"]} % off"),
-                                              );
-                                            } else {
-                                              return DropdownMenuItem<String>(
-                                                value: getConvertedTime(
-                                                        value["opening_time"]) +
-                                                    "  ${value["discount"]} % off" +
-                                                    "#${value["id"]}#${value["seats"]}#${value["booksum"]}#${value["discount"]}",
-                                                child: Text(
-                                                  getConvertedTime(value[
-                                                          "opening_time"]) +
-                                                      "  ${value["discount"]} % off",
-                                                  style: const TextStyle(
-                                                      color: myGrey),
-                                                ),
-                                                enabled: false,
-                                              );
-                                            }
-                                          }).toList(),
-                                          onChanged: (value) {
-                                            changeSate(() {
-                                              indexValue = value!;
-                                            });
+                                                  return DropdownMenuItem<
+                                                      String>(
+                                                    value: getConvertedTime(value[
+                                                            "opening_time"]) +
+                                                        "  ${value["discount"]} % off" +
+                                                        "#${value["id"]}#${value["seats"]}#${value["booksum"]}#${value["discount"]}",
+                                                    child: Text(getConvertedTime(
+                                                            value[
+                                                                "opening_time"]) +
+                                                        "  ${value["discount"]} % off"),
+                                                  );
+                                                } else {
+                                                  return DropdownMenuItem<
+                                                      String>(
+                                                    value: getConvertedTime(value[
+                                                            "opening_time"]) +
+                                                        "  ${value["discount"]} % off" +
+                                                        "#${value["id"]}#${value["seats"]}#${value["booksum"]}#${value["discount"]}",
+                                                    child: Text(
+                                                      getConvertedTime(value[
+                                                              "opening_time"]) +
+                                                          "  ${value["discount"]} % off",
+                                                      style: const TextStyle(
+                                                          color: myGrey),
+                                                    ),
+                                                    enabled: false,
+                                                  );
+                                                }
+                                              }).toList(),
+                                              onChanged: (value) {
+                                                changeSate(() {
+                                                  indexValue = value!;
+                                                });
+                                              },
+                                            );
                                           },
                                         );
-                                      },
-                                    );
                             } else {
                               return LottieBuilder.asset(
                                 "assets/loader.json",
