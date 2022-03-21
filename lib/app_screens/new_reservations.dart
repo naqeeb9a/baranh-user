@@ -215,17 +215,36 @@ class _NewReservationsPageState extends State<NewReservationsPage> {
                                                       DropdownMenuItem<String>>(
                                                   (value) {
                                                 if ((double.parse(value[
-                                                                "opening_time"]
-                                                            .toString()
-                                                            .replaceAll(
-                                                                ":", ".")) -
-                                                        1) >
-                                                    double.parse((DateTime.now()
-                                                                .hour)
-                                                            .toString() +
-                                                        "." +
-                                                        (DateTime.now().minute)
-                                                            .toString())) {
+                                                                    "opening_time"]
+                                                                .toString()
+                                                                .replaceAll(
+                                                                    ":", ".")) -
+                                                            1) >
+                                                        double.parse((DateTime
+                                                                        .now()
+                                                                    .hour)
+                                                                .toString() +
+                                                            "." +
+                                                            (DateTime.now()
+                                                                    .minute)
+                                                                .toString()) &&
+                                                    DateTime.now()
+                                                        .toString()
+                                                        .contains(hintText)) {
+                                                  return DropdownMenuItem<
+                                                      String>(
+                                                    value: getConvertedTime(value[
+                                                            "opening_time"]) +
+                                                        "  ${value["discount"]} % off" +
+                                                        "#${value["id"]}#${value["seats"]}#${value["booksum"]}#${value["discount"]}",
+                                                    child: Text(getConvertedTime(
+                                                            value[
+                                                                "opening_time"]) +
+                                                        "  ${value["discount"]} % off"),
+                                                  );
+                                                } else if (!DateTime.now()
+                                                    .toString()
+                                                    .contains(hintText)) {
                                                   return DropdownMenuItem<
                                                       String>(
                                                     value: getConvertedTime(value[
