@@ -191,7 +191,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                     title: const Text("Error"),
                                     dismissable: true,
                                     description: const Text(
-                                        "Check your Internet or try again later"),
+                                      "Check your Internet or try again later",
+                                    ),
                                   ).show(context);
                                 } else {
                                   SharedPreferences loginUser =
