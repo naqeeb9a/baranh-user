@@ -39,7 +39,7 @@ class _LoginScreenState extends State<LoginScreen> {
       var response = await http
           .post(Uri.parse(callBackUrl + "/api/signin-customer"), body: {
         "emailphone": email.text,
-        "password": password.text
+        "password": password.text,
       }).timeout(const Duration(seconds: 10), onTimeout: () {
         return http.Response('Error', 408);
       });

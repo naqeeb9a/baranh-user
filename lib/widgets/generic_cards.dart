@@ -50,6 +50,8 @@ genericCards(function, {check = false}) {
 genericCardsExtension(context, snapshot, index, check) {
   globalWaiterId = snapshot[index]["waiter_id"];
   globalTableId = snapshot[index]["table_name"];
+  globalToken = snapshot[index]["token"];
+  print(globalToken);
   return Container(
     margin: EdgeInsets.symmetric(vertical: dynamicHeight(context, 0.01)),
     decoration: BoxDecoration(
@@ -183,7 +185,7 @@ genericCardsExtension(context, snapshot, index, check) {
                             barrierDismissible: false);
                         if (globalWaiterId != null || globalWaiterId != null) {
                           var temp = FCMServices.sendFCM(
-                            'waiter',
+                            globalToken,
                             63,
                             "Table no : $globalTableId",
                             "Requesting bill via Cash",
@@ -218,7 +220,7 @@ genericCardsExtension(context, snapshot, index, check) {
                             barrierDismissible: false);
                         if (globalWaiterId != null || globalWaiterId != null) {
                           var temp = FCMServices.sendFCM(
-                            'waiter',
+                            globalToken,
                             63,
                             "Table no : $globalTableId",
                             "Requesting bill via Card",

@@ -26,6 +26,7 @@ dynamic menuRefresh;
 dynamic globalContextMain;
 dynamic globalWaiterId;
 dynamic globalTableId;
+dynamic globalToken;
 
 var cartItems = [].obs;
 var reservedTable = [];

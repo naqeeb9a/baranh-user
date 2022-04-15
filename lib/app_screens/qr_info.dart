@@ -23,8 +23,9 @@ class QRInfo extends StatefulWidget {
 class _QRInfoState extends State<QRInfo> {
   @override
   Widget build(BuildContext context) {
-    var aStr = widget.qrApi.replaceAll(RegExp(r'[^0-9]'), ''); // '23'
+    var aStr = widget.qrApi.replaceAll(RegExp(r'[^0-9]'), '');
     var aInt = int.parse(aStr);
+    print("object ${widget.qrApi}");
 
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
@@ -37,7 +38,7 @@ class _QRInfoState extends State<QRInfo> {
                 barrierDismissible: false);
             if (globalWaiterId != null || globalWaiterId != null) {
               var temp = FCMServices.sendFCM(
-                'waiter',
+                globalToken,
                 63,
                 "Table no : $globalTableId",
                 "Customer is calling you..........!",
