@@ -51,7 +51,7 @@ genericCardsExtension(context, snapshot, index, check) {
   globalWaiterId = snapshot[index]["waiter_id"];
   globalTableId = snapshot[index]["table_name"];
   globalToken = snapshot[index]["token"];
-  print(globalToken);
+
   return Container(
     margin: EdgeInsets.symmetric(vertical: dynamicHeight(context, 0.01)),
     decoration: BoxDecoration(

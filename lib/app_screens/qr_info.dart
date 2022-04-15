@@ -25,7 +25,7 @@ class _QRInfoState extends State<QRInfo> {
   Widget build(BuildContext context) {
     var aStr = widget.qrApi.replaceAll(RegExp(r'[^0-9]'), '');
     var aInt = int.parse(aStr);
-    print("object ${widget.qrApi}");
+ 
 
     return Scaffold(
       floatingActionButton: FloatingActionButton.extended(
